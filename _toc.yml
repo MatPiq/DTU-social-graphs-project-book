@@ -1,13 +1,10 @@
 format: jb-article
 root: intro
-
 sections:
 - file: main
-   sections:
-   - file: main_data
-   - file: main_results
-
-sections:
+  sections:
+  - file: main_data
+  - file: main_results
 - file: explainer
   sections:
   - file: explainer_motivation
@@ -15,10 +12,3 @@ sections:
   - file: explainer_analysis
   - file: explainer_discussion
   - file: explainer_contributions
-
-#sections:
-#- file: content
-#  sections:
-#  - file: markdown
- # - file: notebooks
-#- file: syntax
