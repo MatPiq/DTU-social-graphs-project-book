@@ -254,16 +254,368 @@
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
 <span class="kn">from</span> <span class="nn">pyvis.network</span> <span class="kn">import</span> <span class="n">Network</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">bokeh.io</span> <span class="kn">import</span> <span class="n">output_notebook</span><span class="p">,</span> <span class="n">show</span><span class="p">,</span> <span class="n">save</span>
+<span class="kn">from</span> <span class="nn">bokeh.models</span> <span class="kn">import</span> <span class="n">Range1d</span><span class="p">,</span> <span class="n">Circle</span><span class="p">,</span> <span class="n">ColumnDataSource</span><span class="p">,</span> <span class="n">MultiLine</span>
+<span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="kn">import</span> <span class="n">figure</span>
+<span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="kn">import</span> <span class="n">from_networkx</span>
+<span class="n">output_notebook</span><span class="p">()</span>
+
 <span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">karate_club_graph</span><span class="p">()</span>
-<span class="n">nt</span> <span class="o">=</span> <span class="n">Network</span><span class="p">(</span><span class="s1">&#39;500px&#39;</span><span class="p">,</span> <span class="s1">&#39;500px&#39;</span><span class="p">,</span> <span class="n">notebook</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">nt</span><span class="o">.</span><span class="n">from_nx</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
-<span class="n">nt</span><span class="o">.</span><span class="n">toggle_hide_edges_on_drag</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">nt</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="s1">&#39;nb.html&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+<span class="c1">#Choose a title!</span>
+<span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Karate Club Network&#39;</span>
+
+<span class="c1">#Establish which categories will appear when hovering over each node</span>
+<span class="n">HOVER_TOOLTIPS</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;Character&quot;</span><span class="p">,</span> <span class="s2">&quot;@index&quot;</span><span class="p">)]</span>
+
+<span class="c1">#Create a plot — set dimensions, toolbar, and title</span>
+<span class="n">plot</span> <span class="o">=</span> <span class="n">figure</span><span class="p">(</span><span class="n">tooltips</span> <span class="o">=</span> <span class="n">HOVER_TOOLTIPS</span><span class="p">,</span>
+              <span class="n">tools</span><span class="o">=</span><span class="s2">&quot;pan,wheel_zoom,save,reset&quot;</span><span class="p">,</span> <span class="n">active_scroll</span><span class="o">=</span><span class="s1">&#39;wheel_zoom&#39;</span><span class="p">,</span>
+            <span class="n">x_range</span><span class="o">=</span><span class="n">Range1d</span><span class="p">(</span><span class="o">-</span><span class="mf">10.1</span><span class="p">,</span> <span class="mf">10.1</span><span class="p">),</span> <span class="n">y_range</span><span class="o">=</span><span class="n">Range1d</span><span class="p">(</span><span class="o">-</span><span class="mf">10.1</span><span class="p">,</span> <span class="mf">10.1</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">)</span>
+
+<span class="c1">#Create a network graph object with spring layout</span>
+<span class="c1"># https://networkx.github.io/documentation/networkx-1.9/reference/generated/networkx.drawing.layout.spring_layout.html</span>
+<span class="n">network_graph</span> <span class="o">=</span> <span class="n">from_networkx</span><span class="p">(</span><span class="n">G</span><span class="p">,</span> <span class="n">nx</span><span class="o">.</span><span class="n">spring_layout</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+
+<span class="c1">#Set node size and color</span>
+<span class="n">network_graph</span><span class="o">.</span><span class="n">node_renderer</span><span class="o">.</span><span class="n">glyph</span> <span class="o">=</span> <span class="n">Circle</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">fill_color</span><span class="o">=</span><span class="s1">&#39;skyblue&#39;</span><span class="p">)</span>
+
+<span class="c1">#Set edge opacity and width</span>
+<span class="n">network_graph</span><span class="o">.</span><span class="n">edge_renderer</span><span class="o">.</span><span class="n">glyph</span> <span class="o">=</span> <span class="n">MultiLine</span><span class="p">(</span><span class="n">line_alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">line_width</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1">#Add network graph to the plot</span>
+<span class="n">plot</span><span class="o">.</span><span class="n">renderers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">network_graph</span><span class="p">)</span>
+
+<span class="n">show</span><span class="p">(</span><span class="n">plot</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html">
+<div class="bk-root">
+    <a href="https://bokeh.org" target="_blank" class="bk-logo bk-logo-small bk-logo-notebook"></a>
+    <span id="1705">Loading BokehJS ...</span>
+</div></div><script type="application/javascript">
+(function(root) {
+  function now() {
+    return new Date();
+  }
+
+  const force = true;
+
+  if (typeof root._bokeh_onload_callbacks === "undefined" || force === true) {
+    root._bokeh_onload_callbacks = [];
+    root._bokeh_is_loading = undefined;
+  }
+
+  const JS_MIME_TYPE = 'application/javascript';
+  const HTML_MIME_TYPE = 'text/html';
+  const EXEC_MIME_TYPE = 'application/vnd.bokehjs_exec.v0+json';
+  const CLASS_NAME = 'output_bokeh rendered_html';
+
+  /**
+   * Render data to the DOM node
+   */
+  function render(props, node) {
+    const script = document.createElement("script");
+    node.appendChild(script);
+  }
+
+  /**
+   * Handle when an output is cleared or removed
+   */
+  function handleClearOutput(event, handle) {
+    const cell = handle.cell;
+
+    const id = cell.output_area._bokeh_element_id;
+    const server_id = cell.output_area._bokeh_server_id;
+    // Clean up Bokeh references
+    if (id != null && id in Bokeh.index) {
+      Bokeh.index[id].model.document.clear();
+      delete Bokeh.index[id];
+    }
+
+    if (server_id !== undefined) {
+      // Clean up Bokeh references
+      const cmd_clean = "from bokeh.io.state import curstate; print(curstate().uuid_to_server['" + server_id + "'].get_sessions()[0].document.roots[0]._id)";
+      cell.notebook.kernel.execute(cmd_clean, {
+        iopub: {
+          output: function(msg) {
+            const id = msg.content.text.trim();
+            if (id in Bokeh.index) {
+              Bokeh.index[id].model.document.clear();
+              delete Bokeh.index[id];
+            }
+          }
+        }
+      });
+      // Destroy server and session
+      const cmd_destroy = "import bokeh.io.notebook as ion; ion.destroy_server('" + server_id + "')";
+      cell.notebook.kernel.execute(cmd_destroy);
+    }
+  }
+
+  /**
+   * Handle when a new output is added
+   */
+  function handleAddOutput(event, handle) {
+    const output_area = handle.output_area;
+    const output = handle.output;
+
+    // limit handleAddOutput to display_data with EXEC_MIME_TYPE content only
+    if ((output.output_type != "display_data") || (!Object.prototype.hasOwnProperty.call(output.data, EXEC_MIME_TYPE))) {
+      return
+    }
+
+    const toinsert = output_area.element.find("." + CLASS_NAME.split(' ')[0]);
+
+    if (output.metadata[EXEC_MIME_TYPE]["id"] !== undefined) {
+      toinsert[toinsert.length - 1].firstChild.textContent = output.data[JS_MIME_TYPE];
+      // store reference to embed id on output_area
+      output_area._bokeh_element_id = output.metadata[EXEC_MIME_TYPE]["id"];
+    }
+    if (output.metadata[EXEC_MIME_TYPE]["server_id"] !== undefined) {
+      const bk_div = document.createElement("div");
+      bk_div.innerHTML = output.data[HTML_MIME_TYPE];
+      const script_attrs = bk_div.children[0].attributes;
+      for (let i = 0; i < script_attrs.length; i++) {
+        toinsert[toinsert.length - 1].firstChild.setAttribute(script_attrs[i].name, script_attrs[i].value);
+        toinsert[toinsert.length - 1].firstChild.textContent = bk_div.children[0].textContent
+      }
+      // store reference to server id on output_area
+      output_area._bokeh_server_id = output.metadata[EXEC_MIME_TYPE]["server_id"];
+    }
+  }
+
+  function register_renderer(events, OutputArea) {
+
+    function append_mime(data, metadata, element) {
+      // create a DOM node to render to
+      const toinsert = this.create_output_subarea(
+        metadata,
+        CLASS_NAME,
+        EXEC_MIME_TYPE
+      );
+      this.keyboard_manager.register_events(toinsert);
+      // Render to node
+      const props = {data: data, metadata: metadata[EXEC_MIME_TYPE]};
+      render(props, toinsert[toinsert.length - 1]);
+      element.append(toinsert);
+      return toinsert
+    }
+
+    /* Handle when an output is cleared or removed */
+    events.on('clear_output.CodeCell', handleClearOutput);
+    events.on('delete.Cell', handleClearOutput);
+
+    /* Handle when a new output is added */
+    events.on('output_added.OutputArea', handleAddOutput);
+
+    /**
+     * Register the mime type and append_mime function with output_area
+     */
+    OutputArea.prototype.register_mime_type(EXEC_MIME_TYPE, append_mime, {
+      /* Is output safe? */
+      safe: true,
+      /* Index of renderer in `output_area.display_order` */
+      index: 0
+    });
+  }
+
+  // register the mime type if in Jupyter Notebook environment and previously unregistered
+  if (root.Jupyter !== undefined) {
+    const events = require('base/js/events');
+    const OutputArea = require('notebook/js/outputarea').OutputArea;
+
+    if (OutputArea.prototype.mime_types().indexOf(EXEC_MIME_TYPE) == -1) {
+      register_renderer(events, OutputArea);
+    }
+  }
+
+  
+  if (typeof (root._bokeh_timeout) === "undefined" || force === true) {
+    root._bokeh_timeout = Date.now() + 5000;
+    root._bokeh_failed_load = false;
+  }
+
+  const NB_LOAD_WARNING = {'data': {'text/html':
+     "<div style='background-color: #fdd'>\n"+
+     "<p>\n"+
+     "BokehJS does not appear to have successfully loaded. If loading BokehJS from CDN, this \n"+
+     "may be due to a slow or bad network connection. Possible fixes:\n"+
+     "</p>\n"+
+     "<ul>\n"+
+     "<li>re-rerun `output_notebook()` to attempt to load from CDN again, or</li>\n"+
+     "<li>use INLINE resources instead, as so:</li>\n"+
+     "</ul>\n"+
+     "<code>\n"+
+     "from bokeh.resources import INLINE\n"+
+     "output_notebook(resources=INLINE)\n"+
+     "</code>\n"+
+     "</div>"}};
+
+  function display_loaded() {
+    const el = document.getElementById("1705");
+    if (el != null) {
+      el.textContent = "BokehJS is loading...";
+    }
+    if (root.Bokeh !== undefined) {
+      if (el != null) {
+        el.textContent = "BokehJS " + root.Bokeh.version + " successfully loaded.";
+      }
+    } else if (Date.now() < root._bokeh_timeout) {
+      setTimeout(display_loaded, 100)
+    }
+  }
+
+
+  function run_callbacks() {
+    try {
+      root._bokeh_onload_callbacks.forEach(function(callback) {
+        if (callback != null)
+          callback();
+      });
+    } finally {
+      delete root._bokeh_onload_callbacks
+    }
+    console.debug("Bokeh: all callbacks have finished");
+  }
+
+  function load_libs(css_urls, js_urls, callback) {
+    if (css_urls == null) css_urls = [];
+    if (js_urls == null) js_urls = [];
+
+    root._bokeh_onload_callbacks.push(callback);
+    if (root._bokeh_is_loading > 0) {
+      console.debug("Bokeh: BokehJS is being loaded, scheduling callback at", now());
+      return null;
+    }
+    if (js_urls == null || js_urls.length === 0) {
+      run_callbacks();
+      return null;
+    }
+    console.debug("Bokeh: BokehJS not loaded, scheduling load and callback at", now());
+    root._bokeh_is_loading = css_urls.length + js_urls.length;
+
+    function on_load() {
+      root._bokeh_is_loading--;
+      if (root._bokeh_is_loading === 0) {
+        console.debug("Bokeh: all BokehJS libraries/stylesheets loaded");
+        run_callbacks()
+      }
+    }
+
+    function on_error(url) {
+      console.error("failed to load " + url);
+    }
+
+    for (let i = 0; i < css_urls.length; i++) {
+      const url = css_urls[i];
+      const element = document.createElement("link");
+      element.onload = on_load;
+      element.onerror = on_error.bind(null, url);
+      element.rel = "stylesheet";
+      element.type = "text/css";
+      element.href = url;
+      console.debug("Bokeh: injecting link tag for BokehJS stylesheet: ", url);
+      document.body.appendChild(element);
+    }
+
+    for (let i = 0; i < js_urls.length; i++) {
+      const url = js_urls[i];
+      const element = document.createElement('script');
+      element.onload = on_load;
+      element.onerror = on_error.bind(null, url);
+      element.async = false;
+      element.src = url;
+      console.debug("Bokeh: injecting script tag for BokehJS library: ", url);
+      document.head.appendChild(element);
+    }
+  };
+
+  function inject_raw_css(css) {
+    const element = document.createElement("style");
+    element.appendChild(document.createTextNode(css));
+    document.body.appendChild(element);
+  }
+
+  
+  const js_urls = ["https://cdn.bokeh.org/bokeh/release/bokeh-2.4.1.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-gl-2.4.1.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.4.1.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.4.1.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-mathjax-2.4.1.min.js"];
+  const css_urls = [];
+  
+
+  const inline_js = [
+    function(Bokeh) {
+      Bokeh.set_log_level("info");
+    },
+    function(Bokeh) {
+    
+    
+    }
+  ];
+
+  function run_inline_js() {
+    
+    if (root.Bokeh !== undefined || force === true) {
+      
+    for (let i = 0; i < inline_js.length; i++) {
+      inline_js[i].call(root, root.Bokeh);
+    }
+    if (force === true) {
+        display_loaded();
+      }} else if (Date.now() < root._bokeh_timeout) {
+      setTimeout(run_inline_js, 100);
+    } else if (!root._bokeh_failed_load) {
+      console.log("Bokeh: BokehJS failed to load within specified timeout.");
+      root._bokeh_failed_load = true;
+    } else if (force !== true) {
+      const cell = $(document.getElementById("1705")).parents('.cell').data().cell;
+      cell.output_area.append_execute_result(NB_LOAD_WARNING)
+    }
+
+  }
+
+  if (root._bokeh_is_loading === 0) {
+    console.debug("Bokeh: BokehJS loaded, going straight to plotting");
+    run_inline_js();
+  } else {
+    load_libs(css_urls, js_urls, function() {
+      console.debug("Bokeh: BokehJS plotting callback run at", now());
+      run_inline_js();
+    });
+  }
+}(window));</script><div class="output text_html">
+
+
+
+
+
+<div class="bk-root" id="f5c34cea-391b-4bb9-981d-c3eda96f1ca2" data-root-id="1708"></div>
+</div><script type="application/javascript">(function(root) {
+  function embed_document(root) {
+    
+  const docs_json = {"221b1dca-cb6a-41cd-92f2-9f97d52bd2c0":{"defs":[],"roots":{"references":[{"attributes":{"below":[{"id":"1717"}],"center":[{"id":"1720"},{"id":"1724"}],"left":[{"id":"1721"}],"renderers":[{"id":"1736"}],"title":{"id":"1709"},"toolbar":{"id":"1730"},"x_range":{"id":"1706"},"x_scale":{"id":"1713"},"y_range":{"id":"1707"},"y_scale":{"id":"1715"}},"id":"1708","subtype":"Figure","type":"Plot"},{"attributes":{},"id":"1768","type":"BasicTickFormatter"},{"attributes":{"callback":null,"tooltips":[["Character","@index"]]},"id":"1729","type":"HoverTool"},{"attributes":{},"id":"1769","type":"AllLabels"},{"attributes":{},"id":"1726","type":"WheelZoomTool"},{"attributes":{},"id":"1728","type":"ResetTool"},{"attributes":{},"id":"1766","type":"NodesOnly"},{"attributes":{"graph_layout":{"0":[2.875415944335729,-2.3596846511784837],"1":[0.930232511642606,-2.273851637746409],"10":[6.254055438108184,-3.7854653597507575],"11":[5.065631506446393,-5.867795507008293],"12":[3.9162221699471385,-4.508370039049955],"13":[1.0261824392083676,-0.31902680561108204],"14":[-3.4458669872478667,5.545066754738681],"15":[-2.583274556386114,6.082186633191942],"16":[10.0,-2.045483535853884],"17":[1.3262512800161934,-5.0988619907816135],"18":[-0.557577797041726,5.123278235867571],"19":[0.13005911646273652,-0.831573947082011],"2":[-0.6399231029047865,-0.5720059776409886],"20":[-1.5861651452080956,5.645305112931262],"21":[2.4990603975234014,-4.931719835116694],"22":[-4.291960860770424,4.933216528229556],"23":[-5.119599025835297,1.9276804583534792],"24":[-5.661118480638031,-1.9057006359825326],"25":[-6.21779760232829,-0.46753266274471605],"26":[-6.0939846093985635,4.701856164846016],"27":[-4.246339175901939,0.012751062891062355],"28":[-3.1015698413248622,0.4706978314707537],"29":[-5.058766025731575,3.6373336819764224],"3":[1.8277683622722778,-2.735704190247965],"30":[-0.3610013134255614,1.3566877763937508],"31":[-2.4984208760528266,-0.5071442730790405],"32":[-2.2721730183043167,3.2258290530904703],"33":[-2.4649029737334285,2.5763216577238524],"4":[6.035110192849239,-2.25831541985791],"5":[7.442942077040556,-2.803950749746313],"6":[7.288918277727497,-1.6260653455595662],"7":[0.4191221020400817,-3.39584286029201],"8":[0.5534857530180018,1.2790956654862946],"9":[-1.39001617640472,1.7767888071391353]}},"id":"1745","type":"StaticLayoutProvider"},{"attributes":{},"id":"1715","type":"LinearScale"},{"attributes":{"data":{"end":[1,2,3,4,5,6,7,8,10,11,12,13,17,19,21,31,2,3,7,13,17,19,21,30,3,7,8,9,13,27,28,32,7,12,13,6,10,6,10,16,16,30,32,33,33,33,32,33,32,33,32,33,33,32,33,32,33,25,27,29,32,33,25,27,31,31,29,33,33,31,33,32,33,32,33,32,33,33],"start":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,3,3,3,4,4,5,5,5,6,8,8,8,9,13,14,14,15,15,18,18,19,20,20,22,22,23,23,23,23,23,24,24,24,25,26,26,27,28,28,29,29,30,30,31,31,32]},"selected":{"id":"1776"},"selection_policy":{"id":"1775"}},"id":"1742","type":"ColumnDataSource"},{"attributes":{},"id":"1718","type":"BasicTicker"},{"attributes":{"line_alpha":{"value":0.5}},"id":"1751","type":"MultiLine"},{"attributes":{"coordinates":null,"group":null,"text":"Game of Thrones Network"},"id":"1709","type":"Title"},{"attributes":{"coordinates":null,"data_source":{"id":"1742"},"glyph":{"id":"1751"},"group":null,"hover_glyph":null,"view":{"id":"1744"}},"id":"1743","type":"GlyphRenderer"},{"attributes":{},"id":"1713","type":"LinearScale"},{"attributes":{},"id":"1775","type":"UnionRenderers"},{"attributes":{"end":10.1,"start":-10.1},"id":"1706","type":"Range1d"},{"attributes":{},"id":"1776","type":"Selection"},{"attributes":{},"id":"1773","type":"UnionRenderers"},{"attributes":{"coordinates":null,"formatter":{"id":"1771"},"group":null,"major_label_policy":{"id":"1772"},"ticker":{"id":"1718"}},"id":"1717","type":"LinearAxis"},{"attributes":{"end":10.1,"start":-10.1},"id":"1707","type":"Range1d"},{"attributes":{},"id":"1765","type":"NodesOnly"},{"attributes":{"axis":{"id":"1717"},"coordinates":null,"group":null,"ticker":null},"id":"1720","type":"Grid"},{"attributes":{"source":{"id":"1742"}},"id":"1744","type":"CDSView"},{"attributes":{},"id":"1772","type":"AllLabels"},{"attributes":{},"id":"1771","type":"BasicTickFormatter"},{"attributes":{"source":{"id":"1738"}},"id":"1740","type":"CDSView"},{"attributes":{"fill_color":{"value":"skyblue"},"size":{"value":15}},"id":"1746","type":"Circle"},{"attributes":{"coordinates":null,"data_source":{"id":"1738"},"glyph":{"id":"1746"},"group":null,"hover_glyph":null,"view":{"id":"1740"}},"id":"1739","type":"GlyphRenderer"},{"attributes":{"coordinates":null,"edge_renderer":{"id":"1743"},"group":null,"inspection_policy":{"id":"1766"},"layout_provider":{"id":"1745"},"node_renderer":{"id":"1739"},"selection_policy":{"id":"1765"}},"id":"1736","type":"GraphRenderer"},{"attributes":{},"id":"1774","type":"Selection"},{"attributes":{"coordinates":null,"formatter":{"id":"1768"},"group":null,"major_label_policy":{"id":"1769"},"ticker":{"id":"1722"}},"id":"1721","type":"LinearAxis"},{"attributes":{"data":{"club":["Mr. Hi","Mr. Hi","Mr. Hi","Mr. Hi","Mr. Hi","Mr. Hi","Mr. Hi","Mr. Hi","Mr. Hi","Officer","Mr. Hi","Mr. Hi","Mr. Hi","Mr. Hi","Officer","Officer","Mr. Hi","Mr. Hi","Officer","Mr. Hi","Officer","Mr. Hi","Officer","Officer","Officer","Officer","Officer","Officer","Officer","Officer","Officer","Officer","Officer","Officer"],"index":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33]},"selected":{"id":"1774"},"selection_policy":{"id":"1773"}},"id":"1738","type":"ColumnDataSource"},{"attributes":{},"id":"1725","type":"PanTool"},{"attributes":{"axis":{"id":"1721"},"coordinates":null,"dimension":1,"group":null,"ticker":null},"id":"1724","type":"Grid"},{"attributes":{},"id":"1727","type":"SaveTool"},{"attributes":{},"id":"1722","type":"BasicTicker"},{"attributes":{"active_scroll":{"id":"1726"},"tools":[{"id":"1725"},{"id":"1726"},{"id":"1727"},{"id":"1728"},{"id":"1729"}]},"id":"1730","type":"Toolbar"}],"root_ids":["1708"]},"title":"Bokeh Application","version":"2.4.1"}};
+  const render_items = [{"docid":"221b1dca-cb6a-41cd-92f2-9f97d52bd2c0","root_ids":["1708"],"roots":{"1708":"f5c34cea-391b-4bb9-981d-c3eda96f1ca2"}}];
+  root.Bokeh.embed.embed_items_notebook(docs_json, render_items);
+
+  }
+  if (root.Bokeh !== undefined) {
+    embed_document(root);
+  } else {
+    let attempts = 0;
+    const timer = setInterval(function(root) {
+      if (root.Bokeh !== undefined) {
+        clearInterval(timer);
+        embed_document(root);
+      } else {
+        attempts++;
+        if (attempts > 100) {
+          clearInterval(timer);
+          console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing");
+        }
+      }
+    }, 10, root)
+  }
+})(window);</script></div>
 </div>
 </div>
 
