@@ -254,25 +254,30 @@
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
 <span class="kn">from</span> <span class="nn">pyvis.network</span> <span class="kn">import</span> <span class="n">Network</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">karate_club_graph</span><span class="p">()</span>
-<span class="n">nt</span> <span class="o">=</span> <span class="n">Network</span><span class="p">(</span><span class="s1">&#39;500px&#39;</span><span class="p">,</span> <span class="s1">&#39;500px&#39;</span><span class="p">)</span>
+<span class="n">nt</span> <span class="o">=</span> <span class="n">Network</span><span class="p">(</span><span class="s1">&#39;500px&#39;</span><span class="p">,</span> <span class="s1">&#39;500px&#39;</span><span class="p">,</span> <span class="n">notebook</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">nt</span><span class="o">.</span><span class="n">from_nx</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
-<span class="n">nt</span><span class="o">.</span><span class="n">prep_notebook</span><span class="p">()</span>
-<span class="n">nt</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="s2">&quot;nb.html&quot;</span><span class="p">)</span>
+<span class="n">nt</span><span class="o">.</span><span class="n">toggle_hide_edges_on_drag</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">nt</span><span class="o">.</span><span class="n">show</span><span class="p">(</span><span class="s1">&#39;nb.html&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html">
-<iframe
-    width="500px"
-    height="500px"
-    src="nb.html"
-    frameborder="0"
-    allowfullscreen
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1575</span><span class="o">/</span><span class="mf">1570487080.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">pyvis.network</span> <span class="kn">import</span> <span class="n">Network</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">karate_club_graph</span><span class="p">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">nt</span> <span class="o">=</span> <span class="n">Network</span><span class="p">(</span><span class="s1">&#39;500px&#39;</span><span class="p">,</span> <span class="s1">&#39;500px&#39;</span><span class="p">,</span> <span class="n">notebook</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-></iframe>
-</div></div>
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;networkx&#39;
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 
