@@ -1,15 +1,4 @@
-GitHub Actions with Jupyter Book
-================================
+Introduction
+============
 
-Here we test a small change. And here is some more. asdasda
-This is a small sample book built with GitHub Actions. It was built using the
-following action:
-
-```{literalinclude} .github/workflows/book.yml
-:language: yaml
-```
-
-and this `requirements.txt` file:
-
-```{literalinclude} requirements.txt
-```
+This website is divided into two parts: (1) The main section, which includes the self-contained story of our data. Including, our research question, data description and main parts of the analysis. Part (2) is the explainer notebooks, where we go into more detail and showcase the code used to generate our project. 
