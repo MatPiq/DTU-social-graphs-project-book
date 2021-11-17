@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GitHub Actions with Jupyter Book &#8212; My sample book</title>
+    <title>Introduction &#8212; The Social Science Network</title>
     
   <link href="_static/css/theme.css" rel="stylesheet">
   <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -51,7 +51,7 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Content in Jupyter Book" href="content.html" />
+    <link rel="next" title="Main" href="main.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -80,7 +80,7 @@
       <img src="_static/logo.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">My sample book</h1>
+      <h1 class="site-logo" id="site-title">The Social Science Network</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
@@ -91,14 +91,14 @@
         <ul class="nav bd-sidenav">
  <li class="toctree-l1 current">
   <a class="reference internal" href="#">
-   GitHub Actions with Jupyter Book
+   Introduction
   </a>
  </li>
 </ul>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1 has-children">
-  <a class="reference internal" href="content.html">
-   Content in Jupyter Book
+  <a class="reference internal" href="main.html">
+   Main
   </a>
   <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
   <label for="toctree-checkbox-1">
@@ -107,21 +107,53 @@
   </label>
   <ul>
    <li class="toctree-l2">
-    <a class="reference internal" href="markdown.html">
-     Markdown files
+    <a class="reference internal" href="main_data.html">
+     Data Description
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="notebooks.html">
-     Content with notebooks
+    <a class="reference internal" href="main_results.html">
+     Main results
     </a>
    </li>
   </ul>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="syntax.html">
-   Jupyter Book markdown syntax
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="explainer.html">
+   Explainer Notebook
   </a>
+  <input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="explainer_motivation.html">
+     Motivation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="explainer_basicstats.html">
+     Basic Statistics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="explainer_analysis.html">
+     Theory, Methods and Analysis
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="explainer_discussion.html">
+     Discussion
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="explainer_contributions.html">
+     Contributions
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -197,56 +229,9 @@
         
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="github-actions-with-jupyter-book">
-<h1>GitHub Actions with Jupyter Book<a class="headerlink" href="#github-actions-with-jupyter-book" title="Permalink to this headline">¶</a></h1>
-<p>Here we test a small change. And here is some more. asdasda
-This is a small sample book built with GitHub Actions. It was built using the
-following action:</p>
-<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">deploy-book</span>
-
-<span class="c1"># Only run this when the master branch changes</span>
-<span class="nt">on</span><span class="p">:</span>
-  <span class="nt">push</span><span class="p">:</span>
-    <span class="nt">branches</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="l l-Scalar l-Scalar-Plain">master</span>
-
-<span class="c1"># This job installs dependencies, build the book, and pushes it to `gh-pages`</span>
-<span class="nt">jobs</span><span class="p">:</span>
-  <span class="nt">deploy-book</span><span class="p">:</span>
-    <span class="nt">runs-on</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">ubuntu-latest</span>
-    <span class="nt">steps</span><span class="p">:</span>
-    <span class="p p-Indicator">-</span> <span class="nt">uses</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">actions/checkout@v2</span>
-
-    <span class="c1"># Install dependencies</span>
-    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Set up Python 3.7</span>
-      <span class="nt">uses</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">actions/setup-python@v1</span>
-      <span class="nt">with</span><span class="p">:</span>
-        <span class="nt">python-version</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">3.7</span>
-
-    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Install dependencies</span>
-      <span class="nt">run</span><span class="p">:</span> <span class="p p-Indicator">|</span>
-        <span class="no">pip install -r requirements.txt</span>
-
-
-    <span class="c1"># Build the book</span>
-    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">Build the book</span>
-      <span class="nt">run</span><span class="p">:</span> <span class="p p-Indicator">|</span>
-        <span class="no">jupyter-book build .</span>
-
-    <span class="c1"># Push the book&#39;s HTML to github-pages</span>
-    <span class="p p-Indicator">-</span> <span class="nt">name</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">GitHub Pages action</span>
-      <span class="nt">uses</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">peaceiris/actions-gh-pages@v3.5.9</span>
-      <span class="nt">with</span><span class="p">:</span>
-        <span class="nt">github_token</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">${{ secrets.GITHUB_TOKEN }}</span>
-        <span class="nt">publish_dir</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">./_build/html</span>
-</pre></div>
-</div>
-<p>and this <code class="docutils literal notranslate"><span class="pre">requirements.txt</span></code> file:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">jupyter</span><span class="o">-</span><span class="n">book</span><span class="o">&gt;=</span><span class="mf">0.7.0</span><span class="n">b</span>
-<span class="n">matplotlib</span>
-<span class="n">numpy</span>
-</pre></div>
-</div>
+  <div class="tex2jax_ignore mathjax_ignore section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p>This website is divided into two parts: (1) The main section, which includes the self-contained story of our data. Including, our research question, data description and main parts of the analysis. Part (2) is the explainer notebooks, where we go into more detail and showcase the code used to generate our project.</p>
 <div class="toctree-wrapper compound">
 </div>
 </div>
@@ -276,10 +261,10 @@ following action:</p>
         
             <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='right-next' id="next-link" href="content.html" title="next page">
+    <a class='right-next' id="next-link" href="main.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Content in Jupyter Book</p>
+        <p class="prev-next-title">Main</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
@@ -291,7 +276,7 @@ following action:</p>
     <div class="container">
       <p>
         
-          By The Jupyter Book Community<br/>
+          By Frederik Kilpinen, Emilie Munch Gregersen, Matias Piqueras<br/>
         
             &copy; Copyright 2021.<br/>
       </p>

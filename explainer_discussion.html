@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Markdown files &#8212; My sample book</title>
+    <title>Discussion &#8212; The Social Science Network</title>
     
   <link href="_static/css/theme.css" rel="stylesheet">
   <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -51,8 +51,8 @@
     <script async="async" src="_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Content with notebooks" href="notebooks.html" />
-    <link rel="prev" title="Content in Jupyter Book" href="content.html" />
+    <link rel="next" title="Contributions" href="explainer_contributions.html" />
+    <link rel="prev" title="Theory, Methods and Analysis" href="explainer_analysis.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -81,7 +81,7 @@
       <img src="_static/logo.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">My sample book</h1>
+      <h1 class="site-logo" id="site-title">The Social Science Network</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
@@ -92,37 +92,69 @@
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="intro.html">
-   GitHub Actions with Jupyter Book
+   Introduction
   </a>
  </li>
 </ul>
 <ul class="current nav bd-sidenav">
- <li class="toctree-l1 current active has-children">
-  <a class="reference internal" href="content.html">
-   Content in Jupyter Book
+ <li class="toctree-l1 has-children">
+  <a class="reference internal" href="main.html">
+   Main
   </a>
-  <input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
+  <input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/>
   <label for="toctree-checkbox-1">
    <i class="fas fa-chevron-down">
    </i>
   </label>
-  <ul class="current">
-   <li class="toctree-l2 current active">
-    <a class="current reference internal" href="#">
-     Markdown files
+  <ul>
+   <li class="toctree-l2">
+    <a class="reference internal" href="main_data.html">
+     Data Description
     </a>
    </li>
    <li class="toctree-l2">
-    <a class="reference internal" href="notebooks.html">
-     Content with notebooks
+    <a class="reference internal" href="main_results.html">
+     Main results
     </a>
    </li>
   </ul>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="syntax.html">
-   Jupyter Book markdown syntax
+ <li class="toctree-l1 current active has-children">
+  <a class="reference internal" href="explainer.html">
+   Explainer Notebook
   </a>
+  <input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/>
+  <label for="toctree-checkbox-2">
+   <i class="fas fa-chevron-down">
+   </i>
+  </label>
+  <ul class="current">
+   <li class="toctree-l2">
+    <a class="reference internal" href="explainer_motivation.html">
+     Motivation
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="explainer_basicstats.html">
+     Basic Statistics
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="explainer_analysis.html">
+     Theory, Methods and Analysis
+    </a>
+   </li>
+   <li class="toctree-l2 current active">
+    <a class="current reference internal" href="#">
+     Discussion
+    </a>
+   </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="explainer_contributions.html">
+     Contributions
+    </a>
+   </li>
+  </ul>
  </li>
 </ul>
 
@@ -165,7 +197,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/markdown.md"><button type="button"
+        <a class="dropdown-buttons" href="_sources/explainer_discussion.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -198,21 +230,8 @@
         
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="markdown-files">
-<h1>Markdown files<a class="headerlink" href="#markdown-files" title="Permalink to this headline">¶</a></h1>
-<p>Jupyter Book allows you to write your content directly in markdown files.
-If you’d like to include computational content with these markdown files,
-use the following directive:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>```{execute}
-print(&quot;Here is some code to execute&quot;)
-```
-</pre></div>
-</div>
-<p>When your book is build, the contents of any <code class="docutils literal notranslate"><span class="pre">{execute}</span></code> blocks will be
-executed with your default Jupyter kernel, and their outputs will be displayed
-in-line with the rest of your content.</p>
-<p>For more information about executing computational content with Jupyter Book,
-see <a class="reference external" href="https://myst-nb.readthedocs.io/">The MyST-NB documentation</a>.</p>
+  <div class="tex2jax_ignore mathjax_ignore section" id="discussion">
+<h1>Discussion<a class="headerlink" href="#discussion" title="Permalink to this headline">¶</a></h1>
 </div>
 
     <script type="text/x-thebe-config">
@@ -240,17 +259,17 @@ see <a class="reference external" href="https://myst-nb.readthedocs.io/">The MyS
         
             <!-- Previous / next buttons -->
 <div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="content.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="explainer_analysis.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Content in Jupyter Book</p>
+            <p class="prev-next-title">Theory, Methods and Analysis</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="notebooks.html" title="next page">
+    <a class='right-next' id="next-link" href="explainer_contributions.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Content with notebooks</p>
+        <p class="prev-next-title">Contributions</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
@@ -262,7 +281,7 @@ see <a class="reference external" href="https://myst-nb.readthedocs.io/">The MyS
     <div class="container">
       <p>
         
-          By The Jupyter Book Community<br/>
+          By Frederik Kilpinen, Emilie Munch Gregersen, Matias Piqueras<br/>
         
             &copy; Copyright 2021.<br/>
       </p>
