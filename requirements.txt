@@ -4,3 +4,4 @@ numpy
 networkx
 pyvis
 bokeh
+netwulf
