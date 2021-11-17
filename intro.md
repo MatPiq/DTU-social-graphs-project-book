@@ -1,7 +1,7 @@
 GitHub Actions with Jupyter Book
 ================================
 
-Here we test a small change
+Here we test a small change. And here is some more.
 This is a small sample book built with GitHub Actions. It was built using the
 following action:
 
