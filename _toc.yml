@@ -5,6 +5,7 @@ sections:
   sections:
   - file: main_data
   - file: main_results
+  - file: plots/ex
 - file: explainer
   sections:
   - file: explainer_motivation
