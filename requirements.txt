@@ -5,5 +5,5 @@ networkx
 pyvis
 bokeh
 netwulf
-py2cytoscape
-visJS2jupyter
+#py2cytoscape
+#visJS2jupyter
