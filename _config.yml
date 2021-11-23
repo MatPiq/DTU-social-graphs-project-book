@@ -12,15 +12,15 @@ bibtex_bibfiles:
 
 sphinx:
   config:
-    bibtex_reference_style: author_year
     html_extra_path: ['plots']
+    bibtex_reference_style: author_year
     html_js_files:
     - https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js
     nb_render_priority:
      html:
+      - "text/html"
       - "application/vnd.jupyter.widget-view+json"
       - "application/javascript"
-      - "text/html"
       - "image/svg+xml"
       - "image/png"
       - "image/jpeg"
