@@ -157,6 +157,11 @@
    </li>
   </ul>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="references.html">
+   References
+  </a>
+ </li>
 </ul>
 
     </div>
@@ -223,29 +228,6 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
-            </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#what-is-the-data">
-   What is the data?
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#why-did-we-choose-this-data-set">
-   Why did we choose this data set?
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#our-goal-for-the-end-user-s-experience">
-   Our goal for the end user’s experience?
-  </a>
- </li>
-</ul>
-
-            </nav>
         </div>
     </div>
 </div>
@@ -256,32 +238,18 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="motivation">
 <h1>Motivation<a class="headerlink" href="#motivation" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="what-is-the-data">
-<h2>What is the data?<a class="headerlink" href="#what-is-the-data" title="Permalink to this headline">¶</a></h2>
-<p>In this project we decided to analyse five of the major social science diciplines and how they relate to each other. On the premise that a scientific field, in part, can be defined by its content—we used Wikipedia articles about of theories, subfields, methods and researchers corresponding to fields Economics, Sociology, Political Science, Anthropology and Psychology as our data. In order to get relevant articles we exploited that academic diciplines are organized as groups together with the open-source tool <img alt="petscan" src="https://en.wikipedia.org/wiki/Wikipedia:PetScan" /> through which all articles and sub-groups at a specificed depth relative to the parent node can be found. To avoid</p>
-</div>
-<div class="section" id="why-did-we-choose-this-data-set">
-<h2>Why did we choose this data set?<a class="headerlink" href="#why-did-we-choose-this-data-set" title="Permalink to this headline">¶</a></h2>
-<p>Research conducted at new university centers and departments focusing on Social Data Science or Computational Social Science is characterised by being highly interdiciplinary <span id="id1">[<a class="reference internal" href="main.html#id7">SODAS, 2021</a>, <a class="reference internal" href="main.html#id8">Alan Turing Institute, 2021</a>, <a class="reference internal" href="main.html#id9">Oxford Internet Institute, 2021</a>, <a class="reference internal" href="main.html#id10">Sage Campus, 2019</a>]</span>. Not only in</p>
-</div>
-<div class="section" id="our-goal-for-the-end-user-s-experience">
-<h2>Our goal for the end user’s experience?<a class="headerlink" href="#our-goal-for-the-end-user-s-experience" title="Permalink to this headline">¶</a></h2>
-<p id="id2"><dl class="citation">
-<dt class="label" id="id5"><span class="brackets"><a class="fn-backref" href="#id1">SOD21</a></span></dt>
-<dd><p>Copenhagen University Center for Social Data Science SODAS. About the center. 2021. URL: <a class="reference external" href="https://sodas.ku.dk/about/">https://sodas.ku.dk/about/</a> (visited on 2021-11-23).</p>
-</dd>
-<dt class="label" id="id6"><span class="brackets"><a class="fn-backref" href="#id1">AlanTInstitute21</a></span></dt>
-<dd><p>Alan Turing Institute. Social data science. 2021. URL: <a class="reference external" href="https://www.turing.ac.uk/research/interest-groups/social-data-science">https://www.turing.ac.uk/research/interest-groups/social-data-science</a> (visited on 2021-11-23).</p>
-</dd>
-<dt class="label" id="id7"><span class="brackets"><a class="fn-backref" href="#id1">OxfordIInstitute21</a></span></dt>
-<dd><p>Oxford Internet Institute. Social data science. 2021. URL: <a class="reference external" href="https://www.oii.ox.ac.uk/research/social-data-science/">https://www.oii.ox.ac.uk/research/social-data-science/</a> (visited on 2021-11-23).</p>
-</dd>
-<dt class="label" id="id8"><span class="brackets"><a class="fn-backref" href="#id1">SageCampus19</a></span></dt>
-<dd><p>Sage Campus. What is social data science? 2019. URL: <a class="reference external" href="https://campus.sagepub.com/blog/what-is-social-data-science">https://campus.sagepub.com/blog/what-is-social-data-science</a> (visited on 2020-11-11).</p>
-</dd>
-</dl>
-</p>
-</div>
+<p>In this project we decided to analyse five of the major social science diciplines and how they relate to each other. More specifically, we were guided by the following questions:</p>
+<ul class="simple">
+<li><p><strong>How and to what are the social science disciplines connected in terms of referencing each other?</strong></p></li>
+<li><p><strong>Are relationships reciprocal or are some fields more central and influential than others?</strong></p></li>
+<li><p>**How does the language differ between diciplines? Are some more similar than others?</p></li>
+<li><p>**Is it possible to create an interpretable two dimensional latent representation of the diciplines using their nodes and textual features?</p></li>
+</ul>
+<p><em>The Dataset</em></p>
+<p>On the premise that a scientific field, in part, can be defined by its content—we used Wikipedia articles about of theories, subfields, methods and researchers corresponding to fields Economics, Sociology, Political Science, Anthropology and Psychology as our data. In order to get relevant articles we exploited that academic diciplines are organized as groups together with the open-source tool <a class="reference external" href="https://en.wikipedia.org/wiki/Wikipedia:PetScan">petscan</a> through which all articles and sub-groups at a specificed depth relative to the parent node can be found. To avoid</p>
+<p><em>Why did we choose this data set?</em></p>
+<p>Research conducted at new university centers and departments focusing on Social Data Science or Computational Social Science is characterised by being highly interdiciplinary <span id="id1">[<a class="reference internal" href="references.html#id5">SODAS, 2021</a>, <a class="reference internal" href="references.html#id6">Alan Turing Institute, 2021</a>, <a class="reference internal" href="references.html#id7">Oxford Internet Institute, 2021</a>, <a class="reference internal" href="references.html#id8">Sage Campus, 2019</a>]</span>. Not only in</p>
+<p><em>Our goal for the end user’s experience</em></p>
 </div>
 
     <script type="text/x-thebe-config">
