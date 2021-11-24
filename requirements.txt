@@ -7,3 +7,10 @@ bokeh
 netwulf
 #py2cytoscape
 #visJS2jupyter
+pickle
+powerlaw
+pandas
+tqdm
+collections
+pyvis
+bokeh
