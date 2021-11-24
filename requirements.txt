@@ -5,7 +5,6 @@ networkx
 pyvis
 bokeh
 node2vec
-doc2vec
 plotly
 #py2cytoscape
 #visJS2jupyter
