@@ -13,8 +13,8 @@ sections:
   - file: explainer_motivation
   - file: explainer_basicstats
   - file: explainer_analysis
-    sections:
-    - file: explainer_embeddings
+   # sections:
+  - file: explainer_embeddings
   - file: explainer_discussion
   - file: explainer_contributions
 - file: references

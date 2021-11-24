@@ -4,7 +4,9 @@ numpy
 networkx
 pyvis
 bokeh
-netwulf
+node2vec
+doc2vec
+plotly
 #py2cytoscape
 #visJS2jupyter
 powerlaw
