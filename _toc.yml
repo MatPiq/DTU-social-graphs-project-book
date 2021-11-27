@@ -1,5 +1,6 @@
 format: jb-article
 root: intro
+title: About this page
 sections:
 - file: main
   sections:
