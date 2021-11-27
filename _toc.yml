@@ -8,9 +8,9 @@ sections:
   - title: Document Embeddings
     url: https://projector.tensorflow.org/?config=https://raw.githubusercontent.com/MatPiq/social-graphs-embeddings-data/main/document_config.json
     external: true
-  -title: Node Embeddings
-   url: https://projector.tensorflow.org/?config=https://raw.githubusercontent.com/MatPiq/social-graphs-embeddings-data/main/node_config.json
-   external: true
+  - title: Node Embeddings
+    url: https://projector.tensorflow.org/?config=https://raw.githubusercontent.com/MatPiq/social-graphs-embeddings-data/main/node_config.json
+    external: true
 - file: explainer
   sections:
   - file: explainer_motivation
