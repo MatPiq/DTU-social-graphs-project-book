@@ -297,8 +297,17 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="data-description">
 <h1>Data Description<a class="headerlink" href="#data-description" title="Permalink to this headline">¶</a></h1>
-<p>For our project, we collected wikipedia articles corresponding to five major social science diciplines: Economics, Political Science, Anthropology, Sociology and Psychology. To do this we used the tool <a class="reference external" href="https://petscan.wmflabs.org/">petscan</a> which enables one to find all the sub-categories/articles corresponding to a given page. Petscan can be access both through a web-interface or programmatically through for example Python. We did it programmatically by querying the main page corresponding to each discipline.</p>
-<p><strong>Insert GIF about HERE</strong></p>
+<p>For our project, we collected wikipedia articles corresponding to five major social science diciplines: Economics, Political Science, Anthropology, Sociology and Psychology. To do this we used the tool <a class="reference external" href="https://petscan.wmflabs.org/">petscan</a> which enabled us to find all the sub-categories/articles for each discipline. Petscan can be access both through a web-interface or programmatically through for example Python. The table bellow shows the five first observations of our data-set, which includes the following variables:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: The name of the Wikipedia article.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">parent</span></code>: The discipline to which the article belongs.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">edges</span></code>: Contains all links to another Wikipedia page.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">text</span></code>: The raw text of the article.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cleaned_text</span></code>: Punctuation removed, lower-cased.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">lemmatized</span></code>: The cleaned text in lemmatized form, stop words removed.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">gcc</span></code>: Dummy for if the article is part of the giant component in the network.</p></li>
+</ul>
+<p>The data can be downloaded from the following <a class="reference external" href="https://drive.google.com/file/d/1U0Q8eMvp50crf383ykE1anB5J4oq_mrc/view?usp=sharing">link</a>.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -307,10 +316,10 @@
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
 
 
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span><span class="p">(</span><span class="s1">&#39;/home/matiasp/University/m2/socialgraphs2021-Matias/project/wiki_df.pickle&#39;</span><span class="p">)</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;categories&#39;</span><span class="p">,</span> <span class="s1">&#39;depth&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span><span class="p">(</span><span class="s1">&#39;/home/matiasp/University/m2/socialgraphs2021-Matias/project/df_preprocessed.obj&#39;</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;categories&#39;</span><span class="p">,</span> <span class="s1">&#39;depth&#39;</span><span class="p">,</span> <span class="s1">&#39;tokens&#39;</span><span class="p">,</span> <span class="s1">&#39;Unnamed: 0&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;edges&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;edges&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">literal_eval</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -333,70 +342,74 @@
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>name</th>
       <th>parent</th>
       <th>edges</th>
       <th>text</th>
       <th>cleaned_text</th>
       <th>lemmatized</th>
-      <th>tokens</th>
+      <th>gcc</th>
+    </tr>
+    <tr>
+      <th>name</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>Anarchism</td>
+      <th>Anarchism</th>
       <td>political_science</td>
       <td>[-ism, 1872 Hague Congress, 1919 United States...</td>
       <td>Anarchism is a political philosophy and moveme...</td>
       <td>anarchism is a political philosophy and moveme...</td>
       <td>anarchism political philosophy movement scepti...</td>
-      <td>['anarchism', 'political', 'philosophy', 'move...</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>Cultural_imperialism</td>
-      <td>political_science</td>
-      <td>[Abnormal (Foucault), Acculturation, Aesthetic...</td>
-      <td>Cultural imperialism, also called cultural col...</td>
-      <td>cultural imperialism also called cultural colo...</td>
-      <td>cultural imperialism also called cultural colo...</td>
-      <td>['cultural', 'imperialism', 'also', 'called', ...</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Census</td>
+      <th>Census</th>
       <td>political_science</td>
       <td>[2011 Canadian census, Ab urbe condita (book),...</td>
       <td>A census is the procedure of systematically ca...</td>
       <td>a census is the procedure of systematically ca...</td>
       <td>a census procedure systematically calculating ...</td>
-      <td>['a', 'census', 'procedure', 'systematically',...</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>3</th>
-      <td>Comparative_law</td>
+      <th>Comparative_law</th>
       <td>political_science</td>
       <td>[Act of Congress, Act of Parliament, Adjudicat...</td>
       <td>Comparative law is the study of differences an...</td>
       <td>comparative law is the study of differences an...</td>
       <td>comparative law study difference similarity la...</td>
-      <td>['comparative', 'law', 'study', 'difference', ...</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>4</th>
-      <td>Code_of_Hammurabi</td>
+      <th>Code_of_Hammurabi</th>
       <td>political_science</td>
       <td>['Ain Ghazal Statues, A. Leo Oppenheim, A Medi...</td>
       <td>The Code of Hammurabi is a Babylonian legal te...</td>
       <td>the code of hammurabi is a babylonian legal te...</td>
       <td>the code hammurabi babylonian legal text compo...</td>
-      <td>['the', 'code', 'hammurabi', 'babylonian', 'le...</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>Egalitarianism</th>
+      <td>political_science</td>
+      <td>[Abdullah Öcalan, Abraham Lincoln, Adam Smith,...</td>
+      <td>Egalitarianism (from French  égal 'equal'), or...</td>
+      <td>egalitarianism from french  égal equal or equa...</td>
+      <td>egalitarianism french égal equal equalitariani...</td>
+      <td>1</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
+<p>In the table bellow we display summary statistics including the average number of articles for each discipline, number of edges and word count. As can be seen the distribution is rather skewed, with Antropology for example having more than double the amount of articles compared to Political Science.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Create descriptives table</span>
@@ -450,33 +463,33 @@
   <tbody>
     <tr>
       <th>political_science</th>
-      <td>874</td>
-      <td>144.41</td>
-      <td>9634.81</td>
+      <td>418</td>
+      <td>218.65</td>
+      <td>12748.76</td>
     </tr>
     <tr>
       <th>economics</th>
-      <td>972</td>
-      <td>78.32</td>
-      <td>4967.01</td>
+      <td>675</td>
+      <td>82.67</td>
+      <td>4399.29</td>
     </tr>
     <tr>
       <th>sociology</th>
-      <td>990</td>
-      <td>123.47</td>
-      <td>8737.07</td>
+      <td>684</td>
+      <td>137.08</td>
+      <td>9135.81</td>
     </tr>
     <tr>
       <th>anthropology</th>
-      <td>1785</td>
-      <td>164.28</td>
-      <td>9343.31</td>
+      <td>1198</td>
+      <td>193.84</td>
+      <td>10567.26</td>
     </tr>
     <tr>
       <th>psychology</th>
-      <td>1333</td>
-      <td>106.79</td>
-      <td>9327.63</td>
+      <td>955</td>
+      <td>127.90</td>
+      <td>10447.76</td>
     </tr>
   </tbody>
 </table>
