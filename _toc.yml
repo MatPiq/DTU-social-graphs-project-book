@@ -16,6 +16,8 @@ sections:
   sections:
   - file: explainer_motivation
   - file: explainer_basicstats
+    sections: 
+      - file: explainer_data_collection
   - file: explainer_analysis
     sections:
     - file: explainer_embeddings
