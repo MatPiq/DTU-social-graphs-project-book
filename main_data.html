@@ -225,9 +225,9 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/main_data.md"><button type="button"
+        <a class="dropdown-buttons" href="_sources/main_data.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.md</button></a>
+                data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
             onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
@@ -245,6 +245,31 @@
 
             <!-- Launch buttons -->
 
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/MatPiq/DTU-social-graphs-project-book/HEAD/v2/gh/MatPiq/DTU-social-graphs-project-book/master?urlpath=lab/tree/main_data.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/MatPiq/DTU-social-graphs-project-book/blob/master/main_data.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
         </div>
 
         <!-- Table of contents -->
@@ -260,6 +285,23 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="data-description">
 <h1>Data Description<a class="headerlink" href="#data-description" title="Permalink to this headline">¶</a></h1>
+<p>For our project, we collected wikipedia articles corresponding to five major social science diciplines: Economics, Political Science, Anthropology, Sociology and Psychology. To do this we used the tool <a class="reference external" href="https://petscan.wmflabs.org/">petscan</a> which enables one to find all the sub-categories/articles corresponding to a given page. Petscan can be access both through a web-interface or programmatically through for example Python. We did it programmatically by querying the main page corresponding to each discipline.</p>
+<p><strong>Insert GIF about HERE</strong></p>
+<div class="cell tag_hide-input docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/main_data_3_0.png" src="_images/main_data_3_0.png" />
+</div>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -274,13 +316,13 @@
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
+            kernelName: "python397jvsc74a57bd0794ed8d0b773cbcd7b7ec7f3b705e2b7a8437127647cc51e7d6c4b4e7ca1b777",
             path: "./."
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'python397jvsc74a57bd0794ed8d0b773cbcd7b7ec7f3b705e2b7a8437127647cc51e7d6c4b4e7ca1b777'</script>
 
               </div>
               
