@@ -17,26 +17,36 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-import requests
-import json
-import wikipedia
-import pandas as pd
-from tqdm.notebook import tqdm
-from dataclasses import dataclass
-from typing import List
-from itertools import chain
-from collections import Counter
+def collect_attributes(articles:list[WikiArticle])->list[WikiArticle]:
+    """
+    Parses the wikipedia article text and urls pointing to another wiki page.
+    """
+
+    base_url = 'https://en.wikipedia.org/wiki/'
+    for page in tqdm(pages):
+        resp = requests.get(base_url+page.name)
+        soup = BeautifulSoup(resp.content, 'html.parser')
+        content = soup.find('div', {'id':'mw-content-text'})
+        text = ''
+        for paragraph in content.find_all('p'):
+            text += ' ' + paragraph.text
+        node.text = text
+        node.edges = [ref.text for ref in content.find_all('a', href=True) 
+                                             if 'wiki' in ref.get('href')]
+    return pages
+
+collect_attributes(pages)
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
-[0;32m/tmp/ipykernel_1637/107609096.py[0m in [0;36m<module>[0;34m[0m
-[1;32m      1[0m [0;32mimport[0m [0mrequests[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      2[0m [0;32mimport[0m [0mjson[0m[0;34m[0m[0;34m[0m[0m
-[0;32m----> 3[0;31m [0;32mimport[0m [0mwikipedia[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m      4[0m [0;32mimport[0m [0mpandas[0m [0;32mas[0m [0mpd[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      5[0m [0;32mfrom[0m [0mtqdm[0m[0;34m.[0m[0mnotebook[0m [0;32mimport[0m [0mtqdm[0m[0;34m[0m[0;34m[0m[0m
+[0;31mNameError[0m                                 Traceback (most recent call last)
+[0;32m/tmp/ipykernel_1639/3544185264.py[0m in [0;36m<module>[0;34m[0m
+[0;32m----> 1[0;31m [0;32mdef[0m [0mcollect_attributes[0m[0;34m([0m[0marticles[0m[0;34m:[0m[0mlist[0m[0;34m[[0m[0mWikiArticle[0m[0;34m][0m[0;34m)[0m[0;34m->[0m[0mlist[0m[0;34m[[0m[0mWikiArticle[0m[0;34m][0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m      2[0m     """
+[1;32m      3[0m     [0mParses[0m [0mthe[0m [0mwikipedia[0m [0marticle[0m [0mtext[0m [0;32mand[0m [0murls[0m [0mpointing[0m [0mto[0m [0manother[0m [0mwiki[0m [0mpage[0m[0;34m.[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      4[0m     """
+[1;32m      5[0m [0;34m[0m[0m
 
-[0;31mModuleNotFoundError[0m: No module named 'wikipedia'
-ModuleNotFoundError: No module named 'wikipedia'
+[0;31mNameError[0m: name 'WikiArticle' is not defined
+NameError: name 'WikiArticle' is not defined
 
