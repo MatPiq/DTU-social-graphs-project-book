@@ -52,8 +52,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Theory, Methods and Analysis" href="explainer_analysis.html" />
-    <link rel="prev" title="Basic stats" href="explainer_basicstats.html" />
+    <link rel="next" title="Preprocessing" href="explainer_preprocessing.html" />
+    <link rel="prev" title="About this section" href="basic_stats_intro.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -146,8 +146,8 @@
     </a>
    </li>
    <li class="toctree-l2 current active has-children">
-    <a class="reference internal" href="explainer_basicstats.html">
-     Basic stats
+    <a class="reference internal" href="basic_stats_intro.html">
+     About this section
     </a>
     <input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
     <label for="toctree-checkbox-3">
@@ -158,6 +158,16 @@
      <li class="toctree-l3 current active">
       <a class="current reference internal" href="#">
        Data Collection
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="explainer_preprocessing.html">
+       Preprocessing
+      </a>
+     </li>
+     <li class="toctree-l3">
+      <a class="reference internal" href="explainer_basicstats.html">
+       Basic stats
       </a>
      </li>
     </ul>
@@ -431,7 +441,7 @@
 </div>
 <div class="cell_output docutils container">
 <script type="application/vnd.jupyter.widget-view+json">
-{"version_major": 2, "version_minor": 0, "model_id": "4ca9a3da1c8b4f87802ccb82e553bfc7"}
+{"version_major": 2, "version_minor": 0, "model_id": "703ed9e3e64e470ea8cc2be723dbc360"}
 </script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Petscan failed to retrieve 0 pages in depth 0...
 </pre></div>
 </div>
@@ -460,16 +470,16 @@ Name: title, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[WikiPage(title=&quot;Widow&#39;s_pension&quot;, parent=&#39;economics&#39;, depth=2, text=nan, edges=nan),
- WikiPage(title=&#39;Clothing_terminology&#39;, parent=&#39;anthropology&#39;, depth=2, text=nan, edges=nan),
- WikiPage(title=&#39;Technology_and_society&#39;, parent=&#39;sociology&#39;, depth=2, text=nan, edges=nan),
- WikiPage(title=&#39;Enculturation&#39;, parent=&#39;sociology&#39;, depth=2, text=nan, edges=nan),
- WikiPage(title=&#39;The_Origins_of_Political_Order&#39;, parent=&#39;political_science&#39;, depth=2, text=nan, edges=nan),
- WikiPage(title=&#39;Sociology_of_health_and_illness&#39;, parent=&#39;sociology&#39;, depth=2, text=nan, edges=nan),
- WikiPage(title=&#39;Outlaw&#39;, parent=&#39;political_science&#39;, depth=2, text=nan, edges=nan),
- WikiPage(title=&#39;La_Movida_Madrileña&#39;, parent=&#39;anthropology&#39;, depth=2, text=nan, edges=nan),
- WikiPage(title=&#39;Dividend_puzzle&#39;, parent=&#39;economics&#39;, depth=1, text=nan, edges=nan),
- WikiPage(title=&#39;Horizontal_and_vertical_décalage&#39;, parent=&#39;psychology&#39;, depth=2, text=nan, edges=nan)]
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[WikiPage(title=&#39;Will_to_live&#39;, parent=&#39;psychology&#39;, depth=2, text=nan, edges=nan),
+ WikiPage(title=&#39;Notes_on_the_Folklore_of_the_Fjort&#39;, parent=&#39;anthropology&#39;, depth=2, text=nan, edges=nan),
+ WikiPage(title=&#39;IRSEM&#39;, parent=&#39;political_science&#39;, depth=1, text=nan, edges=nan),
+ WikiPage(title=&#39;Robert_Redfield&#39;, parent=&#39;anthropology&#39;, depth=2, text=nan, edges=nan),
+ WikiPage(title=&#39;Thawri&#39;, parent=&#39;political_science&#39;, depth=2, text=nan, edges=nan),
+ WikiPage(title=&#39;Komshi&#39;, parent=&#39;anthropology&#39;, depth=2, text=nan, edges=nan),
+ WikiPage(title=&#39;Political_opportunity&#39;, parent=&#39;political_science&#39;, depth=0, text=nan, edges=nan),
+ WikiPage(title=&#39;Marquis_de_Condorcet&#39;, parent=&#39;anthropology&#39;, depth=2, text=nan, edges=nan),
+ WikiPage(title=&#39;Durdzuks&#39;, parent=&#39;anthropology&#39;, depth=2, text=nan, edges=nan),
+ WikiPage(title=&#39;Authoritarianism&#39;, parent=&#39;political_science&#39;, depth=1, text=nan, edges=nan)]
 </pre></div>
 </div>
 </div>
@@ -505,7 +515,7 @@ Name: title, dtype: int64
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1672</span><span class="o">/</span><span class="mf">3544185264.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1668</span><span class="o">/</span><span class="mf">3544185264.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="k">def</span> <span class="nf">collect_attributes</span><span class="p">(</span><span class="n">articles</span><span class="p">:</span><span class="nb">list</span><span class="p">[</span><span class="n">WikiArticle</span><span class="p">])</span><span class="o">-&gt;</span><span class="nb">list</span><span class="p">[</span><span class="n">WikiArticle</span><span class="p">]:</span>
 <span class="g g-Whitespace">      </span><span class="mi">2</span>     <span class="sd">&quot;&quot;&quot;</span>
 <span class="g g-Whitespace">      </span><span class="mi">3</span><span class="sd">     Parses the wikipedia article text and urls pointing to another wiki page.</span>
@@ -586,17 +596,17 @@ Name: title, dtype: int64
         
             <!-- Previous / next buttons -->
 <div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="explainer_basicstats.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="basic_stats_intro.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Basic stats</p>
+            <p class="prev-next-title">About this section</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="explainer_analysis.html" title="next page">
+    <a class='right-next' id="next-link" href="explainer_preprocessing.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Theory, Methods and Analysis</p>
+        <p class="prev-next-title">Preprocessing</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
