@@ -173,6 +173,11 @@
     </label>
     <ul>
      <li class="toctree-l3">
+      <a class="reference internal" href="explainer_community_detection.html">
+       Community detection
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="explainer_embeddings.html">
        Document and Node Embeddings
       </a>
@@ -297,7 +302,9 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="data-description">
 <h1>Data Description<a class="headerlink" href="#data-description" title="Permalink to this headline">¶</a></h1>
-<p>For our project, we collected wikipedia articles corresponding to five major social science diciplines: Economics, Political Science, Anthropology, Sociology and Psychology. To do this we used the tool <a class="reference external" href="https://petscan.wmflabs.org/">petscan</a> which enabled us to find all the sub-categories/articles for each discipline. Petscan can be access both through a web-interface or programmatically through for example Python. The table bellow shows the five first observations of our data-set, which includes the following variables:</p>
+<p>For our project, we collected wikipedia articles corresponding to five major social science diciplines: Economics, Political Science, Anthropology, Sociology and Psychology. To do this we used the tool <a class="reference external" href="https://petscan.wmflabs.org/">petscan</a> which enabled us to find all the sub-categories/articles for each discipline. Petscan can be access both through a web-interface or programmatically through for example Python.</p>
+<p><img alt="petscan" src="_images/petscan.gif" /></p>
+<p>The table bellow shows the five first observations of our data-set, which includes the following variables:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: The name of the Wikipedia article.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">parent</span></code>: The discipline to which the article belongs.</p></li>
@@ -308,7 +315,6 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">gcc</span></code>: Dummy for if the article is part of the giant component in the network.</p></li>
 </ul>
 <p>The data can be downloaded from the following <a class="reference external" href="https://drive.google.com/file/d/1U0Q8eMvp50crf383ykE1anB5J4oq_mrc/view?usp=sharing">link</a>.</p>
-<p><img alt="petscan" src="_images/petscan.gif" /></p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -321,94 +327,38 @@
 <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;categories&#39;</span><span class="p">,</span> <span class="s1">&#39;depth&#39;</span><span class="p">,</span> <span class="s1">&#39;tokens&#39;</span><span class="p">,</span> <span class="s1">&#39;Unnamed: 0&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;edges&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;edges&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">literal_eval</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 <span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="c1">#df.to_html(&#39;temp.html&#39;)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="o">&lt;</span><span class="n">ipython</span><span class="o">-</span><span class="nb">input</span><span class="o">-</span><span class="mi">4</span><span class="o">-</span><span class="mi">8</span><span class="n">a59f5682e9c</span><span class="o">&gt;</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> 
+<span class="g g-Whitespace">      </span><span class="mi">6</span> 
+<span class="ne">----&gt; </span><span class="mi">7</span> <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span><span class="p">(</span><span class="s1">&#39;/home/matiasp/University/m2/socialgraphs2021-Matias/project/df_preprocessed.obj&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;categories&#39;</span><span class="p">,</span> <span class="s1">&#39;depth&#39;</span><span class="p">,</span> <span class="s1">&#39;tokens&#39;</span><span class="p">,</span> <span class="s1">&#39;Unnamed: 0&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">9</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;edges&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;edges&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">literal_eval</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
+<span class="nn">/opt/anaconda3/lib/python3.8/site-packages/pandas/io/pickle.py</span> in <span class="ni">read_pickle</span><span class="nt">(filepath_or_buffer, compression, storage_options)</span>
+<span class="g g-Whitespace">    </span><span class="mi">183</span>     <span class="s2">&quot;&quot;&quot;</span>
+<span class="g g-Whitespace">    </span><span class="mi">184</span><span class="s2">     excs_to_catch = (AttributeError, ImportError, ModuleNotFoundError, TypeError)</span>
+<span class="ne">--&gt; </span><span class="mi">185</span><span class="s2">     with get_handle(</span>
+<span class="g g-Whitespace">    </span><span class="mi">186</span><span class="s2">         filepath_or_buffer,</span>
+<span class="g g-Whitespace">    </span><span class="mi">187</span><span class="s2">         &quot;rb&quot;,</span>
 
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>parent</th>
-      <th>edges</th>
-      <th>text</th>
-      <th>cleaned_text</th>
-      <th>lemmatized</th>
-      <th>gcc</th>
-    </tr>
-    <tr>
-      <th>name</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>Anarchism</th>
-      <td>political_science</td>
-      <td>[-ism, 1872 Hague Congress, 1919 United States...</td>
-      <td>Anarchism is a political philosophy and moveme...</td>
-      <td>anarchism is a political philosophy and moveme...</td>
-      <td>anarchism political philosophy movement scepti...</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>Census</th>
-      <td>political_science</td>
-      <td>[2011 Canadian census, Ab urbe condita (book),...</td>
-      <td>A census is the procedure of systematically ca...</td>
-      <td>a census is the procedure of systematically ca...</td>
-      <td>a census procedure systematically calculating ...</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>Comparative_law</th>
-      <td>political_science</td>
-      <td>[Act of Congress, Act of Parliament, Adjudicat...</td>
-      <td>Comparative law is the study of differences an...</td>
-      <td>comparative law is the study of differences an...</td>
-      <td>comparative law study difference similarity la...</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>Code_of_Hammurabi</th>
-      <td>political_science</td>
-      <td>['Ain Ghazal Statues, A. Leo Oppenheim, A Medi...</td>
-      <td>The Code of Hammurabi is a Babylonian legal te...</td>
-      <td>the code of hammurabi is a babylonian legal te...</td>
-      <td>the code hammurabi babylonian legal text compo...</td>
-      <td>1</td>
-    </tr>
-    <tr>
-      <th>Egalitarianism</th>
-      <td>political_science</td>
-      <td>[Abdullah Öcalan, Abraham Lincoln, Adam Smith,...</td>
-      <td>Egalitarianism (from French  égal 'equal'), or...</td>
-      <td>egalitarianism from french  égal equal or equa...</td>
-      <td>egalitarianism french égal equal equalitariani...</td>
-      <td>1</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
+<span class="nn">/opt/anaconda3/lib/python3.8/site-packages/pandas/io/common.py</span> in <span class="ni">get_handle</span><span class="nt">(path_or_buf, mode, encoding, compression, memory_map, is_text, errors, storage_options)</span>
+<span class="g g-Whitespace">    </span><span class="mi">649</span><span class="s2">         else:</span>
+<span class="g g-Whitespace">    </span><span class="mi">650</span><span class="s2">             # Binary mode</span>
+<span class="ne">--&gt; </span><span class="mi">651</span><span class="s2">             handle = open(handle, ioargs.mode)</span>
+<span class="g g-Whitespace">    </span><span class="mi">652</span><span class="s2">         handles.append(handle)</span>
+<span class="g g-Whitespace">    </span><span class="mi">653</span><span class="s2"> </span>
+
+<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;/home/matiasp/University/m2/socialgraphs2021-Matias/project/df_preprocessed.obj&#39;
+</pre></div>
+</div>
+</div>
 </div>
 <p>In the table bellow we display summary statistics including the average number of articles for each discipline, number of edges and word count. As can be seen the distribution is rather skewed, with Antropology for example having more than double the amount of articles compared to Political Science.</p>
 <div class="cell tag_hide-input docutils container">

@@ -18,31 +18,28 @@ Traceback (most recent call last):
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
 import pickle
+import pandas as pd
+import community
 import networkx as nx
-import pandas as pd
-import powerlaw
-from fa2 import ForceAtlas2
-import pandas as pd
-from tqdm.notebook import tqdm
-from collections import Counter
+import numpy as np
 import matplotlib.pyplot as plt
-
-from pyvis.network import Network
-from bokeh.io import output_notebook, show, save
-from bokeh.models import Range1d, Circle, ColumnDataSource, MultiLine
-from bokeh.plotting import figure
-from bokeh.plotting import from_networkx
+import ast
+import time
+from tqdm.notebook import tqdm
+from typing import List
+from collections import Counter, namedtuple, defaultdict
+from sklearn.linear_model import LogisticRegression
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
 [0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
-[0;32m/tmp/ipykernel_1631/2371195710.py[0m in [0;36m<module>[0;34m[0m
-[1;32m      3[0m [0;32mimport[0m [0mpandas[0m [0;32mas[0m [0mpd[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      4[0m [0;32mimport[0m [0mpowerlaw[0m[0;34m[0m[0;34m[0m[0m
-[0;32m----> 5[0;31m [0;32mfrom[0m [0mfa2[0m [0;32mimport[0m [0mForceAtlas2[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m      6[0m [0;32mimport[0m [0mpandas[0m [0;32mas[0m [0mpd[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      7[0m [0;32mfrom[0m [0mtqdm[0m[0;34m.[0m[0mnotebook[0m [0;32mimport[0m [0mtqdm[0m[0;34m[0m[0;34m[0m[0m
+[0;32m/tmp/ipykernel_1651/105608864.py[0m in [0;36m<module>[0;34m[0m
+[1;32m      1[0m [0;32mimport[0m [0mpickle[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      2[0m [0;32mimport[0m [0mpandas[0m [0;32mas[0m [0mpd[0m[0;34m[0m[0;34m[0m[0m
+[0;32m----> 3[0;31m [0;32mimport[0m [0mcommunity[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m      4[0m [0;32mimport[0m [0mnetworkx[0m [0;32mas[0m [0mnx[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      5[0m [0;32mimport[0m [0mnumpy[0m [0;32mas[0m [0mnp[0m[0;34m[0m[0;34m[0m[0m
 
-[0;31mModuleNotFoundError[0m: No module named 'fa2'
-ModuleNotFoundError: No module named 'fa2'
+[0;31mModuleNotFoundError[0m: No module named 'community'
+ModuleNotFoundError: No module named 'community'
 
