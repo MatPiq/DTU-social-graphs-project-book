@@ -20,6 +20,7 @@ sections:
       - file: explainer_data_collection
   - file: explainer_analysis
     sections:
+    - file: explainer_community_detection
     - file: explainer_embeddings
   - file: explainer_discussion
   - file: explainer_contributions
