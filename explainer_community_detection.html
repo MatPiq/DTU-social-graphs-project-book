@@ -309,17 +309,12 @@
             </div>
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Community detection
-  </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#tf-idf">
    TF-IDF
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#multinomial-logistic-regression">
    Multinomial Logistic regression
   </a>
@@ -355,12 +350,9 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Matplotlib is building the font cache; this may take a moment.
-</pre></div>
-</div>
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1673</span><span class="o">/</span><span class="mf">105608864.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1647</span><span class="o">/</span><span class="mf">105608864.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
 <span class="g g-Whitespace">     </span><span class="mi">11</span> <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span><span class="p">,</span> <span class="n">namedtuple</span><span class="p">,</span> <span class="n">defaultdict</span>
 <span class="ne">---&gt; </span><span class="mi">12</span> <span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
@@ -438,12 +430,19 @@ Mean community size 180.636 nodes
 <img alt="_images/explainer_community_detection_4_0.png" src="_images/explainer_community_detection_4_0.png" />
 </div>
 </div>
-</div>
-<div class="tex2jax_ignore mathjax_ignore section" id="tf-idf">
-<h1>TF-IDF<a class="headerlink" href="#tf-idf" title="Permalink to this headline">¶</a></h1>
+<p>Our Louvain-algorithm finds X communities. All though the overall modularity on <em>average</em> is fairly accurate we must still be careful when interpreting the communites, as some of them are very small and might be prone to errors. For an example is the smallest community deteceted composed of only X(!) nodes. We therefore decide to limit our further insecption of the communities to the 9 most frequent.</p>
+<div class="section" id="tf-idf">
+<h2>TF-IDF<a class="headerlink" href="#tf-idf" title="Permalink to this headline">¶</a></h2>
+<p>To decide what the resulting communities reflect we can list the most frequent words. However using the simple counts of each word would not reflect the differences between the communities, as this would yield a list of rather generic terms always occuring. Instead we want to see how import the words in one community are <em>relative</em> (or, simply TF-IDF) to other communities. For this end the <em>term frequency–inverse document frequency</em> is a relevant measure. Following the <a class="reference external" href="https://en.wikipedia.org/wiki/Tf%E2%80%93idf">Wikipedia</a> documentation the TF-IDF can be defined as:</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{f_{t, d}}{\sum_{t^{\prime} \in d} f_{t^{\prime}, d}} * \log \frac{N}{|\{d \in D: t \in d\}|}
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(f_{t,d}\)</span> the simple count of times that a term, t, occurs in a document, d, why the first expression constitutes the Term-Frequency. In the other expression, the Inverse-document frequency, <span class="math notranslate nohighlight">\(N\)</span> is total number of documents across all communities, and <span class="math notranslate nohighlight">\(\{d \in D: t \in d\}\)</span> constitutes the number of communities where a term <span class="math notranslate nohighlight">\(t\)</span> appears. As we base our TF_IDF on 9 documents with all of the tokens from the corresponding communities, a high value means that a term occur relative often in one community compared to the other communities.</p>
+<p>Before create our Document-Feature-Matrix we load in the preprocessed DataFrame from NOTEBOOK X. We then create two self-explanatory columns to use for our TF-IDF: <code class="docutils literal notranslate"><span class="pre">unigrams</span></code> and <code class="docutils literal notranslate"><span class="pre">bigrams</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span><span class="p">(</span><span class="s1">&#39;df_preprocessed.obj&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span><span class="p">(</span><span class="s1">&#39;/Users/frederikskovlundkilpinen/Documents/DTU/Social graphs/Final assignment/df_preprocessed.obj&#39;</span><span class="p">)</span>
 <span class="n">df</span><span class="p">[</span><span class="s2">&quot;unigrams&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;tokens&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">ast</span><span class="o">.</span><span class="n">literal_eval</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 <span class="k">def</span> <span class="nf">get_bigrams</span><span class="p">(</span><span class="n">unigram</span><span class="p">:</span> <span class="nb">list</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
     <span class="k">return</span><span class="p">[</span><span class="s2">&quot;_&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">unigram</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">unigram</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]])</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">t</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">unigram</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">unigram</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
@@ -452,10 +451,11 @@ Mean community size 180.636 nodes
 </div>
 </div>
 </div>
+<p>Based on our list of unigrams and bigrams we can now create a document-feature-matrx for the 9 communities. As we have an extensive list of tokens (LEN) we somewhat arbitrarely decide that each term has to occur at least 5 times to be included in the final matrix. This yields X tokens.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_dfm</span><span class="p">(</span><span class="n">docs</span><span class="p">:</span><span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">],</span> <span class="n">min_df</span><span class="p">:</span><span class="nb">int</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> 
-               <span class="n">max_df</span><span class="p">:</span><span class="nb">int</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">idf</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> 
+               <span class="n">max_df</span><span class="p">:</span><span class="nb">int</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">,</span> <span class="n">idf</span><span class="p">:</span><span class="nb">bool</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> 
                <span class="n">return_vocab</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Creates document-feature matrix of size N (docs) x K (vocab size).</span>
@@ -482,6 +482,7 @@ Mean community size 180.636 nodes
     <span class="n">vocab_size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vocab</span><span class="p">)</span>
     <span class="n">tok2idx</span> <span class="o">=</span> <span class="p">{</span><span class="n">w</span><span class="p">:</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">w</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">vocab</span><span class="p">)}</span>
     <span class="n">doc_n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">docs</span><span class="p">)</span>
+    
     <span class="c1">#Instantiate the dfm and add counts</span>
     <span class="n">dfm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">([</span><span class="n">doc_n</span><span class="p">,</span> <span class="n">vocab_size</span><span class="p">])</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">toks</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">docs</span><span class="p">):</span>
@@ -489,7 +490,7 @@ Mean community size 180.636 nodes
             <span class="n">tok_idx</span> <span class="o">=</span> <span class="n">tok2idx</span><span class="p">[</span><span class="n">tok</span><span class="p">]</span>
             <span class="n">dfm</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">tok_idx</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
     
-    <span class="c1">#Calculate tf and idf</span>
+    <span class="c1">#Calculate tf-idf</span>
     <span class="k">if</span> <span class="n">idf</span><span class="p">:</span>
         <span class="n">idf</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">dfm</span><span class="p">)</span>
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">doc_n</span><span class="p">):</span>
@@ -501,7 +502,7 @@ Mean community size 180.636 nodes
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">dfm</span>
 
-<span class="c1">#Add the corresponding community to each character in the Data frame</span>
+<span class="c1">#Add the corresponding community to each page in the DataFrame</span>
 <span class="n">communites</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">obs</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s1">&#39;Obs&#39;</span><span class="p">,</span> <span class="s1">&#39;name Louvain_Community&#39;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]:</span>
@@ -510,26 +511,25 @@ Mean community size 180.636 nodes
     <span class="k">except</span><span class="p">:</span>
         <span class="n">com</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
     <span class="n">communites</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obs</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">com</span><span class="p">))</span>
-    
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">communites</span><span class="p">),</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;name&#39;</span><span class="p">)</span>
 
-<span class="c1">#Get top6 communities</span>
-<span class="n">top6</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;community_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">community_dist</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">6</span><span class="p">)]</span>
+<span class="c1">#Get top9 communities</span>
+<span class="n">top9</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;community_&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">community_distribution</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">9</span><span class="p">)]</span>
 
-<span class="c1">#Subset data on top6 communities and groupby community. Extract the bigrams.</span>
-<span class="n">top6_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Louvain_Community&#39;</span><span class="p">]</span>\
-                  <span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">top6</span><span class="p">)]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Louvain_Community&#39;</span><span class="p">)</span>\
+<span class="c1">#Subset data on top9 communities and groupby community. Extract the unigrams and bigrams.</span>
+<span class="n">top9_df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Louvain_Community&#39;</span><span class="p">]</span>\
+                  <span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">top9</span><span class="p">)]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Louvain_Community&#39;</span><span class="p">)</span>\
                   <span class="o">.</span><span class="n">agg</span><span class="p">({</span><span class="s1">&#39;unigrams&#39;</span><span class="p">:</span><span class="s1">&#39;sum&#39;</span><span class="p">,</span>
                         <span class="s1">&#39;bigrams&#39;</span><span class="p">:</span><span class="s1">&#39;sum&#39;</span><span class="p">})</span>
 
 <span class="c1"># Token list with both unigrams and bigrams</span>
-<span class="n">tokens</span> <span class="o">=</span> <span class="n">top6_df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()[</span><span class="s2">&quot;unigrams&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">top6_df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()[</span><span class="s2">&quot;bigrams&quot;</span><span class="p">]</span>
+<span class="n">tokens</span> <span class="o">=</span> <span class="n">top9_df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()[</span><span class="s2">&quot;unigrams&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">top9_df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()[</span><span class="s2">&quot;bigrams&quot;</span><span class="p">]</span>
 
 <span class="c1">#Create the document term frequency matrices for unigrams and bigrams. Token must appear min. 5 times</span>
 <span class="n">tf_idf</span><span class="p">,</span> <span class="n">vocab</span> <span class="o">=</span> <span class="n">create_dfm</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">idf</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">return_vocab</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">min_df</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 
 <span class="c1">#Put into dataframes with vocab as colnames and community as index</span>
-<span class="n">tfidf_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">tf_idf</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">vocab</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="n">top6_df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<span class="n">tfidf_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">tf_idf</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">vocab</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="n">top9_df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -541,7 +541,7 @@ Mean community size 180.636 nodes
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Plots the n tokens with higest tf-idf score for the 6 most frequent communities</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> 
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> 
                             <span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span> <span class="n">dpi</span> <span class="o">=</span> <span class="mi">300</span><span class="p">)</span>
     <span class="n">axs</span> <span class="o">=</span> <span class="n">axs</span><span class="o">.</span><span class="n">flat</span>
     <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">iterrows</span><span class="p">()):</span>
@@ -549,8 +549,8 @@ Mean community size 180.636 nodes
         <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
         <span class="n">y</span> <span class="o">=</span> <span class="n">d</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
         <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="s1">&#39;ko&#39;</span><span class="p">)</span>
-        <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;: top </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s1"> words&#39;</span><span class="p">)</span>
-        <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;tf\_idf score&#39;</span><span class="p">)</span>
+        <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;: top </span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s1"> tokensb&#39;</span><span class="p">)</span>
+        <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;TF-IDF score&#39;</span><span class="p">)</span>
         <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
         <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">&#39;minor&#39;</span><span class="p">,</span> <span class="n">bottom</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
@@ -560,12 +560,14 @@ Mean community size 180.636 nodes
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/explainer_community_detection_9_0.png" src="_images/explainer_community_detection_9_0.png" />
+<img alt="_images/explainer_community_detection_11_0.png" src="_images/explainer_community_detection_11_0.png" />
 </div>
 </div>
+<p>The TF-IDF values reveals some quite interesting attributes of the communities. As one would expect, their is some communities as X and X that clear relates to the disciplines X and X, and thereby do not provide us with new information. But on the other hand some communities like X and X provides some entirely different communities.</p>
 </div>
-<div class="tex2jax_ignore mathjax_ignore section" id="multinomial-logistic-regression">
-<h1>Multinomial Logistic regression<a class="headerlink" href="#multinomial-logistic-regression" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="multinomial-logistic-regression">
+<h2>Multinomial Logistic regression<a class="headerlink" href="#multinomial-logistic-regression" title="Permalink to this headline">¶</a></h2>
+<p>Lastly, to get other nuances of these communities we implement a multinomial lasso-logistic regression with <code class="docutils literal notranslate"><span class="pre">sklearn</span></code>. The multinomial model closely resembles a regular logistic regression but is extended from binary classification to multi-class classification. We then extract the <em>average marginal effect</em> which can be</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Lets take raw count</span>
@@ -611,7 +613,7 @@ Mean community size 180.636 nodes
 <span class="sd">    features this function plots the K higest features for the different </span>
 <span class="sd">    classes.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span> <span class="n">dpi</span> <span class="o">=</span> <span class="mi">300</span><span class="p">)</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span> <span class="n">dpi</span> <span class="o">=</span> <span class="mi">300</span><span class="p">)</span>
     <span class="n">axs</span> <span class="o">=</span> <span class="n">axs</span><span class="o">.</span><span class="n">flat</span>
     <span class="n">community_features</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">j</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">margins_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;token&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>
@@ -638,7 +640,7 @@ Mean community size 180.636 nodes
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/explainer_community_detection_14_0.png" src="_images/explainer_community_detection_14_0.png" />
+<img alt="_images/explainer_community_detection_18_0.png" src="_images/explainer_community_detection_18_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -672,6 +674,7 @@ Mean community size 180.636 nodes
 <span class="sd">std = bootstrap_ci()</span>
 <span class="sd">&quot;&quot;&quot;</span>
 </pre></div>
+</div>
 </div>
 </div>
 </div>
