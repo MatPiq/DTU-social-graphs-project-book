@@ -13,3 +13,4 @@ pandas
 tqdm
 itables
 community
+nltk
