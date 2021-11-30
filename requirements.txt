@@ -12,3 +12,9 @@ powerlaw
 pandas
 tqdm
 itables
+community
+ast
+time
+typing
+collections
+sklearn
