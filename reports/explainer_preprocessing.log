@@ -26,7 +26,7 @@ df['tokens'] = df['lemmatized'].astype(str).apply(lambda x: word_tokenize(x))
 
 [0;31m---------------------------------------------------------------------------[0m
 [0;31mNameError[0m                                 Traceback (most recent call last)
-[0;32m/tmp/ipykernel_1741/1864386798.py[0m in [0;36m<module>[0;34m[0m
+[0;32m/tmp/ipykernel_1764/1864386798.py[0m in [0;36m<module>[0;34m[0m
 [1;32m      1[0m [0;31m# we apply all functions to the text[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
 [0;32m----> 2[0;31m [0mdf[0m[0;34m[[0m[0;34m'cleaned_text'[0m[0;34m][0m [0;34m=[0m [0mdf[0m[0;34m[[0m[0;34m'text'[0m[0;34m][0m[0;34m.[0m[0mastype[0m[0;34m([0m[0mstr[0m[0;34m)[0m[0;34m.[0m[0mapply[0m[0;34m([0m[0;32mlambda[0m [0mx[0m[0;34m:[0m [0mclean_text[0m[0;34m([0m[0mx[0m[0;34m)[0m[0;34m)[0m [0;31m#contains stopwords[0m[0;34m[0m[0;34m[0m[0m
 [0m[1;32m      3[0m [0mdf[0m[0;34m[[0m[0;34m'lemmatized'[0m[0;34m][0m [0;34m=[0m [0mdf[0m[0;34m[[0m[0;34m'cleaned_text'[0m[0;34m][0m[0;34m.[0m[0mastype[0m[0;34m([0m[0mstr[0m[0;34m)[0m[0;34m.[0m[0mapply[0m[0;34m([0m[0;32mlambda[0m [0mx[0m[0;34m:[0m [0mremove_stopwords[0m[0;34m([0m[0mx[0m[0;34m)[0m[0;34m)[0m [0;31m#removing stopwords[0m[0;34m[0m[0;34m[0m[0m
