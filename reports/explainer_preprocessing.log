@@ -17,24 +17,22 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-import re
-import string
-
-import nltk
-from nltk.tokenize import WordPunctTokenizer
-from nltk.corpus import stopwords
-from nltk.stem import WordNetLemmatizer
+# we apply all functions to the text
+df['cleaned_text'] = df['text'].astype(str).apply(lambda x: clean_text(x)) #contains stopwords
+df['lemmatized'] = df['cleaned_text'].astype(str).apply(lambda x: remove_stopwords(x)) #removing stopwords
+df['lemmatized'] = df['lemmatized'].astype(str).apply(lambda x: lemmatize(x))
+df['tokens'] = df['lemmatized'].astype(str).apply(lambda x: word_tokenize(x))
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
-[0;31mModuleNotFoundError[0m                       Traceback (most recent call last)
-[0;32m/tmp/ipykernel_1753/3858040348.py[0m in [0;36m<module>[0;34m[0m
-[1;32m      2[0m [0;32mimport[0m [0mstring[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      3[0m [0;34m[0m[0m
-[0;32m----> 4[0;31m [0;32mimport[0m [0mnltk[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m      5[0m [0;32mfrom[0m [0mnltk[0m[0;34m.[0m[0mtokenize[0m [0;32mimport[0m [0mWordPunctTokenizer[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      6[0m [0;32mfrom[0m [0mnltk[0m[0;34m.[0m[0mcorpus[0m [0;32mimport[0m [0mstopwords[0m[0;34m[0m[0;34m[0m[0m
+[0;31mNameError[0m                                 Traceback (most recent call last)
+[0;32m/tmp/ipykernel_1704/1864386798.py[0m in [0;36m<module>[0;34m[0m
+[1;32m      1[0m [0;31m# we apply all functions to the text[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
+[0;32m----> 2[0;31m [0mdf[0m[0;34m[[0m[0;34m'cleaned_text'[0m[0;34m][0m [0;34m=[0m [0mdf[0m[0;34m[[0m[0;34m'text'[0m[0;34m][0m[0;34m.[0m[0mastype[0m[0;34m([0m[0mstr[0m[0;34m)[0m[0;34m.[0m[0mapply[0m[0;34m([0m[0;32mlambda[0m [0mx[0m[0;34m:[0m [0mclean_text[0m[0;34m([0m[0mx[0m[0;34m)[0m[0;34m)[0m [0;31m#contains stopwords[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m      3[0m [0mdf[0m[0;34m[[0m[0;34m'lemmatized'[0m[0;34m][0m [0;34m=[0m [0mdf[0m[0;34m[[0m[0;34m'cleaned_text'[0m[0;34m][0m[0;34m.[0m[0mastype[0m[0;34m([0m[0mstr[0m[0;34m)[0m[0;34m.[0m[0mapply[0m[0;34m([0m[0;32mlambda[0m [0mx[0m[0;34m:[0m [0mremove_stopwords[0m[0;34m([0m[0mx[0m[0;34m)[0m[0;34m)[0m [0;31m#removing stopwords[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      4[0m [0mdf[0m[0;34m[[0m[0;34m'lemmatized'[0m[0;34m][0m [0;34m=[0m [0mdf[0m[0;34m[[0m[0;34m'lemmatized'[0m[0;34m][0m[0;34m.[0m[0mastype[0m[0;34m([0m[0mstr[0m[0;34m)[0m[0;34m.[0m[0mapply[0m[0;34m([0m[0;32mlambda[0m [0mx[0m[0;34m:[0m [0mlemmatize[0m[0;34m([0m[0mx[0m[0;34m)[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      5[0m [0mdf[0m[0;34m[[0m[0;34m'tokens'[0m[0;34m][0m [0;34m=[0m [0mdf[0m[0;34m[[0m[0;34m'lemmatized'[0m[0;34m][0m[0;34m.[0m[0mastype[0m[0;34m([0m[0mstr[0m[0;34m)[0m[0;34m.[0m[0mapply[0m[0;34m([0m[0;32mlambda[0m [0mx[0m[0;34m:[0m [0mword_tokenize[0m[0;34m([0m[0mx[0m[0;34m)[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
 
-[0;31mModuleNotFoundError[0m: No module named 'nltk'
-ModuleNotFoundError: No module named 'nltk'
+[0;31mNameError[0m: name 'df' is not defined
+NameError: name 'df' is not defined
 
