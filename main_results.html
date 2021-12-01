@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Main results &#8212; The Social Science Network</title>
+    <title>Main Results &#8212; The Social Science Network</title>
     
   <link href="_static/css/theme.css" rel="stylesheet">
   <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -115,7 +115,7 @@
    </li>
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
-     Main results
+     Main Results
     </a>
    </li>
    <li class="toctree-l2">
@@ -188,6 +188,11 @@
       </a>
      </li>
      <li class="toctree-l3">
+      <a class="reference internal" href="explainer_topic_model.html">
+       Topic Modelling with hSBM
+      </a>
+     </li>
+     <li class="toctree-l3">
       <a class="reference internal" href="explainer_embeddings.html">
        Document and Node Embeddings
       </a>
@@ -252,9 +257,9 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="_sources/main_results.md"><button type="button"
+        <a class="dropdown-buttons" href="_sources/main_results.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.md</button></a>
+                data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
         <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
             onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
@@ -272,11 +277,64 @@
 
             <!-- Launch buttons -->
 
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/MatPiq/DTU-social-graphs-project-book/HEAD/v2/gh/MatPiq/DTU-social-graphs-project-book/master?urlpath=lab/tree/main_results.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/MatPiq/DTU-social-graphs-project-book/blob/master/main_results.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
         </div>
 
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#network-visualization">
+   1. Network Visualization
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#understanding-communities-and-what-they-talk-about">
+   2. Understanding Communities and what they talk about
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#content-analysis-discovering-salient-topics">
+   3. Content analysis: Discovering salient topics
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#socialscience2vec-node-and-document-embedding">
+   4. socialscience2vec: Node and Document Embedding
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -286,8 +344,31 @@
               <div>
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="main-results">
-<h1>Main results<a class="headerlink" href="#main-results" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference external" href="https://projector.tensorflow.org/?config=https://gist.githubusercontent.com/MatPiq/139f3fccd6f0d0c6c9077f3aa87bd301/raw/0ab01b0d1615ac1f8ff686775fb9afa8b43e5422/config.json">Document embeddings</a></p>
+<h1>Main Results<a class="headerlink" href="#main-results" title="Permalink to this headline">¶</a></h1>
+<p>Here we present the most interesting findings from our project. For a more detailed coverage please visit the explainer notebook.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="#part1"><code class="docutils literal notranslate"><span class="pre">1.</span> <span class="pre">Network</span> <span class="pre">Visualization</span></code></a></p></li>
+<li><p><a class="reference external" href="#part2"><code class="docutils literal notranslate"><span class="pre">2.</span> <span class="pre">Understanding</span> <span class="pre">Communities</span> <span class="pre">and</span> <span class="pre">what</span> <span class="pre">they</span> <span class="pre">talk</span> <span class="pre">about</span></code></a></p></li>
+<li><p><a class="reference external" href="#part3"><code class="docutils literal notranslate"><span class="pre">3.</span> <span class="pre">Content</span> <span class="pre">analysis:</span> <span class="pre">Discovering</span> <span class="pre">salient</span> <span class="pre">topics.</span></code></a></p></li>
+<li><p><a class="reference external" href="#part4"><code class="docutils literal notranslate"><span class="pre">4.</span> <span class="pre">socialscience2vec:</span> <span class="pre">Node</span> <span class="pre">and</span> <span class="pre">Document</span> <span class="pre">Embeddings</span></code></a></p></li>
+</ul>
+<p><a id='part1'></a></p>
+<div class="section" id="network-visualization">
+<h2>1. Network Visualization<a class="headerlink" href="#network-visualization" title="Permalink to this headline">¶</a></h2>
+<p>In the plot bellow we visualize</p>
+<p><a id='part2'></a></p>
+</div>
+<div class="section" id="understanding-communities-and-what-they-talk-about">
+<h2>2. Understanding Communities and what they talk about<a class="headerlink" href="#understanding-communities-and-what-they-talk-about" title="Permalink to this headline">¶</a></h2>
+<p><a id='part3'></a></p>
+</div>
+<div class="section" id="content-analysis-discovering-salient-topics">
+<h2>3. Content analysis: Discovering salient topics<a class="headerlink" href="#content-analysis-discovering-salient-topics" title="Permalink to this headline">¶</a></h2>
+<p><a id='part4'></a></p>
+</div>
+<div class="section" id="socialscience2vec-node-and-document-embedding">
+<h2>4. socialscience2vec: Node and Document Embedding<a class="headerlink" href="#socialscience2vec-node-and-document-embedding" title="Permalink to this headline">¶</a></h2>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -302,13 +383,13 @@
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
+            kernelName: "python397jvsc74a57bd0794ed8d0b773cbcd7b7ec7f3b705e2b7a8437127647cc51e7d6c4b4e7ca1b777",
             path: "./."
         },
         predefinedOutput: true
     }
     </script>
-    <script>kernelName = 'python3'</script>
+    <script>kernelName = 'python397jvsc74a57bd0794ed8d0b773cbcd7b7ec7f3b705e2b7a8437127647cc51e7d6c4b4e7ca1b777'</script>
 
               </div>
               
