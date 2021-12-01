@@ -11,4 +11,3 @@ plotly
 powerlaw
 pandas
 tqdm
-itables
