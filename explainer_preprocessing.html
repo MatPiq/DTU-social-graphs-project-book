@@ -327,7 +327,7 @@
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1709</span><span class="o">/</span><span class="mf">3858040348.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1753</span><span class="o">/</span><span class="mf">3858040348.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">string</span>
 <span class="g g-Whitespace">      </span><span class="mi">3</span> 
 <span class="ne">----&gt; </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">nltk</span>
@@ -340,12 +340,7 @@
 </div>
 </div>
 <p>In this section we conduct light preprocessing since the wikipedia documents do not contain a lot of noise.
-In the following preprocessing steps, we split on the ‘see also’ section on each page to remove all possible irrelevant links. We remove all non-alphanumeric characters such as quotation marks, line break characters and remove punctuation. Finally, we lowercase before moving on to remove stopwords. We create three different columns of preprocessed text to work with due to accommodate different needs for our methods:</p>
-<ol class="simple">
-<li><p>The first will simply contain the preprocessed text as described above.</p></li>
-<li><p>In the second stopwords have been removed and all words have been lemmatized.</p></li>
-<li><p>The final one is a duplicate of the second column in a tokenized version.</p></li>
-</ol>
+In the following preprocessing steps, we split on the ‘see also’ section on each page to remove all possible irrelevant links. We remove all non-alphanumeric characters such as quotation marks, line break characters and remove punctuation. Finally, we lowercase before moving on to removing stopwords, lemmatizing and tokenizing the text.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># functions for preprocessing</span>
@@ -384,6 +379,12 @@ In the following preprocessing steps, we split on the ‘see also’ section on 
 </div>
 </div>
 </div>
+<p>We create three different columns of preprocessed text to work with to accommodate different needs for our text analysis methods:</p>
+<ol class="simple">
+<li><p>The first will simply contain the preprocessed text as described above.</p></li>
+<li><p>In the second stopwords have been removed and all words have been lemmatized.</p></li>
+<li><p>The final one is a duplicate of the second column in a tokenized version.</p></li>
+</ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># we apply all functions to the text</span>
