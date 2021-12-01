@@ -327,7 +327,7 @@
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1768</span><span class="o">/</span><span class="mf">3858040348.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1709</span><span class="o">/</span><span class="mf">3858040348.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">string</span>
 <span class="g g-Whitespace">      </span><span class="mi">3</span> 
 <span class="ne">----&gt; </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">nltk</span>
@@ -339,23 +339,22 @@
 </div>
 </div>
 </div>
-<p>In this section we preprocess…</p>
+<p>In this section we conduct light preprocessing since the wikipedia documents do not contain a lot of noise.
+In the following preprocessing steps, we split on the ‘see also’ section on each page to remove all possible irrelevant links. We remove all non-alphanumeric characters such as quotation marks, line break characters and remove punctuation. Finally, we lowercase before moving on to remove stopwords. We create three different columns of preprocessed text to work with due to accommodate different needs for our methods:</p>
+<ol class="simple">
+<li><p>The first will simply contain the preprocessed text as described above.</p></li>
+<li><p>In the second stopwords have been removed and all words have been lemmatized.</p></li>
+<li><p>The final one is a duplicate of the second column in a tokenized version.</p></li>
+</ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># functions for preprocessing</span>
 <span class="k">def</span> <span class="nf">clean_text</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
     <span class="c1"># get relevant text (exclude references)</span>
     <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;See also&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-    <span class="c1"># remove line break</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\&#39;</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;•&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span> 
-    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;—&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
-    <span class="c1"># remove punctuation</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">&quot;[’‘</span><span class="se">\&quot;</span><span class="s2">\“\”]&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">,</span><span class="n">text</span><span class="p">)</span>
-    <span class="n">text</span> <span class="o">=</span> <span class="n">text</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="nb">str</span><span class="o">.</span><span class="n">maketrans</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">string</span><span class="o">.</span><span class="n">punctuation</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">text</span>
+    <span class="c1"># remove all non alphanumerical characters</span>
+    <span class="n">text</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39;\W+&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
 
 <span class="c1">#Remove default stopwords</span>
 <span class="k">def</span> <span class="nf">remove_stopwords</span><span class="p">(</span><span class="n">text</span><span class="p">):</span> 
@@ -387,7 +386,8 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;cleaned_text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">clean_text</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="c1">#contains stopwords</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># we apply all functions to the text</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;cleaned_text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">clean_text</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="c1">#contains stopwords</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;lemmatized&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;cleaned_text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">remove_stopwords</span><span class="p">(</span><span class="n">x</span><span class="p">))</span> <span class="c1">#removing stopwords</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;lemmatized&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;lemmatized&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">lemmatize</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;tokens&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;lemmatized&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
