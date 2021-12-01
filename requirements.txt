@@ -6,6 +6,7 @@ pyvis
 bokeh
 node2vec
 plotly
+nltk
 #py2cytoscape
 #visJS2jupyter
 powerlaw
