@@ -355,11 +355,13 @@
 <p><a id='part1'></a></p>
 <div class="section" id="network-visualization">
 <h2>1. Network Visualization<a class="headerlink" href="#network-visualization" title="Permalink to this headline">¶</a></h2>
-<p>In the plot bellow we visualize</p>
+<p>In the plot bellow we visualize the network. Nodes represent the Wikipedia pages and are colored by the discipline from which they originated. An edge between two nodes is drawn if a page has a hyperlink to another page.</p>
+<p>To further understand the Network structure we also plot the most central pages both in the Network as a whole but also within disciplines.</p>
 <p><a id='part2'></a></p>
 </div>
 <div class="section" id="understanding-communities-and-what-they-talk-about">
 <h2>2. Understanding Communities and what they talk about<a class="headerlink" href="#understanding-communities-and-what-they-talk-about" title="Permalink to this headline">¶</a></h2>
+<p>For each Wiki page, we also collected the body of text. In order to better understand what the communities represent, we used a multionomial logistic model to predict the community using the text as input features. By looking at the words with the highest partial effects on the prediction of some community we can get an idea of what separates them.</p>
 <p><a id='part3'></a></p>
 </div>
 <div class="section" id="content-analysis-discovering-salient-topics">
@@ -368,7 +370,14 @@
 </div>
 <div class="section" id="socialscience2vec-node-and-document-embedding">
 <h2>4. socialscience2vec: Node and Document Embedding<a class="headerlink" href="#socialscience2vec-node-and-document-embedding" title="Permalink to this headline">¶</a></h2>
-</div>
+<p>As a last step in our analysis we used <code class="docutils literal notranslate"><span class="pre">doc2vec</span></code> and <code class="docutils literal notranslate"><span class="pre">node2vec</span></code> to create a meaningful 100-dimensional vector representations of our data. The <code class="docutils literal notranslate"><span class="pre">doc2vec</span></code> model is fit on the text corpus while the <code class="docutils literal notranslate"><span class="pre">node2vec</span></code> model uses the hyperlink network, in both cases the each point represents one Wiki page. In this sense, they represent the same object but different kinds of relations between them. The document embeddings can be understood as the semantic similarity between the pages.  and the node embeddings the    To visualize the embeddings, we project it on a lower dimensional space using <a class="reference external" href="https://tensorboard.dev/">tensorboard</a> and can be accessed through the following links:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://projector.tensorflow.org/?config=https://raw.githubusercontent.com/MatPiq/social-graphs-embeddings-data/main/document_config.json">Node embeddings</a></p></li>
+<li><p><a class="reference external" href="https://projector.tensorflow.org/?config=https://raw.githubusercontent.com/MatPiq/social-graphs-embeddings-data/main/document_config.json">Document embeddings</a></p></li>
+</ul>
+<p>We recommend coloring the points in the projection according to their discipline. This can be done by setting the colormap in the upper-left corner.</p>
+<img src="https://i.ibb.co/QYgGw72/embedding-guide1.png" width="250"/><p>Besides clicking on a point to see which page it belongs to, one can also search for the name of a page and find its neighbouring points. This is done in the upper-right corner as in the example bellow.</p>
+<img src="https://i.ibb.co/n084MFW/embedding-guide2.png" width="250"/></div>
 </div>
 
     <script type="text/x-thebe-config">
