@@ -49,7 +49,7 @@ pages, error_log = collect_attributes(pages)
 
 [0;31m---------------------------------------------------------------------------[0m
 [0;31mTypeError[0m                                 Traceback (most recent call last)
-[0;32m/tmp/ipykernel_1712/749677908.py[0m in [0;36m<module>[0;34m[0m
+[0;32m/tmp/ipykernel_1669/749677908.py[0m in [0;36m<module>[0;34m[0m
 [0;32m----> 1[0;31m [0;32mdef[0m [0mcollect_attributes[0m[0;34m([0m[0marticles[0m[0;34m:[0m[0mlist[0m[0;34m[[0m[0mWikiPage[0m[0;34m][0m[0;34m)[0m[0;34m->[0m[0mlist[0m[0;34m[[0m[0mWikiPage[0m[0;34m][0m[0;34m:[0m[0;34m[0m[0;34m[0m[0m
 [0m[1;32m      2[0m     """
 [1;32m      3[0m     [0mParses[0m [0mthe[0m [0mwikipedia[0m [0marticle[0m [0mtext[0m [0;32mand[0m [0murls[0m [0mpointing[0m [0mto[0m [0manother[0m [0mwiki[0m [0mpage[0m[0;34m.[0m[0;34m[0m[0;34m[0m[0m

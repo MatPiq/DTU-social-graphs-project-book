@@ -14,7 +14,7 @@ In this project we decided to analyse five of the major social science dicipline
 
 **Why did we choose this data set?**
 
-Research conducted at new university centers and departments focusing on Social Data Science or Computational Social Science is characterised by being highly interdiciplinary {cite}`sodas, alan, oxford`. It is against this background, both interesting and of relevance to understand the commonalities and differences between the fields. We think that a better understanding could enchance collaboration in two important ways. First of all, having a basic understanding of central theories and methodological approaches used in other fields is a first step for fruitful communication. blablabla....
+Research conducted at new university centers and departments focusing on Social Data Science or Computational Social Science is characterised by being highly interdiciplinary {cite}`sodas, alan, oxford`. It is against this background, both interesting and of relevance to understand the commonalities and differences between the fields. We think that a better understanding could enchance collaboration in two important ways. First of all, having a basic understanding of central theories and methodological approaches used in other fields is a first step for a fruitful collaboration in an interdisciplinary project. Second of all, employing a variety of central methods in a interdisciplinary project is not simply 'plug and play' as each method must be understood in the context of the discipline it stems from. 
 
 **Our goal for the end user's experience**
 
