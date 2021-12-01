@@ -352,7 +352,7 @@
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1634</span><span class="o">/</span><span class="mf">105608864.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1756</span><span class="o">/</span><span class="mf">105608864.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">pickle</span>
 <span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="ne">----&gt; </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">community</span>
@@ -364,18 +364,17 @@
 </div>
 </div>
 </div>
-<p>In (Notebook X) we see from our network that nodes tend to bundle together in different groups. To identify some of these groups in a systematic way <em>community detection</em> serves as a useful tool. For this we use the <em>Louvain algorithm</em>. The Louvain algorithm relies on the network’s <em>modularity</em> which is best described as a measure of how well a partitioned in the network can be split into supgraphs (communities). A higher modularity therefore corresponds to a better community structure. Formally the modularity can be expressed as <span id="id1">[<a class="reference internal" href="references.html#id13">Sapiezynski <em>et al.</em>, 2019</a>]</span>:</p>
+<p>In (Notebook X) we see from our network that nodes tend to bundle together in different groups. To identify some of these groups in a systematic way <em>community detection</em> serves as a useful tool. For this we use the <em>Louvain algorithm</em>. The Louvain algorithm relies on the network’s <em>modularity</em> which is best described as a measure of how well a partitioned in the network can be split into supgraphs (communities). A higher modularity therefore corresponds to a better community structure. Formally the modularity can be expressed as <span id="id1">[<a class="reference internal" href="references.html#id14">Barabási, 2016</a>]</span>:</p>
 <div class="math notranslate nohighlight">
 \[
 M = \sum^{n_c}_{c=1}\left[\frac{L_c}{L}-\left(\frac{k_c}{2L}\right)^{2}\right]
 \]</div>
-<p>where <span class="math notranslate nohighlight">\(n_c\)</span> are the communities, <span class="math notranslate nohighlight">\(L_c\)</span> are the number of links and  <span class="math notranslate nohighlight">\(k_c\)</span> the total degree of nodes in the community <span class="math notranslate nohighlight">\(c\)</span>. The Louvain algorithm tries to find the communities that maximize <span class="math notranslate nohighlight">\(M\)</span> by the following two steps citenotwork
-:</p>
+<p>where <span class="math notranslate nohighlight">\(n_c\)</span> are the communities, <span class="math notranslate nohighlight">\(L_c\)</span> are the number of links and  <span class="math notranslate nohighlight">\(k_c\)</span> the total degree of nodes in the community <span class="math notranslate nohighlight">\(c\)</span>. The Louvain algorithm tries to find the communities that maximize <span class="math notranslate nohighlight">\(M\)</span> by the following two steps <span id="id2">[<a class="reference internal" href="references.html#id14">Barabási, 2016</a>]</span>:</p>
 <ol class="simple">
 <li><p>First it assigns each node to its own communities, i.e. there are as many communities as nodes. Next, for each node <span class="math notranslate nohighlight">\(i\)</span> we evaluate if by assigning it to one of its neighbours <span class="math notranslate nohighlight">\(j\)</span> communities the change in modularity  <span class="math notranslate nohighlight">\(\Delta M\)</span> is positive. Node <span class="math notranslate nohighlight">\(i\)</span> then moves to the community of the neighbor that yields the highest positive change in <span class="math notranslate nohighlight">\(\Delta M\)</span>. This is repeated for all nodes until no further increase can be made.</p></li>
 <li><p>In the second step, the algorithm creates a “super graph”, that is each community is condensed into one node where the edges are now weighted by the total number of links going from one community to the other in the original network. Having done this, we rerun the first step on the “super graph”.</p></li>
 </ol>
-<p>The steps are done iteratively until the maximum <span class="math notranslate nohighlight">\(M\)</span> has been reached. As this is an approximate method it is not ensured that the algorithm will always find the global maximum <span class="math notranslate nohighlight">\(M\)</span>, all though that tests shows, that the algorithm usually is fairly accurate citenotwork.</p>
+<p>The steps are done iteratively until the maximum <span class="math notranslate nohighlight">\(M\)</span> has been reached. As this is an approximate method it is not ensured that the algorithm will always find the global maximum <span class="math notranslate nohighlight">\(M\)</span>, all though that tests shows, that the algorithm usually is fairly accurate <span id="id3">[<a class="reference internal" href="references.html#id15">Blondel <em>et al.</em>, 2021</a>]</span>.</p>
 <p>To implement the Louvain algorithm and find the optimal communities for our network we simply rely on the function <code class="docutils literal notranslate"><span class="pre">.best_partition()</span></code> from the module <code class="docutils literal notranslate"><span class="pre">community</span></code>. As the Louvain algorithm only works for undirected networkx we model our network accordingly for the community detection.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -569,7 +568,11 @@ Mean community size 180.636 nodes
 </div>
 <div class="section" id="multinomial-logistic-regression">
 <h2>Multinomial Logistic regression<a class="headerlink" href="#multinomial-logistic-regression" title="Permalink to this headline">¶</a></h2>
-<p>Lastly, to get other nuances of these communities we implement a multinomial lasso-logistic regression with <code class="docutils literal notranslate"><span class="pre">sklearn</span></code>. The multinomial model closely resembles a regular logistic regression but is extended from binary classification to multi-class classification. We then extract the <em>average marginal effect</em> which can be</p>
+<p>Lastly, to get other nuances of these communities we implement a multinomial lasso-logistic regression with <code class="docutils literal notranslate"><span class="pre">sklearn</span></code>. The multinomial model closely resembles a regular logistic regression but is extended from binary classification to multi-class classification. We then extract each feature’s <em>average marginal effects</em> to inspect how predictive they are of each community, expressed as:</p>
+<div class="math notranslate nohighlight">
+\[
+AME_{jk} = \frac{\partial Pr[y_i = j|\mathbf{w}_{i}]}{\partial w_{jk}} = N^{-1} \sum_{i = 1}^N p_{ij}\left(\theta_{jk} - \sum^J_{m = 1} p_{im} \theta_{mk}\right)
+\]</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Lets take raw count</span>
