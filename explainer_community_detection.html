@@ -352,7 +352,7 @@
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1626</span><span class="o">/</span><span class="mf">105608864.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1694</span><span class="o">/</span><span class="mf">105608864.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">pickle</span>
 <span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="ne">----&gt; </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">community</span>
@@ -364,7 +364,7 @@
 </div>
 </div>
 </div>
-<p>In (Notebook X) we see from our network that nodes tend to bundle together in different groups. To identify some of these groups in a systematic way <em>community detection</em> serves as a useful tool. For this we use the <em>Louvain algorithm</em>. The Louvain algorithm relies on the network’s <em>modularity</em> which is best described as a measure of how well a partitioned in the network can be split into supgraphs (communities). A higher modularity therefore corresponds to a better community structure. Formally the modularity can be expressed as citenotwork:</p>
+<p>In (Notebook X) we see from our network that nodes tend to bundle together in different groups. To identify some of these groups in a systematic way <em>community detection</em> serves as a useful tool. For this we use the <em>Louvain algorithm</em>. The Louvain algorithm relies on the network’s <em>modularity</em> which is best described as a measure of how well a partitioned in the network can be split into supgraphs (communities). A higher modularity therefore corresponds to a better community structure. Formally the modularity can be expressed as <span id="id1">[<a class="reference internal" href="references.html#id13">Sapiezynski <em>et al.</em>, 2019</a>]</span>:</p>
 <div class="math notranslate nohighlight">
 \[
 M = \sum^{n_c}_{c=1}\left[\frac{L_c}{L}-\left(\frac{k_c}{2L}\right)^{2}\right]
