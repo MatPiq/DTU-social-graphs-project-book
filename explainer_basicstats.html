@@ -343,7 +343,7 @@
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1610</span><span class="o">/</span><span class="mf">2371195710.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1598</span><span class="o">/</span><span class="mf">2371195710.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">import</span> <span class="nn">powerlaw</span>
 <span class="ne">----&gt; </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">fa2</span> <span class="kn">import</span> <span class="n">ForceAtlas2</span>
@@ -376,7 +376,33 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The directed network has: 4164 nodes and 20012 edges.
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mi">81</span><span class="o">/</span><span class="n">hmpn7q9j37l5nqxjsd88rbf00000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_6182</span><span class="o">/</span><span class="mf">451215317.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">edgelist</span> <span class="o">=</span> <span class="p">[</span><span class="n">e</span> <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="n">edgelist</span> <span class="k">if</span> <span class="n">e</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">e</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">()</span>
+<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">G</span><span class="o">.</span><span class="n">add_edges_from</span><span class="p">(</span><span class="n">edgelist</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="n">gcc</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">nx</span><span class="o">.</span><span class="n">weakly_connected_components</span><span class="p">(</span><span class="n">G</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">)</span>
+<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="n">G</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">subgraph</span><span class="p">(</span><span class="n">gcc</span><span class="p">)</span>
+
+<span class="ne">NameError</span>: name &#39;edgelist&#39; is not defined
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">G</span><span class="o">.</span><span class="n">index</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mi">81</span><span class="o">/</span><span class="n">hmpn7q9j37l5nqxjsd88rbf00000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_6182</span><span class="o">/</span><span class="mf">2693246800.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">G</span><span class="o">.</span><span class="n">index</span>
+
+<span class="ne">NameError</span>: name &#39;G&#39; is not defined
 </pre></div>
 </div>
 </div>
@@ -430,7 +456,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/explainer_basicstats_6_0.png" src="_images/explainer_basicstats_6_0.png" />
+<img alt="_images/explainer_basicstats_7_0.png" src="_images/explainer_basicstats_7_0.png" />
 </div>
 </div>
 <p>When comparing the linear plots with the log-log plot, it is clear that our directed network have scale-free properties. The reason for this is that the degree distriubtion is well approximated by a linear model on a log-log scale suggesting that the degree distribution follows a power-law distribution (Barabási 2016). Formally the pow-law distribution can be expressed as:</p>
@@ -503,7 +529,7 @@ The exponent of the Out-degree distribution is: 7.065090437619653
   axs[j].set_xticklabels(x, rotation = 90)
 </pre></div>
 </div>
-<img alt="_images/explainer_basicstats_11_1.png" src="_images/explainer_basicstats_11_1.png" />
+<img alt="_images/explainer_basicstats_12_1.png" src="_images/explainer_basicstats_12_1.png" />
 </div>
 </div>
 <p>The inspection of the pages with high degrees reveal, that the keyword used for categorisation (Anthropology, Economicis, Sociology, Psycology and Political science) also have independent wikipedia pages. Naturally, a large share of the other pages refers to these, why four out of five discipline’s wikipedia page are among the pages with a highest in-degree. Given how much they distort our network we do not believe it is meaningful to keep them in our network. Likewise we also remove pages with “Index_of_” in the name.</p>

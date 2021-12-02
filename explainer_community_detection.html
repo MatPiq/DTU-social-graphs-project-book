@@ -357,7 +357,7 @@
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1631</span><span class="o">/</span><span class="mf">105608864.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1619</span><span class="o">/</span><span class="mf">105608864.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">pickle</span>
 <span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="ne">----&gt; </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">community</span>
@@ -402,8 +402,8 @@ M = \sum^{n_c}_{c=1}\left[\frac{L_c}{L}-\left(\frac{k_c}{2L}\right)^{2}\right]
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The Louvain algorithm found 22 communities
-Modularity of network: 0.5872
-Largest community consists of 860 nodes
+Modularity of network: 0.585
+Largest community consists of 796 nodes
 Smallest community consists of 2 nodes
 Mean community size 180.636 nodes
 </pre></div>
@@ -573,16 +573,16 @@ Mean community size 180.636 nodes
 </div>
 <div class="section" id="multinomial-logistic-regression">
 <h2>Multinomial Logistic regression<a class="headerlink" href="#multinomial-logistic-regression" title="Permalink to this headline">¶</a></h2>
-<p>Lastly, to get other nuances of these communities we implement a multinomial lasso-logistic regression with <code class="docutils literal notranslate"><span class="pre">sklearn</span></code>. The multinomial model closely resembles a regular logistic regression but is extended from binary classification to multi-class classification. We then extract each feature’s <em>average marginal effects</em> to inspect how predictive they are of each community, expressed as:</p>
+<p>Lastly, to get other nuances of these communities we implement a multinomial lasso-logistic regression with <code class="docutils literal notranslate"><span class="pre">sklearn</span></code>. The multinomial model closely resembles a regular logistic regression but is extended from binary classification to multi-class classification. We then extract each feature’s <em>average marginal effects</em> (AME) to inspect how predictive they are of each community. Following <span id="id4">[<a class="reference internal" href="references.html#id16">Cameron, 2005</a>]</span> this can be expressed as:</p>
 <div class="math notranslate nohighlight">
 \[
 AME_{jk} = \frac{\partial Pr[y_i = j|\mathbf{w}_{i}]}{\partial w_{jk}} = N^{-1} \sum_{i = 1}^N p_{ij}\left(\theta_{jk} - \sum^J_{m = 1} p_{im} \theta_{mk}\right)
 \]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{w}_i\)</span> is a vector of token frequencies for each community and <span class="math notranslate nohighlight">\({\theta}_j\)</span> is the estimated coefficient vector for each community of length equal to the vocabulary. This also means that we rely on the raw count of every token in each community rather than TF-IDF value to calculate the AME. We do this to ease the interpretability of the effects, as the AME then describe how the probability of a community changes as we increment the count of the given token. To get the raw count of our vocabulary we use our funtion <code class="docutils literal notranslate"><span class="pre">create_dfm()</span></code> from before but set the <code class="docutils literal notranslate"><span class="pre">idf</span></code> argument to <code class="docutils literal notranslate"><span class="pre">False</span></code>, hence we get the word counts. As before, we specify that a token have to occur at least five times in community to be part of a document-feature-matrix.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Lets take raw count</span>
-<span class="n">token_count</span><span class="p">,</span> <span class="n">vocab</span> <span class="o">=</span> <span class="n">create_dfm</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="n">idf</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">return_vocab</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">min_df</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-<span class="n">token_count_pd</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">token_count</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">vocab</span><span class="p">,</span> <span class="n">index</span> <span class="o">=</span> <span class="n">top6_df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>´token_count, vocab = create_dfm(tokens, idf=False, return_vocab=True, min_df=5)
+token_count_pd = pd.DataFrame(token_count, columns=vocab, index = top9_df.index)
 </pre></div>
 </div>
 </div>
@@ -611,13 +611,8 @@ AME_{jk} = \frac{\partial Pr[y_i = j|\mathbf{w}_{i}]}{\partial w_{jk}} = N^{-1} 
         <span class="n">avg_margins</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">avg_margins</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">classes</span><span class="p">)</span>
         <span class="n">avg_margins</span><span class="p">[</span><span class="s2">&quot;token&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vocab</span>
     <span class="k">return</span> <span class="n">avg_margins</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plot_most_predictive_features</span><span class="p">(</span><span class="n">margins_df</span><span class="p">:</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">K</span><span class="p">:</span><span class="nb">int</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
+
+<span class="k">def</span> <span class="nf">plot_most_predictive_features</span><span class="p">(</span><span class="n">margins_df</span><span class="p">:</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">K</span><span class="p">:</span><span class="nb">int</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Based on a DataFrame with the average marginal effect for a list of </span>
 <span class="sd">    features this function plots the K higest features for the different </span>
@@ -648,9 +643,6 @@ AME_{jk} = \frac{\partial Pr[y_i = j|\mathbf{w}_{i}]}{\partial w_{jk}} = N^{-1} 
 <span class="n">plot_most_predictive_features</span><span class="p">(</span><span class="n">margins_pd</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<img alt="_images/explainer_community_detection_18_0.png" src="_images/explainer_community_detection_18_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
