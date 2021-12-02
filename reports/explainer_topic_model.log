@@ -23,7 +23,7 @@ model = joblib.load("hSBM_model.joblib")
 
 [0;31m---------------------------------------------------------------------------[0m
 [0;31mNameError[0m                                 Traceback (most recent call last)
-[0;32m/tmp/ipykernel_1729/3668406922.py[0m in [0;36m<module>[0;34m[0m
+[0;32m/tmp/ipykernel_1727/3668406922.py[0m in [0;36m<module>[0;34m[0m
 [1;32m      1[0m [0;31m# load model #måske med request (tjek hvordan man peger til GitHub)[0m[0;34m[0m[0;34m[0m[0;34m[0m[0m
 [0;32m----> 2[0;31m [0mmodel[0m [0;34m=[0m [0mjoblib[0m[0;34m.[0m[0mload[0m[0;34m([0m[0;34m"hSBM_model.joblib"[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
 [0m
