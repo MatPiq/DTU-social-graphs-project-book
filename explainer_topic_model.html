@@ -317,6 +317,7 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="topic-modelling-with-hsbm-community-detection-in-a-topic-model-context">
 <h1>Topic Modelling with hSBM: Community Detection in a Topic Model Context<a class="headerlink" href="#topic-modelling-with-hsbm-community-detection-in-a-topic-model-context" title="Permalink to this headline">¶</a></h1>
+<p>In this section we introduce part of our text analysis, namely the part which pertains to our topic modelling approach. Topic models are mainly used to cluster a collection of documents into different so-called ‘topics’.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import relevant modules</span>
@@ -331,7 +332,7 @@
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1701</span><span class="o">/</span><span class="mf">2676618463.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1700</span><span class="o">/</span><span class="mf">2676618463.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Import relevant modules</span>
 <span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">joblib</span>
 <span class="ne">----&gt; </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">hSBM_Topicmodel.sbmtm</span> <span class="kn">import</span> <span class="n">sbmtm</span>
@@ -363,7 +364,7 @@
 </div>
 </div>
 <p>comment on the visualization</p>
-<p>And now for the real fun - let’s extract the topics. We have experimented with extracting topics at different levels of the model (our model has 7 levels) and find that the topics at level 1 are cohesive and useful for our analysis. We specify that the model should return the 20 most probable words per topic (remember the model itself chooses number of topics).</p>
+<p>And now for the real fun - let’s extract the topics. We have experimented with extracting topics at different levels of the model (our model has 6 levels) and find that the topics at level 1 are cohesive and useful for our analysis. We specify that the model should return the 20 most probable words per topic (remember the model itself chooses number of topics).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">topics_l1</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">topics</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
@@ -371,6 +372,7 @@
 </div>
 </div>
 </div>
+<p>The model generates 15 topics on level 2 which are more discipline-related and broader whereas the model generates 105 topics on level 1 which span from very classic disciplin-related to more theme or topic-specific such as ‘global development’ or ‘trump’. The lower the level, the less semantically cohesive the topics.</p>
 <p>Gerlach et al. point to the hSBM’s ability to identify groups of stopwords. We however chose to remove stopwords in our initial preprocessing. We do not specify any stopwords for the wordclouds to bypass.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
