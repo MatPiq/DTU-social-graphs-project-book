@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Data Collection &#8212; The Social Science Network</title>
+    <title>Data collection &#8212; The Social Science Network</title>
     
   <link href="_static/css/theme.css" rel="stylesheet">
   <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -159,7 +159,7 @@
     <ul class="current">
      <li class="toctree-l3 current active">
       <a class="current reference internal" href="#">
-       Data Collection
+       Data collection
       </a>
      </li>
      <li class="toctree-l3">
@@ -316,6 +316,11 @@
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h1 nav-item toc-entry">
   <a class="reference internal nav-link" href="#">
+   Data collection
+  </a>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id1">
    Data Collection
   </a>
   <ul class="visible nav section-nav flex-column">
@@ -353,7 +358,10 @@
               <div>
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="data-collection">
-<h1>Data Collection<a class="headerlink" href="#data-collection" title="Permalink to this headline">¶</a></h1>
+<span id="explainer-data-collection"></span><h1>Data collection<a class="headerlink" href="#data-collection" title="Permalink to this headline">¶</a></h1>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="id1">
+<h1>Data Collection<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <p>This notebook outlines our data collection strategy which consists of the following steps:</p>
 <ol class="simple">
 <li><p>Finding the relevant Wikipedia pages for each discipline through <a class="reference external" href="https://petscan.wmflabs.org/">PetScan</a>.</p></li>
@@ -393,7 +401,7 @@
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1999</span><span class="o">/</span><span class="mf">4217365109.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1660</span><span class="o">/</span><span class="mf">4217365109.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">     </span><span class="mi">17</span> 
 <span class="g g-Whitespace">     </span><span class="mi">18</span> <span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
 <span class="ne">---&gt; </span><span class="mi">19</span> <span class="kn">import</span> <span class="nn">littleballoffur</span>
@@ -635,7 +643,7 @@ Lastly we remove all edges from the pages we have collected to pages not in our 
 {"model_id": "984c5e7c78424acfbbffd4eff424787c", "version_major": 2, "version_minor": 0}
 </script></div>
 </div>
-<p>To further subset our data we remove self-loops and model a undirected network from which we extract the giant connected component. We then try to sample a respresntative supgraph containing <span class="math notranslate nohighlight">\(\frac{1}{4}\)</span> of the giant connected component’s nodes using a Metropolis algoritm as stated in <span id="id1">[<a class="reference internal" href="references.html#id17">Hübler <em>et al.</em>, 2008</a>]</span> and implemented in the function <code class="docutils literal notranslate"><span class="pre">.MetropolisHastingsRandomWalkSampler()</span></code> from the module <code class="docutils literal notranslate"><span class="pre">littleballoffur</span></code>. The intuition behind the method is to initialise a random subgraph <span class="math notranslate nohighlight">\(S\)</span> of our full network <span class="math notranslate nohighlight">\(G\)</span> from which we iteratively remove and add nodes in order to mimic some topological properties of <span class="math notranslate nohighlight">\(G\)</span>, in this case the degree-distriubtion. This is of course not without consequences as we remove of the complexity in our network and thereby lose information, however we deem this nesecarry to reduce our network to a more manageble size.</p>
+<p>To further subset our data we remove self-loops and model a undirected network from which we extract the giant connected component. We then try to sample a respresntative supgraph containing <span class="math notranslate nohighlight">\(\frac{1}{4}\)</span> of the giant connected component’s nodes using a Metropolis algoritm as stated in <span id="id2">[<a class="reference internal" href="references.html#id17">Hübler <em>et al.</em>, 2008</a>]</span> and implemented in the function <code class="docutils literal notranslate"><span class="pre">.MetropolisHastingsRandomWalkSampler()</span></code> from the module <code class="docutils literal notranslate"><span class="pre">littleballoffur</span></code>. The intuition behind the method is to initialise a random subgraph <span class="math notranslate nohighlight">\(S\)</span> of our full network <span class="math notranslate nohighlight">\(G\)</span> from which we iteratively remove and add nodes in order to mimic some topological properties of <span class="math notranslate nohighlight">\(G\)</span>, in this case the degree-distriubtion. This is of course not without consequences as we remove of the complexity in our network and thereby lose information, however we deem this nesecarry to reduce our network to a more manageble size.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We create a dictionary with the index each pagename</span>
@@ -743,9 +751,6 @@ Transitivity supgraph S: 0.2991
 <span class="c1"># Saving the node attributes</span>
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;Final_node_attr.pickle&quot;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
     <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">([</span><span class="n">node_attr</span><span class="p">],</span> <span class="n">f</span><span class="p">)</span>
-    
-<span class="c1">#pickle.dump(G, open(&#39;Final_graph.pickle&#39;, &#39;wb&#39;))</span>
-<span class="n">final_df</span><span class="o">.</span><span class="n">to_pickle</span><span class="p">(</span><span class="s2">&quot;Final_df.pickle&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -804,6 +809,7 @@ We split up all the lemmatized pages into list of words (or tokens) and add them
     <span class="k">return</span> <span class="n">text</span>
 
 <span class="c1"># we apply all functions to the text</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">mode</span><span class="o">.</span><span class="n">chained_assignment</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Hide DeprecationWarning</span>
 <span class="n">tqdm</span><span class="o">.</span><span class="n">pandas</span><span class="p">()</span>
 <span class="n">final_df</span><span class="p">[</span><span class="s1">&#39;cleaned_text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">final_df</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">progress_apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">clean_text</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 <span class="n">final_df</span><span class="p">[</span><span class="s1">&#39;lemmatized&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">final_df</span><span class="p">[</span><span class="s1">&#39;cleaned_text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">progress_apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">remove_stopwords</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
@@ -817,14 +823,22 @@ We split up all the lemmatized pages into list of words (or tokens) and add them
 </pre></div>
 </div>
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "34f23aa7c20c41a2b675a31a1ec034f9", "version_major": 2, "version_minor": 0}
+{"model_id": "9386349dac9d472c96802530ecf247ff", "version_major": 2, "version_minor": 0}
 </script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "60ae419cabf846f59be179f91584591c", "version_major": 2, "version_minor": 0}
+{"model_id": "7409a59aa1d5467e8dc968024a7525fc", "version_major": 2, "version_minor": 0}
 </script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "abbd4d6164c64a08919104ed4dadd9a4", "version_major": 2, "version_minor": 0}
+{"model_id": "c68c5d47fc8c4b83a872eab681a1f5b1", "version_major": 2, "version_minor": 0}
 </script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "cfb48e5dda394f139a7a17ff719b03e2", "version_major": 2, "version_minor": 0}
+{"model_id": "6915a412f7d94d7ba360957b91383eaa", "version_major": 2, "version_minor": 0}
 </script></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Save final DataFrame</span>
+<span class="n">final_df</span><span class="o">.</span><span class="n">to_pickle</span><span class="p">(</span><span class="s2">&quot;Final_df.pickle&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 
