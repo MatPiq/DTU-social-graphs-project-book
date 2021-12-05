@@ -18,7 +18,6 @@ sections:
   - file: basic_stats_intro
     sections: 
       - file: explainer_data_collection
-      - file: explainer_preprocessing
       - file: explainer_basicstats
   - file: explainer_analysis
     sections:
