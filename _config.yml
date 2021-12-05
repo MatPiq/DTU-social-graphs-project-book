@@ -39,3 +39,6 @@ launch_buttons:
   binderhub_url: "https://mybinder.org/v2/gh/MatPiq/DTU-social-graphs-project-book/HEAD" # The URL for your BinderHub (e.g., https://mybinder.org)
   thebe: true
   colab_url: "https://colab.research.google.com"
+
+execute:
+  execute_notebooks: 'off'
