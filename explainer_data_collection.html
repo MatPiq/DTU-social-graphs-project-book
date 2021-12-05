@@ -54,8 +54,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Preprocessing" href="explainer_preprocessing.html" />
-    <link rel="prev" title="Woop woop" href="basic_stats_intro.html" />
+    <link rel="next" title="Descriptive statistics" href="explainer_basicstats.html" />
+    <link rel="prev" title="Data collection and descriptive statistics" href="basic_stats_intro.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -149,7 +149,7 @@
    </li>
    <li class="toctree-l2 current active has-children">
     <a class="reference internal" href="basic_stats_intro.html">
-     Woop woop
+     Data collection and descriptive statistics
     </a>
     <input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/>
     <label for="toctree-checkbox-3">
@@ -163,13 +163,8 @@
       </a>
      </li>
      <li class="toctree-l3">
-      <a class="reference internal" href="explainer_preprocessing.html">
-       Preprocessing
-      </a>
-     </li>
-     <li class="toctree-l3">
       <a class="reference internal" href="explainer_basicstats.html">
-       Basic stats
+       Descriptive statistics
       </a>
      </li>
     </ul>
@@ -318,11 +313,6 @@
   <a class="reference internal nav-link" href="#">
    Data collection
   </a>
- </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id1">
-   Data Collection
-  </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#finding-relevant-articles">
@@ -359,9 +349,6 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="data-collection">
 <span id="explainer-data-collection"></span><h1>Data collection<a class="headerlink" href="#data-collection" title="Permalink to this headline">¶</a></h1>
-</div>
-<div class="tex2jax_ignore mathjax_ignore section" id="id1">
-<h1>Data Collection<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <p>This notebook outlines our data collection strategy which consists of the following steps:</p>
 <ol class="simple">
 <li><p>Finding the relevant Wikipedia pages for each discipline through <a class="reference external" href="https://petscan.wmflabs.org/">PetScan</a>.</p></li>
@@ -371,7 +358,8 @@
 <p>Lastly we will also describe the steps that we have taken to preprocess our data for the purphose of later natural language processing.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># imports</span>
+<span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">import</span> <span class="nn">string</span>
 <span class="kn">import</span> <span class="nn">random</span> 
@@ -524,7 +512,7 @@
 </div>
 <div class="cell_output docutils container">
 <script type="application/vnd.jupyter.widget-view+json">
-{"version_major": 2, "version_minor": 0, "model_id": "8659a22b93d9424cb9164c411bab33b4"}
+{"version_major": 2, "version_minor": 0, "model_id": "5e1f0382136d4469b8fc7bb49d37ad13"}
 </script><div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Petscan failed to retrieve 0 pages in depth 0...
 </pre></div>
 </div>
@@ -535,10 +523,10 @@
 </pre></div>
 </div>
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>parent
-anthropology         17624
-economics             6027
-political_science     7016
-psychology            8739
+anthropology         17626
+economics             6026
+political_science     7015
+psychology            8738
 sociology             5894
 Name: title, dtype: int64
 </pre></div>
@@ -585,7 +573,7 @@ Name: title, dtype: int64
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">TypeError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_3720</span><span class="o">/</span><span class="mf">749677908.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_3657</span><span class="o">/</span><span class="mf">749677908.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="k">def</span> <span class="nf">collect_attributes</span><span class="p">(</span><span class="n">articles</span><span class="p">:</span><span class="nb">list</span><span class="p">[</span><span class="n">WikiPage</span><span class="p">])</span><span class="o">-&gt;</span><span class="nb">list</span><span class="p">[</span><span class="n">WikiPage</span><span class="p">]:</span>
 <span class="g g-Whitespace">      </span><span class="mi">2</span>     <span class="sd">&quot;&quot;&quot;</span>
 <span class="g g-Whitespace">      </span><span class="mi">3</span><span class="sd">     Parses the wikipedia article text and urls pointing to another wiki page.</span>
@@ -677,7 +665,7 @@ Lastly we remove all edges from the pages we have collected to pages not in our 
 <span class="c1"># Calling the functions</span>
 <span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">mode</span><span class="o">.</span><span class="n">chained_assignment</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Hide Pandas Warnings</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">remove_duplicates</span><span class="p">(</span><span class="n">pages_df</span><span class="p">)</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">remove_anthro</span><span class="p">(</span><span class="n">pages_df</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">remove_anthro</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">uniform_page_and_edge_names</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">remove_edges_not_in_nodelist</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
@@ -686,12 +674,12 @@ Lastly we remove all edges from the pages we have collected to pages not in our 
 </div>
 <div class="cell_output docutils container">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "a38ce26476a84e899dde664b65a592ce", "version_major": 2, "version_minor": 0}
+{"model_id": "eb827056769a4e83bb885986a414ef44", "version_major": 2, "version_minor": 0}
 </script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "984c5e7c78424acfbbffd4eff424787c", "version_major": 2, "version_minor": 0}
+{"model_id": "5f2b1be6ad7649abbd8f03e04bf81b27", "version_major": 2, "version_minor": 0}
 </script></div>
 </div>
-<p>To further subset our data we remove self-loops and model a undirected network from which we extract the giant connected component. We then try to sample a respresntative supgraph containing <span class="math notranslate nohighlight">\(\frac{1}{4}\)</span> of the giant connected component’s nodes using a Metropolis algoritm as stated in <span id="id2">[<a class="reference internal" href="references.html#id17">Hübler <em>et al.</em>, 2008</a>]</span> and implemented in the function <code class="docutils literal notranslate"><span class="pre">.MetropolisHastingsRandomWalkSampler()</span></code> from the module <code class="docutils literal notranslate"><span class="pre">littleballoffur</span></code>. The intuition behind the method is to initialise a random subgraph <span class="math notranslate nohighlight">\(S\)</span> of our full network <span class="math notranslate nohighlight">\(G\)</span> from which we iteratively remove and add nodes in order to mimic some topological properties of <span class="math notranslate nohighlight">\(G\)</span>, in this case the degree-distriubtion. This is of course not without consequences as we remove of the complexity in our network and thereby lose information, however we deem this nesecarry to reduce our network to a more manageble size.</p>
+<p>To further subset our data we remove self-loops and model a undirected network from which we extract the giant connected component. We then try to sample a respresntative supgraph containing <span class="math notranslate nohighlight">\(\frac{1}{4}\)</span> of the giant connected component’s nodes using a Metropolis algoritm as stated in <span id="id1">[<a class="reference internal" href="references.html#id17">Hübler <em>et al.</em>, 2008</a>]</span> and implemented in the function <code class="docutils literal notranslate"><span class="pre">.MetropolisHastingsRandomWalkSampler()</span></code> from the module <code class="docutils literal notranslate"><span class="pre">littleballoffur</span></code>. The intuition behind the method is to initialise a random subgraph <span class="math notranslate nohighlight">\(S\)</span> of our full network <span class="math notranslate nohighlight">\(G\)</span> from which we iteratively remove and add nodes in order to mimic some topological properties of <span class="math notranslate nohighlight">\(G\)</span>, in this case the degree-distriubtion. This is of course not without consequences as we remove of the complexity in our network and thereby lose information, however we deem this nesecarry to reduce our network to a more manageble size.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We create a dictionary with the index each pagename</span>
@@ -749,8 +737,8 @@ Lastly we remove all edges from the pages we have collected to pages not in our 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Degree distribution exponent full network G: 3.5715735745810036
-Degree distribution exponent supgraph S: 3.9408591519970835
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Degree distribution exponent full network G: 3.2974527129230946
+Degree distribution exponent supgraph S: 3.8342121796821265
 ----------------------------------------------------------------------
 Transitivity full network G: 0.1929
 Transitivity supgraph S: 0.2991
@@ -763,15 +751,15 @@ Transitivity supgraph S: 0.2991
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We define a list of nodes to keep and remove edges that refers to nodes that we have removed</span>
 <span class="n">nodes_to_keep</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">index_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">sampled_supgraph</span><span class="o">.</span><span class="n">nodes</span><span class="p">())]</span>
-<span class="n">final_df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">nodes_to_keep</span><span class="p">)]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()[[</span><span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;parent&quot;</span><span class="p">,</span> <span class="s2">&quot;depth&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;edges&quot;</span><span class="p">]]</span>
-<span class="n">final_df</span> <span class="o">=</span> <span class="n">remove_edges_not_in_nodelist</span><span class="p">(</span><span class="n">final_df</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">nodes_to_keep</span><span class="p">)]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()[[</span><span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;parent&quot;</span><span class="p">,</span> <span class="s2">&quot;depth&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;edges&quot;</span><span class="p">]]</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">remove_edges_not_in_nodelist</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 
 <span class="c1"># Set attributes</span>
-<span class="n">node_attr</span> <span class="o">=</span> <span class="n">final_df</span><span class="p">[[</span><span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;parent&quot;</span><span class="p">,</span> <span class="s2">&quot;depth&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;title&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+<span class="n">node_attr</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s2">&quot;title&quot;</span><span class="p">,</span> <span class="s2">&quot;parent&quot;</span><span class="p">,</span> <span class="s2">&quot;depth&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s2">&quot;title&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">orient</span><span class="o">=</span><span class="s1">&#39;index&#39;</span><span class="p">)</span>
 
 <span class="c1"># Create an edgelist</span>
 <span class="n">edge_list</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">node</span><span class="p">,</span> <span class="n">edges</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">final_df</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">final_df</span><span class="p">[</span><span class="s1">&#39;edges&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()):</span>
+<span class="k">for</span> <span class="n">node</span><span class="p">,</span> <span class="n">edges</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;edges&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()):</span>
     <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">:</span>
         <span class="n">edge_list</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">node</span><span class="p">,</span> <span class="n">edge</span><span class="p">))</span>
 
@@ -785,20 +773,24 @@ Transitivity supgraph S: 0.2991
 <span class="n">G</span> <span class="o">=</span> <span class="n">G</span><span class="o">.</span><span class="n">subgraph</span><span class="p">(</span><span class="n">gcc</span><span class="p">)</span>
 
 <span class="c1"># Add a gcc column to our final DataFrame</span>
-<span class="n">final_df</span><span class="p">[</span><span class="s2">&quot;gcc&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">final_df</span><span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">()</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;gcc&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">1</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">()</span> <span class="k">else</span> <span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "5b226fb4ef1744fc9c07fb3752af44cb", "version_major": 2, "version_minor": 0}
+</script></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Saving the edgelist as the a directed network can not be pickled</span>
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;Final_edge_list.pickle&quot;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">([</span><span class="n">edge_list</span><span class="p">],</span> <span class="n">f</span><span class="p">)</span>
+    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">edge_list</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
     
 <span class="c1"># Saving the node attributes</span>
 <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;Final_node_attr.pickle&quot;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">([</span><span class="n">node_attr</span><span class="p">],</span> <span class="n">f</span><span class="p">)</span>
+    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">node_attr</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -857,36 +849,139 @@ We split up all the lemmatized pages into list of words (or tokens) and add them
     <span class="k">return</span> <span class="n">text</span>
 
 <span class="c1"># we apply all functions to the text</span>
-<span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">mode</span><span class="o">.</span><span class="n">chained_assignment</span> <span class="o">=</span> <span class="kc">None</span>  <span class="c1"># Hide DeprecationWarning</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>  <span class="c1"># Ignore DepreciationError</span>
 <span class="n">tqdm</span><span class="o">.</span><span class="n">pandas</span><span class="p">()</span>
-<span class="n">final_df</span><span class="p">[</span><span class="s1">&#39;cleaned_text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">final_df</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">progress_apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">clean_text</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-<span class="n">final_df</span><span class="p">[</span><span class="s1">&#39;lemmatized&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">final_df</span><span class="p">[</span><span class="s1">&#39;cleaned_text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">progress_apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">remove_stopwords</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-<span class="n">final_df</span><span class="p">[</span><span class="s1">&#39;lemmatized&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">final_df</span><span class="p">[</span><span class="s1">&#39;lemmatized&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">progress_apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">lemmatize</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-<span class="n">final_df</span><span class="p">[</span><span class="s1">&#39;tokens&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">final_df</span><span class="p">[</span><span class="s1">&#39;lemmatized&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">progress_apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;cleaned_text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">progress_apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">clean_text</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;lemmatized&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;cleaned_text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">progress_apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">remove_stopwords</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;lemmatized&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;lemmatized&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">progress_apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">lemmatize</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">df</span><span class="p">[</span><span class="s1">&#39;tokens&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;lemmatized&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">str</span><span class="p">)</span><span class="o">.</span><span class="n">progress_apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;&gt;:7: DeprecationWarning: invalid escape sequence \W
-</pre></div>
-</div>
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "9386349dac9d472c96802530ecf247ff", "version_major": 2, "version_minor": 0}
+{"model_id": "3d049402f0c64e3cabe5cbc7ad4a239e", "version_major": 2, "version_minor": 0}
 </script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "7409a59aa1d5467e8dc968024a7525fc", "version_major": 2, "version_minor": 0}
+{"model_id": "9f003087d33a4fc794ef030a91b2879a", "version_major": 2, "version_minor": 0}
 </script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "c68c5d47fc8c4b83a872eab681a1f5b1", "version_major": 2, "version_minor": 0}
+{"model_id": "04e50e22b5434f38b8c4c819f77437ba", "version_major": 2, "version_minor": 0}
 </script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "6915a412f7d94d7ba360957b91383eaa", "version_major": 2, "version_minor": 0}
+{"model_id": "a74d52b4a12a4b55881a3fb8e7dab949", "version_major": 2, "version_minor": 0}
 </script></div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Save final DataFrame</span>
-<span class="n">final_df</span><span class="o">.</span><span class="n">to_pickle</span><span class="p">(</span><span class="s2">&quot;Final_df.pickle&quot;</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">to_pickle</span><span class="p">(</span><span class="s2">&quot;Final_df.pickle&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;parent&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>title</th>
+      <th>depth</th>
+      <th>text</th>
+      <th>edges</th>
+      <th>gcc</th>
+      <th>cleaned_text</th>
+      <th>lemmatized</th>
+      <th>tokens</th>
+    </tr>
+    <tr>
+      <th>parent</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>anthropology</th>
+      <td>510</td>
+      <td>510</td>
+      <td>510</td>
+      <td>510</td>
+      <td>510</td>
+      <td>510</td>
+      <td>510</td>
+      <td>510</td>
+    </tr>
+    <tr>
+      <th>economics</th>
+      <td>1020</td>
+      <td>1020</td>
+      <td>1020</td>
+      <td>1020</td>
+      <td>1020</td>
+      <td>1020</td>
+      <td>1020</td>
+      <td>1020</td>
+    </tr>
+    <tr>
+      <th>political_science</th>
+      <td>1614</td>
+      <td>1614</td>
+      <td>1614</td>
+      <td>1614</td>
+      <td>1614</td>
+      <td>1614</td>
+      <td>1614</td>
+      <td>1614</td>
+    </tr>
+    <tr>
+      <th>psychology</th>
+      <td>543</td>
+      <td>543</td>
+      <td>543</td>
+      <td>543</td>
+      <td>543</td>
+      <td>543</td>
+      <td>543</td>
+      <td>543</td>
+    </tr>
+    <tr>
+      <th>sociology</th>
+      <td>615</td>
+      <td>615</td>
+      <td>615</td>
+      <td>615</td>
+      <td>615</td>
+      <td>615</td>
+      <td>615</td>
+      <td>615</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 </div>
 
@@ -919,13 +1014,13 @@ We split up all the lemmatized pages into list of words (or tokens) and add them
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Woop woop</p>
+            <p class="prev-next-title">Data collection and descriptive statistics</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="explainer_preprocessing.html" title="next page">
+    <a class='right-next' id="next-link" href="explainer_basicstats.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Preprocessing</p>
+        <p class="prev-next-title">Descriptive statistics</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
