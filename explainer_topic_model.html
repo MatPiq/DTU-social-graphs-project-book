@@ -324,20 +324,6 @@
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_3730</span><span class="o">/</span><span class="mf">2676618463.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="c1"># Import relevant modules</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">joblib</span>
-<span class="ne">----&gt; </span><span class="mi">3</span> <span class="kn">from</span> <span class="nn">hSBM_Topicmodel.sbmtm</span> <span class="kn">import</span> <span class="n">sbmtm</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="kn">from</span> <span class="nn">wordcloud</span> <span class="kn">import</span> <span class="n">WordCloud</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;hSBM_Topicmodel&#39;
-</pre></div>
-</div>
-</div>
 </div>
 <p>Inspired by the approach set forth by <a class="reference external" href="https://www.science.org/doi/10.1126/sciadv.aaq1360">Gerlach et al. 2018</a>, we show the hierarchical clustering of documents and words from our wikipedia dataset for all six scientific disciplines using a <strong>hierarchical Stochastic Block Model</strong> (hSBM). We only consider words that appear more than ten times in the text corpus and end up with 4810 articles or in our case, nodes. As opposed to other popular topic models such as LDA, we do not need to specify number of groups, levels or topics beforehand, since hSBM automatically detects these parameters. The model is inspired by community detection in networks and creates a bipartite-like network of words and documents. It splits the network into groups on different hierarchical levels organized as a tree. On each level, the hSBM clusters the documents and words in varying group sizes.</p>
 <p>We have fed the model with data consisting of preprocessed tokens from each Wikipedia article where wer remove infrequent tokens with a threshold at minimum 10 occurences per token. We are able to extract the documents from the model using the document number which corresponds to the index from our dataframe. We have merged the title of each article with the discipline from which it originates i.e. ‘Anarchism’ becomes ‘political_science-anarchism’, which we need for the forthcoming analysis.</p>
