@@ -809,117 +809,23 @@ We split up all the lemmatized pages into list of words (or tokens) and add them
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Save final DataFrame</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Saving and displaying the discipline distribution of the final DataFrame</span>
 <span class="n">df</span><span class="o">.</span><span class="n">to_pickle</span><span class="p">(</span><span class="s2">&quot;Final_df.pickle&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;parent&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+<span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;parent&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">count</span><span class="p">()[</span><span class="s2">&quot;title&quot;</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>title</th>
-      <th>depth</th>
-      <th>text</th>
-      <th>edges</th>
-      <th>gcc</th>
-      <th>cleaned_text</th>
-      <th>lemmatized</th>
-      <th>tokens</th>
-    </tr>
-    <tr>
-      <th>parent</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>anthropology</th>
-      <td>510</td>
-      <td>510</td>
-      <td>510</td>
-      <td>510</td>
-      <td>510</td>
-      <td>510</td>
-      <td>510</td>
-      <td>510</td>
-    </tr>
-    <tr>
-      <th>economics</th>
-      <td>1020</td>
-      <td>1020</td>
-      <td>1020</td>
-      <td>1020</td>
-      <td>1020</td>
-      <td>1020</td>
-      <td>1020</td>
-      <td>1020</td>
-    </tr>
-    <tr>
-      <th>political_science</th>
-      <td>1614</td>
-      <td>1614</td>
-      <td>1614</td>
-      <td>1614</td>
-      <td>1614</td>
-      <td>1614</td>
-      <td>1614</td>
-      <td>1614</td>
-    </tr>
-    <tr>
-      <th>psychology</th>
-      <td>543</td>
-      <td>543</td>
-      <td>543</td>
-      <td>543</td>
-      <td>543</td>
-      <td>543</td>
-      <td>543</td>
-      <td>543</td>
-    </tr>
-    <tr>
-      <th>sociology</th>
-      <td>615</td>
-      <td>615</td>
-      <td>615</td>
-      <td>615</td>
-      <td>615</td>
-      <td>615</td>
-      <td>615</td>
-      <td>615</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>parent
+anthropology         1401
+economics            4636
+political_science    5217
+psychology           6715
+sociology            3518
+Name: title, dtype: int64
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 
