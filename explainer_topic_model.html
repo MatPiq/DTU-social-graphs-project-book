@@ -318,16 +318,21 @@
   </a>
   <ul class="visible nav section-nav flex-column">
    <li class="toc-h2 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     hSBM Topic Modelling
+    </a>
+   </li>
+   <li class="toc-h2 nav-item toc-entry">
     <a class="reference internal nav-link" href="#bipartite-network-of-10-topics-articles-and-10-topic-words">
      Bipartite network of 10 topics-articles and 10 topic-words
     </a>
    </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#mangler">
-     Mangler
-    </a>
-   </li>
   </ul>
+ </li>
+ <li class="toc-h1 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#insert-interactive-graph-of-topics-articles">
+   insert interactive graph of topics-articles
+  </a>
  </li>
 </ul>
 
@@ -345,50 +350,70 @@
 </div>
 <div class="tex2jax_ignore mathjax_ignore section" id="topic-modelling-with-hsbm-community-detection-in-a-topic-model-context">
 <h1>Topic Modelling with hSBM: Community Detection in a Topic Model Context<a class="headerlink" href="#topic-modelling-with-hsbm-community-detection-in-a-topic-model-context" title="Permalink to this headline">¶</a></h1>
-<p>In this section we introduce part of our text analysis, namely the part which pertains to our topic modelling approach. Topic models are mainly used to cluster a collection of documents into different so-called ‘topics’.</p>
+<p>In this section we introduce part of our text analysis, namely the part which pertains to our topic modelling approach. Topic models are mainly used to cluster a collection of documents into different so-called ‘topics’. In oue analysis, we choose relevant topics, extract their topic distributions and visualize the words for each topic to demonstrate how and in which areas the different disciplines tend to interact on Wikipedia.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import relevant modules</span>
+<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">joblib</span>
-<span class="kn">from</span> <span class="nn">hSBM_Topicmodel.sbmtm</span> <span class="kn">import</span> <span class="n">sbmtm</span>
 <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 <span class="kn">from</span> <span class="nn">wordcloud</span> <span class="kn">import</span> <span class="n">WordCloud</span>
 <span class="kn">import</span> <span class="nn">matplotlib.colors</span> <span class="k">as</span> <span class="nn">mcolors</span>
 <span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">netwulf</span> <span class="k">as</span> <span class="nn">nw</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">Image</span>
 </pre></div>
 </div>
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># load data</span>
+<span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/Users/emiliemunchgregersen/Downloads&#39;</span>
+<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+<span class="c1"># wikipedia data</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;wiki_df_new.csv.gz&#39;</span><span class="p">,</span> <span class="n">compression</span> <span class="o">=</span> <span class="s1">&#39;gzip&#39;</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Unnamed: 0&#39;</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">tokens</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">tokens</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">eval</span><span class="p">)</span>
+<span class="n">new_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">parent</span><span class="o">+</span> <span class="s1">&#39;-&#39;</span> <span class="o">+</span> <span class="n">df</span><span class="o">.</span><span class="n">title</span><span class="p">))</span>
+<span class="n">new_names</span> <span class="o">=</span> <span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="nb">tuple</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">new_names</span><span class="p">)]</span>
+
+<span class="c1"># hSBM data</span>
+<span class="n">topic_dist_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;topic_dist_df.csv&#39;</span><span class="p">)</span>
+<span class="n">topic_dist_df</span> <span class="o">=</span> <span class="n">topic_dist_df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Unnamed: 0&#39;</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;topics_l1.json&#39;</span><span class="p">)</span>
+<span class="n">topics_l1</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="c1"># topics at level 1 returning 20 most probable words</span>
+<span class="n">topics_l1</span> <span class="o">=</span> <span class="p">{</span><span class="nb">int</span><span class="p">(</span><span class="n">k</span><span class="p">):</span><span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">topics_l1</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+
+<span class="c1"># network data </span>
+<span class="n">word_nx</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;word_bipartite_df.csv&#39;</span><span class="p">)</span>
+<span class="n">word_nx</span> <span class="o">=</span> <span class="n">word_nx</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Unnamed: 0&#39;</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">bipart_nx</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;bipartite_df.csv&#39;</span><span class="p">)</span>
+<span class="n">bipart_nx</span> <span class="o">=</span> <span class="n">bipart_nx</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Unnamed: 0&#39;</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id1">
+<h2>hSBM Topic Modelling<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <p>Inspired by the approach set forth by <a class="reference external" href="https://www.science.org/doi/10.1126/sciadv.aaq1360">Gerlach et al. 2018</a>, we show the hierarchical clustering of documents and words from our wikipedia dataset for all six scientific disciplines using a <strong>hierarchical Stochastic Block Model</strong> (hSBM). We only consider words that appear more than ten times in the text corpus and end up with 4810 articles or in our case, nodes. As opposed to other popular topic models such as LDA, we do not need to specify number of groups, levels or topics beforehand, since hSBM automatically detects these parameters. The model is inspired by community detection in networks and creates a bipartite-like network of words and documents. It splits the network into groups on different hierarchical levels organized as a tree. On each level, the hSBM clusters the documents and words in varying group sizes.</p>
-<p>We have fed the model with data consisting of preprocessed tokens from each Wikipedia article where wer remove infrequent tokens with a threshold at minimum 10 occurences per token. We are able to extract the documents from the model using the document number which corresponds to the index from our dataframe. We have merged the title of each article with the discipline from which it originates i.e. ‘Anarchism’ becomes ‘political_science-anarchism’, which we need for the forthcoming analysis.</p>
+<p>We have fed the model with data consisting of preprocessed tokens from each Wikipedia article where we remove infrequent tokens with a threshold at minimum 10 occurences per token. We are able to extract the documents from the model using the document number which corresponds to the index from our dataframe. We have merged the title of each article with the discipline from which it originates i.e. ‘Voter Turnout’ becomes ‘political_science-voter_turnout, which we need for the forthcoming analysis.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># load model</span>
-<span class="n">model</span> <span class="o">=</span> <span class="n">joblib</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s2">&quot;hSBM_model.joblib&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot of the model&#39;s hierarchical layers </span>
+<span class="n">Image</span><span class="p">(</span><span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;/Users/emiliemunchgregersen/Downloads/hSBM.png&#39;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="mi">450</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="mi">200</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
-</div>
-<p>Let’s take a look at the structure of the model</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot the model</span>
-<span class="n">model</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">nedges</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
-</pre></div>
+<div class="cell_output docutils container">
+<img alt="_images/explainer_topic_model_6_0.png" src="_images/explainer_topic_model_6_0.png" />
 </div>
 </div>
-</div>
-<p>comment on the visualization</p>
-<p>And now for the real fun - let’s extract the topics. We have experimented with extracting topics at different levels of the model (our model has 7 levels). Generally, we find that the topics at level 1 are the most cohesive and specific which is useful for our analysis. We specify that the model should return the 20 most probable words per topic (remember the model itself chooses number of topics).</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">topics_l1</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">topics</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>The model generates 76 topics on level 1 which span from very method-related to more theme or topic-specific such as ‘socialism’ or ‘US politics’. On level 2, we find 15 topics which are more discipline-related and broader. The lower the level, the less semantically cohesive the topics. We choose and name 10 topics for our content analysis:</p>
+<p>The above image shows the structure of the model. On the left side, we have the documents and on the right side, we see the words. Compared to Gerlach et al.’s visualization (see link), we are not able to detect the different disciplines from this image, however we do find the division on the document-ax interesting as it seems to divide the divide the documents into two overall sections.</p>
+<p>We have experimented with extracting topics at different levels of the model (our model has 7 levels). Generally, we find that the topics at level 1 are the most cohesive and specific which is useful for our analysis. We specify that the model should return the 20 most probable words per topic (remember the model itself chooses number of topics). The model generates 76 topics on level 1 which span from very method-related to more theme or topic-specific such as ‘socialism’ or ‘US politics’. On level 2, we find 15 topics which are more discipline-related and broader. The lower the level, the less semantically cohesive the topics. We choose and name 10 topics for our content analysis:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># the 10 topics from level 1 of our model</span>
@@ -399,58 +424,117 @@
 
 <span class="c1"># we create a pandas dataframe for our topics and topic words</span>
 <span class="n">topic_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">chosen_topics</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-<span class="n">topic_values</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">chosen_topics</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
 
 <span class="n">topic_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span> <span class="o">=</span> <span class="n">topic_names</span><span class="p">)</span>
-<span class="n">topic_df</span><span class="p">[</span><span class="s1">&#39;topics&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">topic_values</span>
+<span class="n">topic_df</span><span class="p">[</span><span class="s1">&#39;topics&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">chosen_topics</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
 <span class="n">topic_df</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>topics</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>administrative_science</th>
+      <td>[[law, 0.30511587704608073], [power, 0.2227324...</td>
+    </tr>
+    <tr>
+      <th>market_economy</th>
+      <td>[[country, 0.2939826619071902], [economic, 0.2...</td>
+    </tr>
+    <tr>
+      <th>museum_anthropology</th>
+      <td>[[animal, 0.0694333173102601], [anthropology, ...</td>
+    </tr>
+    <tr>
+      <th>cognitive_psychology</th>
+      <td>[[cognitive, 0.06543223284100783], [memory, 0....</td>
+    </tr>
+    <tr>
+      <th>academia</th>
+      <td>[[university, 0.12850992917650325], [american,...</td>
+    </tr>
+    <tr>
+      <th>statistical_methods</th>
+      <td>[[data, 0.10926193921852388], [factor, 0.10308...</td>
+    </tr>
+    <tr>
+      <th>socialism</th>
+      <td>[[right, 0.18845588527390458], [movement, 0.10...</td>
+    </tr>
+    <tr>
+      <th>labour_economics</th>
+      <td>[[worker, 0.1709834834834835], [labour, 0.125]...</td>
+    </tr>
+    <tr>
+      <th>class_racialization</th>
+      <td>[[family, 0.1137934539540557], [class, 0.10200...</td>
+    </tr>
+    <tr>
+      <th>US_politics_SoMe</th>
+      <td>[[medium, 0.27214524605828955], [campaign, 0.1...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
-<p>The topics we chose are cherry picked meaning that we choose them based on word clusters we find interesting - both some which we believe to be ‘pure’ discipline and some which we believe to capture some overlap between disciplines. Next step is to extract the topic distribution for each chosen topic related to the articles which the given topic is most contributing in. Luckily, the hSBM library has a function we can use:</p>
+<p>The topics we choose are chosen based on word clusters we find interesting and semantically meaningful for our purpose - both some which we believe to be ‘pure’ discipline and some which we believe to capture some overlap between disciplines. Our analysis will therefore touch upon patterns and tendencies rather than generalize across our entire dataset. From the words, we are already able to get a general idea of what kind of topic to infer. We do however want to be certain in our assesment and have therefore extracted the topic distribution for each chosen topic and their relation to articles in our corpus. We create clusters of the top 30 articles which are most related to each topic to better name the topics.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># get model paramers from level 1</span>
-<span class="n">model_params</span> <span class="o">=</span> <span class="n">loaded_model</span><span class="o">.</span><span class="n">get_groups</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-
-<span class="c1"># create a dataframe to store the topic distributions from the model parameters</span>
-<span class="n">topic_dist_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">model_params</span><span class="p">[</span><span class="s1">&#39;p_tw_d&#39;</span><span class="p">],</span>
-<span class="n">columns</span><span class="o">=</span><span class="n">new_names</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># we create a function to extract the relevant data from our topic distributions</span>
+<span class="k">def</span> <span class="nf">get_topic_dist</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
+    
+    <span class="c1"># get the topic</span>
+    <span class="n">topic</span> <span class="o">=</span> <span class="n">topics_l1</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+    <span class="c1"># get the words belonging to each topic</span>
+    <span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="nb">tuple</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">topic</span><span class="p">)]</span>
+    <span class="c1"># and their probabilities</span>
+    <span class="n">word_prob</span> <span class="o">=</span> <span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="nb">tuple</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">topic</span><span class="p">)]</span>
+    <span class="c1"># get the 30 most probable articles related from the topic distribution</span>
+    <span class="n">topic_dist</span> <span class="o">=</span> <span class="n">topic_dist_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)[:</span><span class="mi">30</span><span class="p">]</span>
+    <span class="c1"># store their probabilities</span>
+    <span class="n">article_probabilities</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">topic_dist</span><span class="p">]</span>
+    <span class="c1"># and their names</span>
+    <span class="n">articles</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">topic_dist</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
+    
+    <span class="c1">#print(&#39;topic name: &#39; + str(topic))</span>
+    <span class="c1">#print(&#39;topic words: &#39; + str(words))</span>
+    <span class="c1">#print(&#39;topic distribution: &#39; + str(topic_dist_df.iloc[key].sort_values(ascending = False)[:30]))</span>
+    
+    <span class="k">return</span> <span class="n">topic_num_names</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">article_probabilities</span><span class="p">,</span> <span class="n">articles</span><span class="p">,</span> <span class="n">words</span><span class="p">,</span> <span class="n">word_prob</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p>(p_tw_d corresponds to probability of word group e.i. topic is in a given document)</p>
+<p>Let’s take a look at the data we get from this function.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># we create a new dict with original key values as keys and inferred topic as value</span>
 <span class="n">new_keys_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">chosen_topics</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 <span class="n">topic_num</span> <span class="o">=</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">68</span><span class="p">,</span> <span class="mi">75</span><span class="p">]</span>
 <span class="n">topic_num_names</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">topic_num</span><span class="p">,</span> <span class="n">new_keys_names</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>Now we are ready to extract the topic distributions for each topic. We create a function which returns the topic name, the article and their probabilities as well as the words and word probabilities for each topic.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_topic_dist</span><span class="p">(</span><span class="n">key</span><span class="p">):</span>
-    <span class="n">topic</span> <span class="o">=</span> <span class="n">topics_l1</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
-    <span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="nb">tuple</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">topic</span><span class="p">)]</span>
-    <span class="n">word_prob</span> <span class="o">=</span> <span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="nb">tuple</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">topic</span><span class="p">)]</span>
-    <span class="n">topic_dist</span> <span class="o">=</span> <span class="n">topic_dist_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)[:</span><span class="mi">30</span><span class="p">]</span>
-    <span class="n">article_probabilities</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">topic_dist</span><span class="p">]</span>
-    <span class="n">articles</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">topic_dist</span><span class="o">.</span><span class="n">index</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">topic_num_names</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">article_probabilities</span><span class="p">,</span> <span class="n">articles</span><span class="p">,</span> <span class="n">words</span><span class="p">,</span> <span class="n">word_prob</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>All we need now is to store the different values for our following analysis.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># lists of the different values we need </span>
+
+<span class="c1"># lists of the different values we need </span>
 <span class="n">topics</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">probabilities</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="n">article_names</span> <span class="o">=</span> <span class="p">[]</span>
@@ -465,44 +549,76 @@
     <span class="n">article_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">element</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
     <span class="n">words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">element</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
     <span class="n">word_prob</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">element</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+
+<span class="n">chosen_topics_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span> <span class="o">=</span> <span class="n">topics</span><span class="p">)</span>
+<span class="n">chosen_topics_df</span><span class="p">[</span><span class="s1">&#39;article_names&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">article_names</span>
+<span class="n">chosen_topics_df</span><span class="p">[</span><span class="s1">&#39;article_proba&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">probabilities</span>
+<span class="n">chosen_topics_df</span><span class="p">[</span><span class="s1">&#39;words&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">words</span>
+<span class="n">chosen_topics_df</span><span class="p">[</span><span class="s1">&#39;word_proba&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">word_prob</span>
 </pre></div>
 </div>
 </div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">article_names</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">probabilities</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(&#39;political_science-law_without_the_state&#39;, 0.2258064516129032),
+ (&#39;political_science-exclusive_federal_powers&#39;, 0.1610169491525423),
+ (&#39;economics-economic_power&#39;, 0.1428571428571428),
+ (&#39;political_science-the_province_of_jurisprudence_determined&#39;, 0.14),
+ (&#39;political_science-concurrent_powers&#39;, 0.134020618556701),
+ (&#39;political_science-dualism_(law)&#39;, 0.133492252681764),
+ (&#39;political_science-political_obligation&#39;, 0.1306818181818181),
+ (&#39;political_science-retslægerådet&#39;, 0.1304347826086956),
+ (&#39;sociology-authority_(sociology)&#39;, 0.1264108352144469),
+ (&#39;political_science-implied_powers&#39;, 0.1196172248803827),
+ (&#39;sociology-delegated_authority&#39;, 0.1111111111111111),
+ (&#39;political_science-institute_of_parliamentary_and_political_law&#39;,
+  0.10828025477707),
+ (&#39;political_science-universal_law&#39;, 0.1016949152542373),
+ (&#39;sociology-tripartite_classification_of_authority&#39;, 0.1011904761904761),
+ (&#39;economics-hans-bernd_schäfer&#39;, 0.1),
+ (&#39;political_science-promulgation_(catholic_canon_law)&#39;, 0.098876404494382),
+ (&#39;political_science-vacatio_legis&#39;, 0.0987261146496815),
+ (&quot;sociology-yhprum&#39;s_law&quot;, 0.0944881889763779),
+ (&#39;political_science-list_of_national_legal_systems&#39;, 0.0932297447280799),
+ (&#39;economics-thrift_institution&#39;, 0.0909090909090909),
+ (&#39;political_science-leo_katz_(lawyer)&#39;, 0.0903614457831325),
+ (&#39;political_science-jus_commune&#39;, 0.0877742946708464),
+ (&#39;political_science-philosophy,_theology,_and_fundamental_theory_of_catholic_canon_law&#39;,
+  0.0856553147574819),
+ (&#39;political_science-jurisprudence&#39;, 0.0851218624954529),
+ (&#39;anthropology-anthropology_of_institutions&#39;, 0.0841423948220064),
+ (&#39;political_science-international_law&#39;, 0.0825206301575393),
+ (&#39;political_science-brocard_(law)&#39;, 0.0790960451977401),
+ (&#39;political_science-federal_law&#39;, 0.0789473684210526),
+ (&quot;economics-gibrat&#39;s_law&quot;, 0.0785498489425981),
+ (&#39;political_science-jurisprudence_of_concepts&#39;, 0.078125)]
+</pre></div>
+</div>
+</div>
+</div>
+<p>For topic 7, we infer it to regard administrative science. While the most probable words are ‘law’, ‘power’, and ‘institution’, we also see how the topic is the majority contributor in an overweight of political science documents which suggest the topic to be political science-related. This topic is one of our more or less ‘pure’ discipline topics. Let’s take a look at one of our more intersiciplinary topics:</p>
+<p>Since the distribution of wikipedia articles between disciplines is skewed towards political science, we find many political science-related topics in general. In the above table, ‘administrative science’, ‘academia’, ‘socialism’ and ‘US politics and Social Media’ are topics mainly contributing to political science articles which we infer to be political science topics.</p>
 </div>
 <div class="section" id="bipartite-network-of-10-topics-articles-and-10-topic-words">
 <h2>Bipartite network of 10 topics-articles and 10 topic-words<a class="headerlink" href="#bipartite-network-of-10-topics-articles-and-10-topic-words" title="Permalink to this headline">¶</a></h2>
 <p>We want to visualize the topics and their related articles as well as their related words in two separate bipartite networks. The topics will be one type of nodes and the articles/words another type. Links represents articles/words connected to the given topic. The links are further weigthed by the probabilities for an article/word to contributing/explanatory of the topic.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># remember this is not a coding class xD</span>
-<span class="n">y_word</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
-<span class="n">w_word</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
-
-<span class="c1"># we create two different lists of tuples</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">w_word</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">topics</span><span class="p">)):</span>
     <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">words</span><span class="p">[</span><span class="mi">0</span><span class="p">])):</span>
-        <span class="c1"># topic name and related words</span>
-        <span class="n">y_word</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">topics</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">words</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">element</span><span class="p">]))</span>
-        <span class="c1">#topic name, words and their probabilities</span>
         <span class="n">w_word</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">topics</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">words</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">element</span><span class="p">],</span><span class="n">word_prob</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">element</span><span class="p">]))</span>
-    
-<span class="c1"># we repeat the process for articles     </span>
-<span class="n">y</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
-<span class="n">w</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
 
+<span class="n">w</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">article_names</span><span class="p">)):</span>
     <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">article_names</span><span class="p">[</span><span class="mi">0</span><span class="p">])):</span>
-        <span class="n">y</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">topics</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">article_names</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">element</span><span class="p">]))</span>
         <span class="n">w</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">topics</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">article_names</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">element</span><span class="p">],</span><span class="n">probabilities</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">element</span><span class="p">]))</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># two separate dataframes to create the network from </span>
-<span class="n">bipart_nx</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sender&#39;</span><span class="p">,</span> <span class="s1">&#39;receiver&#39;</span><span class="p">,</span> <span class="s1">&#39;weight&#39;</span><span class="p">])</span>
-<span class="n">word_nx</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">w_word</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;sender&#39;</span><span class="p">,</span> <span class="s1">&#39;receiver&#39;</span><span class="p">,</span> <span class="s1">&#39;weight&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -511,28 +627,31 @@
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># bipartite network x graph object of topic-words</span>
 <span class="n">B_word</span><span class="o">=</span><span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
-<span class="n">B_word</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="n">word_nx</span><span class="p">[</span><span class="s1">&#39;receiver&#39;</span><span class="p">],</span> <span class="n">bipartite</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">B_word</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="n">word_nx</span><span class="p">[</span><span class="s1">&#39;sender&#39;</span><span class="p">],</span> <span class="n">bipartite</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">B_word</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="n">word_nx</span><span class="p">[</span><span class="s1">&#39;source&#39;</span><span class="p">],</span> <span class="n">bipartite</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">B_word</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="n">word_nx</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">],</span> <span class="n">bipartite</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">B_word</span><span class="o">.</span><span class="n">add_weighted_edges_from</span><span class="p">(</span><span class="n">w_word</span><span class="p">)</span>
 
 <span class="c1"># bipartite network x graph object of topic-articles</span>
 <span class="n">B</span><span class="o">=</span><span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">()</span>
-<span class="n">B</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="n">bipart_nx</span><span class="p">[</span><span class="s1">&#39;receiver&#39;</span><span class="p">],</span> <span class="n">bipartite</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-<span class="n">B</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="n">bipart_nx</span><span class="p">[</span><span class="s1">&#39;sender&#39;</span><span class="p">],</span> <span class="n">bipartite</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">B</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="n">bipart_nx</span><span class="p">[</span><span class="s1">&#39;source&#39;</span><span class="p">],</span> <span class="n">bipartite</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">B</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="n">bipart_nx</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">],</span> <span class="n">bipartite</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">B</span><span class="o">.</span><span class="n">add_weighted_edges_from</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="section" id="mangler">
-<h2>Mangler<a class="headerlink" href="#mangler" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><p>vise svg fil eller visualiser med netwulf</p></li>
-<li><p>lav wordclouds</p></li>
-<li><p>skriv content analysen ud fra visualiseringer</p></li>
-</ul>
-<p>Gerlach et al. point to the hSBM’s ability to identify groups of stopwords. We however chose to remove stopwords in our initial preprocessing. We do not specify any stopwords for the wordclouds to bypass.</p>
+</div>
+<div class="tex2jax_ignore mathjax_ignore section" id="insert-interactive-graph-of-topics-articles">
+<h1>insert interactive graph of topics-articles<a class="headerlink" href="#insert-interactive-graph-of-topics-articles" title="Permalink to this headline">¶</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">topics_subset</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">topics_l1</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">topic_num</span><span class="p">}</span>
+<span class="n">topics_subset</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">topics_subset</span><span class="o">.</span><span class="n">values</span><span class="p">())}</span>
+</pre></div>
+</div>
+</div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># wordcloud of Top 20 words in each topic</span>
@@ -546,17 +665,18 @@
                   <span class="n">color_func</span><span class="o">=</span><span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">cols</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
                   <span class="n">prefer_horizontal</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
 
-<span class="n">topics</span> <span class="o">=</span> <span class="n">topics_l1</span>
+<span class="n">topics</span> <span class="o">=</span> <span class="n">topics_subset</span>
 
-<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">()):</span>
     <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
-    <span class="n">topic_words</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">topics</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+    <span class="n">topic_words</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">topics_subset</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
     <span class="n">cloud</span><span class="o">.</span><span class="n">generate_from_frequencies</span><span class="p">(</span><span class="n">topic_words</span><span class="p">,</span> <span class="n">max_font_size</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">cloud</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Topic &#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">),</span> <span class="n">fontdict</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">16</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">topic_names</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="n">fontdict</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">16</span><span class="p">))</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
+    <span class="c1">#plt.save</span>
 
 
 <span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">wspace</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">hspace</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
@@ -567,34 +687,8 @@
 </pre></div>
 </div>
 </div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># subsample </span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># clustering</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># dataframes</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plots </span>
-</pre></div>
-</div>
-</div>
+<div class="cell_output docutils container">
+<img alt="_images/explainer_topic_model_21_0.png" src="_images/explainer_topic_model_21_0.png" />
 </div>
 </div>
 </div>
