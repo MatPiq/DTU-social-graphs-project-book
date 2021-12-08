@@ -880,7 +880,7 @@ Mean community size 110.375 nodes
 \[
 AME_{jk} = \frac{\partial Pr[y_i = j|\mathbf{w}_{i}]}{\partial w_{jk}} = N^{-1} \sum_{i = 1}^N p_{ij}\left(\theta_{jk} - \sum^J_{m = 1} p_{im} \theta_{mk}\right)
 \]</div>
-<p>where <span class="math notranslate nohighlight">\(\mathbf{w}_i\)</span> is a vector of token frequencies for each community and <span class="math notranslate nohighlight">\({\theta}_j\)</span> is the estimated coefficient vector for each community of length equal to the vocabulary. This also means that we rely on the raw count of every token in each community rather than TF-IDF value to calculate the AME. We do this to ease the interpretability of the effects, as the AME then describe how the probability of a community changes as we increment the count of the given token. To get the raw count of our vocabulary we use our funtion <code class="docutils literal notranslate"><span class="pre">create_dfm()</span></code> from before but set the <code class="docutils literal notranslate"><span class="pre">idf</span></code> argument to <code class="docutils literal notranslate"><span class="pre">False</span></code>, hence we get the word counts. As before, we specify that a token have to occur at least five times in community to be part of a document-feature-matrix.</p>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{w}_i\)</span> is a vector of token frequencies for each community and <span class="math notranslate nohighlight">\({\theta}_j\)</span> is the estimated coefficient vector for each community of length equal to the vocabulary. This also means that we rely on the raw count of every token in each community rather than TF-IDF value to calculate the AME. We do this to ease the interpretability of the effects, as the AME then describes how the probability of a community changes as we increment the count of the given token. To get the raw count of our vocabulary we use our function <code class="docutils literal notranslate"><span class="pre">create_dfm()</span></code> from before but set the <code class="docutils literal notranslate"><span class="pre">idf</span></code> argument to <code class="docutils literal notranslate"><span class="pre">False</span></code>, hence we get the word counts. As before, we specify that a token have to occur at least 5 times in a community to be part of a document-feature-matrix.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Document feature matrix with simple counts</span>
@@ -913,7 +913,7 @@ AME_{jk} = \frac{\partial Pr[y_i = j|\mathbf{w}_{i}]}{\partial w_{jk}} = N^{-1} 
 <span class="k">def</span> <span class="nf">plot_most_predictive_features</span><span class="p">(</span><span class="n">margins_df</span><span class="p">:</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">K</span><span class="p">:</span><span class="nb">int</span><span class="o">=</span><span class="mi">20</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Based on a DataFrame with the average marginal effect for a list of </span>
-<span class="sd">    features this function plots the K higest features for the different </span>
+<span class="sd">    features this function plots the K highest features for the different </span>
 <span class="sd">    classes.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span> <span class="n">dpi</span> <span class="o">=</span> <span class="mi">300</span><span class="p">)</span>
@@ -951,12 +951,12 @@ AME_{jk} = \frac{\partial Pr[y_i = j|\mathbf{w}_{i}]}{\partial w_{jk}} = N^{-1} 
 <div class="cell_output docutils container">
 <img alt="_images/explainer_community_detection_16_0.svg" src="_images/explainer_community_detection_16_0.svg" /></div>
 </div>
-<p>Before we comment features’ meaning it is important to notice that the y-scale uses scientific notation and thus reflect quite small effect sizes. All though the difference are minor, we believe that the most predictive features from the multinomial logistic regression makes the communities are bit easier to interpret. It now becomes clearer that community 5 is related to sociology and community 4 have something to do with middle-eastern immigration. To see how each of these topic are strucuted and related to the different disciplines we draw each of them as networks which nodes colourd according to their discipline.</p>
+<p>Before we comment on the meaning of features, it is important to note that the y-scale uses scientific notation and thus reflects quite small effect sizes. Although the differences are minor, we believe that the most predictive features from the multinomial logistic regression make the communities easier to interpret. It now becomes clearer that community 5 for instance is related to sociology and community 4 have something to do with middle-eastern immigration. To see how each of these topic are strucuted and related to the different disciplines we draw each of them as networks with nodes coloured according to their discipline.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span>
 
-<span class="c1"># Prettifying and uniforming names in the df and graph</span>
+<span class="c1"># Prettyfying and uniforming names in the df and graph</span>
 <span class="k">def</span> <span class="nf">change_node_names</span><span class="p">(</span><span class="n">node</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Replaces &quot;_&quot; to &quot; &quot; in node names.</span>
@@ -968,7 +968,7 @@ AME_{jk} = \frac{\partial Pr[y_i = j|\mathbf{w}_{i}]}{\partial w_{jk}} = N^{-1} 
 <span class="c1"># Setting colours</span>
 <span class="k">def</span> <span class="nf">get_colors_palette_from_parent</span><span class="p">(</span><span class="n">G</span><span class="p">:</span> <span class="n">nx</span><span class="o">.</span><span class="n">Graph</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
     <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Creates a color palette given the parent attributes of the </span>
+<span class="sd">    Creates a color palette given the parent attribute of the </span>
 <span class="sd">    nodes in a network.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">disciplines</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">node</span><span class="p">][</span><span class="s2">&quot;parent&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">()])</span>
@@ -985,7 +985,7 @@ AME_{jk} = \frac{\partial Pr[y_i = j|\mathbf{w}_{i}]}{\partial w_{jk}} = N^{-1} 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">col_pal</span><span class="p">[</span><span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="s2">&quot;parent&quot;</span><span class="p">]]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">]</span>
 
-<span class="c1"># Creates dictionary of supgraphs for each community</span>
+<span class="c1"># Creates dictionary of subgraphs for each community</span>
 <span class="n">community_graphs</span> <span class="o">=</span> <span class="p">{}</span>
 <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">top9_df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">tolist</span><span class="p">():</span>
     <span class="n">community_nodes</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> 
@@ -1150,46 +1150,7 @@ AME_{jk} = \frac{\partial Pr[y_i = j|\mathbf{w}_{i}]}{\partial w_{jk}} = N^{-1} 
   }
 })(window);</script></div>
 </div>
-<p>These graphs highlight that the main communites - using the Louvain algorithm - of our network are very much intra-disciplinary. There is however two exceptions: Community 14 and 5. Whereas community 14 is a bit of a mixture of all bad things such as <a class="reference external" href="https://en.wikipedia.org/wiki/Propaganda">propaganda</a>, <a class="reference external" href="https://en.wikipedia.org/wiki/Slave">slave</a>, <a class="reference external" href="https://en.wikipedia.org/wiki/Brainwashing">brainwashing</a>, <a class="reference external" href="https://en.wikipedia.org/wiki/Peer_pressure">peer pressure</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/Astrology">astrology</a>, community 5 seems to constitute anthropology and sociology’s view on a society’s vital components such <a class="reference external" href="https://en.wikipedia.org/wiki/Religion">religion</a>, <a class="reference external" href="https://en.wikipedia.org/wiki/language">language</a>, <a class="reference external" href="https://en.wikipedia.org/wiki/Social_class">classes</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/Social_complexity">social complexity</a>.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd"># If we want to bootstrap ci</span>
-<span class="sd">def bootstrap_ci(tf=tf, n_prop:int=0.50, n_runs:int=100):</span>
-<span class="sd">    statistics = [] </span>
-<span class="sd">    n_obs = tf.values.shape[1]</span>
-<span class="sd">    n_size = int(n_obs * n_prop)</span>
-<span class="sd">    print(f&quot;Number of obs in bootstrap samples {n_size}...&quot;)</span>
-<span class="sd">    start = time.time()</span>
-<span class="sd">    for i in tqdm(range(n_runs)):</span>
-<span class="sd">        #Draw random sample from X and y with replacement</span>
-<span class="sd">        sample = tf.sample(n=n_size,axis=&#39;columns&#39;)</span>
-<span class="sd">        x_sample = sample.values</span>
-<span class="sd">        y_sample = sample.index.values</span>
-<span class="sd">        #Calculate marginal effect for sample</span>
-<span class="sd">        m = margins(x_sample, y_sample, vocab = sample.columns.tolist())</span>
-<span class="sd">        statistics.append(m)</span>
-
-<span class="sd">    #Join the resulting dataframes of margins</span>
-<span class="sd">    statistics = pd.concat(statistics, axis=0)</span>
-<span class="sd">    print(f&quot;Boostraping Done. Calculating {1-0.05}% confidence interval...&quot;)</span>
-<span class="sd">    #From bootstrap results get lower and upper CI limits based on alpha</span>
-<span class="sd">    statistics = statistics.groupby(&quot;token&quot;).quantile([0.05, 1-0.05]).reset_index()    </span>
-<span class="sd">    print(&quot;Time to complete: &quot;, time.time() - start)</span>
-<span class="sd">    return statistics</span>
-<span class="sd">    </span>
-<span class="sd">margins_pd = margins()</span>
-<span class="sd">std = bootstrap_ci()</span>
-<span class="sd">&quot;&quot;&quot;</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;\n# If we want to bootstrap ci\ndef bootstrap_ci(tf=tf, n_prop:int=0.50, n_runs:int=100):\n    statistics = [] \n    n_obs = tf.values.shape[1]\n    n_size = int(n_obs * n_prop)\n    print(f&quot;Number of obs in bootstrap samples {n_size}...&quot;)\n    start = time.time()\n    for i in tqdm(range(n_runs)):\n        #Draw random sample from X and y with replacement\n        sample = tf.sample(n=n_size,axis=\&#39;columns\&#39;)\n        x_sample = sample.values\n        y_sample = sample.index.values\n        #Calculate marginal effect for sample\n        m = margins(x_sample, y_sample, vocab = sample.columns.tolist())\n        statistics.append(m)\n\n    #Join the resulting dataframes of margins\n    statistics = pd.concat(statistics, axis=0)\n    print(f&quot;Boostraping Done. Calculating {1-0.05}% confidence interval...&quot;)\n    #From bootstrap results get lower and upper CI limits based on alpha\n    statistics = statistics.groupby(&quot;token&quot;).quantile([0.05, 1-0.05]).reset_index()    \n    print(&quot;Time to complete: &quot;, time.time() - start)\n    return statistics\n    \nmargins_pd = margins()\nstd = bootstrap_ci()\n&#39;
-</pre></div>
-</div>
-</div>
-</div>
+<p>These graphs highlight that the main communites - using the Louvain algorithm - of our network are very much intra-disciplinary. There is however two exceptions: Community 14 and 5. Whereas community 14 is a bit of a mixture of all bad things such as <a class="reference external" href="https://en.wikipedia.org/wiki/Propaganda">propaganda</a>, <a class="reference external" href="https://en.wikipedia.org/wiki/Slave">slave</a>, <a class="reference external" href="https://en.wikipedia.org/wiki/Brainwashing">brainwashing</a>, <a class="reference external" href="https://en.wikipedia.org/wiki/Peer_pressure">peer pressure</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/Astrology">astrology</a>, community 5 seems to constitute of classical topics within anthropology and sociology regarding societal components such as <a class="reference external" href="https://en.wikipedia.org/wiki/Religion">religion</a>, <a class="reference external" href="https://en.wikipedia.org/wiki/language">language</a>, <a class="reference external" href="https://en.wikipedia.org/wiki/Social_class">classes</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/Social_complexity">social complexity</a>.</p>
 </div>
 </div>
 
