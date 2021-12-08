@@ -362,7 +362,12 @@
 <span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">Image</span>
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">Image</span><span class="p">,</span> <span class="n">set_matplotlib_formats</span>
+<span class="kn">import</span> <span class="nn">ast</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">rc</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;science&#39;</span><span class="p">)</span>
+<span class="n">set_matplotlib_formats</span><span class="p">(</span><span class="s1">&#39;svg&#39;</span><span class="p">)</span>
+<span class="n">rc</span><span class="p">(</span><span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="n">usetex</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -403,7 +408,7 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot of the model&#39;s hierarchical layers </span>
-<span class="n">Image</span><span class="p">(</span><span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;/Users/emiliemunchgregersen/Downloads/hSBM.png&#39;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="mi">250</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">Image</span><span class="p">(</span><span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;/Users/emiliemunchgregersen/Downloads/hSBM.png&#39;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -425,125 +430,31 @@
 <span class="n">topic_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">chosen_topics</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
 
 <span class="n">topic_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span> <span class="o">=</span> <span class="n">topic_names</span><span class="p">)</span>
-<span class="n">topic_df</span><span class="p">[</span><span class="s1">&#39;topics&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">chosen_topics</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
-<span class="n">topic_df</span>
+<span class="n">topic_df</span><span class="p">[</span><span class="s1">&#39;topics&#39;</span><span class="p">]</span> <span class="o">=</span>   <span class="nb">list</span><span class="p">(</span><span class="n">chosen_topics</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
 </pre></div>
 </div>
 </div>
-<div class="cell_output docutils container">
-<div class="output text_html"><div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>topics</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>administrative_science</th>
-      <td>[[law, 0.30511587704608073], [power, 0.2227324...</td>
-    </tr>
-    <tr>
-      <th>market_economy</th>
-      <td>[[country, 0.2939826619071902], [economic, 0.2...</td>
-    </tr>
-    <tr>
-      <th>museum_anthropology</th>
-      <td>[[animal, 0.0694333173102601], [anthropology, ...</td>
-    </tr>
-    <tr>
-      <th>cognitive_psychology</th>
-      <td>[[cognitive, 0.06543223284100783], [memory, 0....</td>
-    </tr>
-    <tr>
-      <th>academia</th>
-      <td>[[university, 0.12850992917650325], [american,...</td>
-    </tr>
-    <tr>
-      <th>statistical_methods</th>
-      <td>[[data, 0.10926193921852388], [factor, 0.10308...</td>
-    </tr>
-    <tr>
-      <th>socialism</th>
-      <td>[[right, 0.18845588527390458], [movement, 0.10...</td>
-    </tr>
-    <tr>
-      <th>labour_economics</th>
-      <td>[[worker, 0.1709834834834835], [labour, 0.125]...</td>
-    </tr>
-    <tr>
-      <th>class_racialization</th>
-      <td>[[family, 0.1137934539540557], [class, 0.10200...</td>
-    </tr>
-    <tr>
-      <th>US_politics_SoMe</th>
-      <td>[[medium, 0.27214524605828955], [campaign, 0.1...</td>
-    </tr>
-  </tbody>
-</table>
-</div></div></div>
 </div>
-<p>The topics are chosen based on word clusters we find semantically meaningful and interesting for our query at hand - we choose some we believe to be purely discipline-specific and some which we believe to capture some overlap between disciplines. Our analysis will therefore touch upon patterns and tendencies rather than generalize across our entire dataset. We choose to visualize the word-topics with word clouds scaled on prabability:</p>
+<p>The topics are chosen based on word clusters we find semantically meaningful and interesting for our query at hand - we choose some we believe to be purely discipline-specific and some which we believe to capture some overlap between disciplines. Our analysis will therefore touch upon patterns and tendencies rather than generalize across our entire dataset. We choose to visualize the word-topics with bar plots of the word prabability distribution in each topic:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># we create a new dict with original key values as keys and inferred topic as value</span>
-<span class="n">new_keys_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">chosen_topics</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-<span class="n">topic_num</span> <span class="o">=</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">18</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">32</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">53</span><span class="p">,</span> <span class="mi">68</span><span class="p">,</span> <span class="mi">75</span><span class="p">]</span>
-<span class="n">topic_num_names</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">topic_num</span><span class="p">,</span> <span class="n">new_keys_names</span><span class="p">))</span>
-
-<span class="c1">#we subset on our chosen topics</span>
-<span class="n">topics_subset</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">topics_l1</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">topic_num</span><span class="p">}</span>
-<span class="n">topics_subset</span> <span class="o">=</span> <span class="p">{</span><span class="n">i</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">topics_subset</span><span class="o">.</span><span class="n">values</span><span class="p">())}</span>
-
-<span class="c1"># wordcloud of Top 20 words in each topic</span>
-<span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">color</span> <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="n">mcolors</span><span class="o">.</span><span class="n">TABLEAU_COLORS</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>  
-
-<span class="n">cloud</span> <span class="o">=</span> <span class="n">WordCloud</span><span class="p">(</span><span class="n">background_color</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span>
-                  <span class="n">width</span><span class="o">=</span><span class="mi">2500</span><span class="p">,</span>
-                  <span class="n">height</span><span class="o">=</span><span class="mi">1800</span><span class="p">,</span>
-                  <span class="n">max_words</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
-                  <span class="n">colormap</span><span class="o">=</span><span class="s1">&#39;tab10&#39;</span><span class="p">,</span>
-                  <span class="n">color_func</span><span class="o">=</span><span class="k">lambda</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">cols</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
-                  <span class="n">prefer_horizontal</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
-
-<span class="n">topics</span> <span class="o">=</span> <span class="n">topics_subset</span>
-
-<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span><span class="mi">20</span><span class="p">))</span>
-
-<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">ax</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">()):</span>
-    <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
-    <span class="n">topic_words</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">topics_subset</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-    <span class="n">cloud</span><span class="o">.</span><span class="n">generate_from_frequencies</span><span class="p">(</span><span class="n">topic_words</span><span class="p">,</span> <span class="n">max_font_size</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">cloud</span><span class="p">)</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">topic_names</span><span class="p">[</span><span class="n">i</span><span class="p">]),</span> <span class="n">fontdict</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">25</span><span class="p">))</span>
-    <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
-
-
-<span class="c1">#plt.subplots_adjust(wspace=0, hspace=0)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">axis</span><span class="p">(</span><span class="s1">&#39;off&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">margins</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot word probability distribution</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span> <span class="o">=</span> <span class="mi">3</span><span class="p">,</span> <span class="n">ncols</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span>  <span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">),</span> <span class="n">dpi</span> <span class="o">=</span> <span class="mi">300</span><span class="p">)</span>
+<span class="n">axs</span> <span class="o">=</span> <span class="n">axs</span><span class="o">.</span><span class="n">flat</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">delaxes</span><span class="p">(</span><span class="n">axs</span><span class="p">[</span><span class="mi">10</span><span class="p">])</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">delaxes</span><span class="p">(</span><span class="n">axs</span><span class="p">[</span><span class="mi">11</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">topic_df</span><span class="p">)):</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">topic_df</span><span class="p">[</span><span class="s2">&quot;topics&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">]][::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">topic_df</span><span class="p">[</span><span class="s2">&quot;topics&quot;</span><span class="p">][</span><span class="n">i</span><span class="p">]][::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s2">&quot;k&quot;</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">topic_df</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">tolist</span><span class="p">()[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">),</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_ticks_position</span><span class="p">(</span><span class="s1">&#39;none&#39;</span><span class="p">)</span> 
 <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/explainer_topic_model_10_0.png" src="_images/explainer_topic_model_10_0.png" />
-</div>
+<img alt="_images/explainer_topic_model_10_0.svg" src="_images/explainer_topic_model_10_0.svg" /></div>
 </div>
 <p>From the words, we are already able to get a general idea of what kind of topic to infer. Based on our knowledge of the different disciplines, we are able to get an overall sense of whether we are dealing with an interdisciplinary topic such as ‘statistical methods’ or a disciplinary topic such as cognitive psychology. We do however want to be certain in our assesment and have therefore extracted the topic distribution for each chosen topic and their relation to articles in our corpus. We create clusters of the top 30 articles which are most related to each topic to better name the topics.</p>
 <div class="cell docutils container">
@@ -591,63 +502,16 @@
     <span class="n">article_names</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">element</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
     <span class="n">words</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">element</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
     <span class="n">word_prob</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">element</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
-
-<span class="n">chosen_topics_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span> <span class="o">=</span> <span class="n">topics</span><span class="p">)</span>
-<span class="n">chosen_topics_df</span><span class="p">[</span><span class="s1">&#39;article_names&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">article_names</span>
-<span class="n">chosen_topics_df</span><span class="p">[</span><span class="s1">&#39;article_proba&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">probabilities</span>
-<span class="n">chosen_topics_df</span><span class="p">[</span><span class="s1">&#39;words&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">words</span>
-<span class="n">chosen_topics_df</span><span class="p">[</span><span class="s1">&#39;word_proba&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">word_prob</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">article_names</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">probabilities</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(&#39;political_science-law_without_the_state&#39;, 0.2258064516129032),
- (&#39;political_science-exclusive_federal_powers&#39;, 0.1610169491525423),
- (&#39;economics-economic_power&#39;, 0.1428571428571428),
- (&#39;political_science-the_province_of_jurisprudence_determined&#39;, 0.14),
- (&#39;political_science-concurrent_powers&#39;, 0.134020618556701),
- (&#39;political_science-dualism_(law)&#39;, 0.133492252681764),
- (&#39;political_science-political_obligation&#39;, 0.1306818181818181),
- (&#39;political_science-retslægerådet&#39;, 0.1304347826086956),
- (&#39;sociology-authority_(sociology)&#39;, 0.1264108352144469),
- (&#39;political_science-implied_powers&#39;, 0.1196172248803827),
- (&#39;sociology-delegated_authority&#39;, 0.1111111111111111),
- (&#39;political_science-institute_of_parliamentary_and_political_law&#39;,
-  0.10828025477707),
- (&#39;political_science-universal_law&#39;, 0.1016949152542373),
- (&#39;sociology-tripartite_classification_of_authority&#39;, 0.1011904761904761),
- (&#39;economics-hans-bernd_schäfer&#39;, 0.1),
- (&#39;political_science-promulgation_(catholic_canon_law)&#39;, 0.098876404494382),
- (&#39;political_science-vacatio_legis&#39;, 0.0987261146496815),
- (&quot;sociology-yhprum&#39;s_law&quot;, 0.0944881889763779),
- (&#39;political_science-list_of_national_legal_systems&#39;, 0.0932297447280799),
- (&#39;economics-thrift_institution&#39;, 0.0909090909090909),
- (&#39;political_science-leo_katz_(lawyer)&#39;, 0.0903614457831325),
- (&#39;political_science-jus_commune&#39;, 0.0877742946708464),
- (&#39;political_science-philosophy,_theology,_and_fundamental_theory_of_catholic_canon_law&#39;,
-  0.0856553147574819),
- (&#39;political_science-jurisprudence&#39;, 0.0851218624954529),
- (&#39;anthropology-anthropology_of_institutions&#39;, 0.0841423948220064),
- (&#39;political_science-international_law&#39;, 0.0825206301575393),
- (&#39;political_science-brocard_(law)&#39;, 0.0790960451977401),
- (&#39;political_science-federal_law&#39;, 0.0789473684210526),
- (&quot;economics-gibrat&#39;s_law&quot;, 0.0785498489425981),
- (&#39;political_science-jurisprudence_of_concepts&#39;, 0.078125)]
-</pre></div>
-</div>
-</div>
-</div>
-<p>For topic 7, we infer it to regard administrative science. While the most probable words are ‘law’, ‘power’, and ‘institution’, we also see how the topic is the majority contributor in an overweight of political science documents which suggest the topic to be political science-related. This topic is one of our more or less ‘pure’ discipline topics. Let’s take a look at one of our more interdiciplinary topics:</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">chosen_topics_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># let&#39;s take a look at the 20 most probable articles and words for this topic</span>
+<span class="n">topic0</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">article_names</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">probabilities</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> 
+             <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;topic: administrative politics&#39;</span><span class="p">,</span> <span class="s1">&#39;probability&#39;</span><span class="p">])</span>
+<span class="n">topic0</span><span class="p">[:</span><span class="mi">20</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -670,93 +534,252 @@
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>article_names</th>
-      <th>article_proba</th>
-      <th>words</th>
-      <th>word_proba</th>
+      <th>topic: administrative politics</th>
+      <th>probability</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>administrative_science</th>
-      <td>[political_science-law_without_the_state, poli...</td>
-      <td>[0.2258064516129032, 0.1610169491525423, 0.142...</td>
-      <td>[law, power, institution, authority, justice, ...</td>
-      <td>[0.30511587704608073, 0.22273242936632273, 0.0...</td>
+      <th>0</th>
+      <td>political_science-law_without_the_state</td>
+      <td>0.225806</td>
     </tr>
     <tr>
-      <th>market_economy</th>
-      <td>[economics-list_of_latin_american_economic_cri...</td>
-      <td>[0.25, 0.1739130434782608, 0.1568627450980392,...</td>
-      <td>[country, economic, economy, trade, industry, ...</td>
-      <td>[0.2939826619071902, 0.269862315145334, 0.1266...</td>
+      <th>1</th>
+      <td>political_science-exclusive_federal_powers</td>
+      <td>0.161017</td>
     </tr>
     <tr>
-      <th>museum_anthropology</th>
-      <td>[anthropology-list_of_women_anthropologists, a...</td>
-      <td>[0.3333333333333333, 0.2568807339449541, 0.239...</td>
-      <td>[animal, anthropology, head, site, remains, an...</td>
-      <td>[0.0694333173102601, 0.05987288361907814, 0.04...</td>
+      <th>2</th>
+      <td>economics-economic_power</td>
+      <td>0.142857</td>
     </tr>
     <tr>
-      <th>cognitive_psychology</th>
-      <td>[psychology-flashback_(psychology), psychology...</td>
-      <td>[0.1842465753424657, 0.1636363636363636, 0.156...</td>
-      <td>[cognitive, memory, perception, personality, b...</td>
-      <td>[0.06543223284100783, 0.05196568201563857, 0.0...</td>
+      <th>3</th>
+      <td>political_science-the_province_of_jurisprudenc...</td>
+      <td>0.140000</td>
     </tr>
     <tr>
-      <th>academia</th>
-      <td>[political_science-william_james_booth, sociol...</td>
-      <td>[0.3055555555555556, 0.2884615384615384, 0.287...</td>
-      <td>[university, american, student, education, aca...</td>
-      <td>[0.12850992917650325, 0.10348562699625052, 0.0...</td>
+      <th>4</th>
+      <td>political_science-concurrent_powers</td>
+      <td>0.134021</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>political_science-dualism_(law)</td>
+      <td>0.133492</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>political_science-political_obligation</td>
+      <td>0.130682</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>political_science-retslægerådet</td>
+      <td>0.130435</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>sociology-authority_(sociology)</td>
+      <td>0.126411</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>political_science-implied_powers</td>
+      <td>0.119617</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>sociology-delegated_authority</td>
+      <td>0.111111</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>political_science-institute_of_parliamentary_a...</td>
+      <td>0.108280</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>political_science-universal_law</td>
+      <td>0.101695</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>sociology-tripartite_classification_of_authority</td>
+      <td>0.101190</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>economics-hans-bernd_schäfer</td>
+      <td>0.100000</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>political_science-promulgation_(catholic_canon...</td>
+      <td>0.098876</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>political_science-vacatio_legis</td>
+      <td>0.098726</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>sociology-yhprum's_law</td>
+      <td>0.094488</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>political_science-list_of_national_legal_systems</td>
+      <td>0.093230</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>economics-thrift_institution</td>
+      <td>0.090909</td>
     </tr>
   </tbody>
 </table>
 </div></div></div>
 </div>
+<p>For topic 7, we infer it to regard administrative science. While the most probable words are ‘law’, ‘power’, and ‘institution’, we also see how the topic is the majority contributor in an overweight of political science documents which suggest the topic to be political science-related. This topic is one of our more or less ‘pure’ discipline topics. Let’s take a look at one of our more interdiciplinary topics:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">article_names</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span><span class="n">probabilities</span><span class="p">[</span><span class="mi">5</span><span class="p">]))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># let&#39;s take a look at the 20 most probable articlesfor this topic</span>
+<span class="n">topic5</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">article_names</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">probabilities</span><span class="p">[</span><span class="mi">5</span><span class="p">])),</span> 
+             <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;topic: statistical methods&#39;</span><span class="p">,</span> <span class="s1">&#39;probability&#39;</span><span class="p">])</span>
+<span class="n">topic5</span><span class="p">[:</span><span class="mi">20</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[(&#39;political_science-total_survey_error&#39;, 0.2788461538461538),
- (&#39;political_science-non-sampling_error&#39;, 0.2711864406779661),
- (&#39;economics-kitchen_sink_regression&#39;, 0.21875),
- (&#39;psychology-list_of_backmasked_messages&#39;, 0.2),
- (&#39;economics-analysis_of_rhythmic_variance&#39;, 0.1702127659574468),
- (&#39;psychology-psychological_statistics&#39;, 0.1669085631349782),
- (&#39;economics-cash_flow_hedge&#39;, 0.1666666666666666),
- (&#39;political_science-administrative_error&#39;, 0.1666666666666666),
- (&#39;economics-variance_risk_premium&#39;, 0.1612903225806451),
- (&#39;economics-correlation_trading&#39;, 0.1489361702127659),
- (&#39;economics-truncated_regression_model&#39;, 0.1440677966101695),
- (&#39;psychology-repeatability&#39;, 0.1415929203539823),
- (&#39;economics-average_fixed_cost&#39;, 0.1408450704225352),
- (&#39;economics-economic_puzzle&#39;, 0.1395348837209302),
- (&#39;psychology-reliability_(statistics)&#39;, 0.1376237623762376),
- (&#39;sociology-list_of_countries_by_share_of_income_of_the_richest_one_percent&#39;,
-  0.1363636363636363),
- (&#39;political_science-data_editing&#39;, 0.1358024691358024),
- (&#39;economics-cost_accrual_ratio&#39;, 0.1351351351351351),
- (&#39;political_science-tim_holt_(statistician)&#39;, 0.1237113402061855),
- (&#39;political_science-scale_analysis_(statistics)&#39;, 0.1237113402061855),
- (&quot;political_science-rexer&#39;s_annual_data_miner_survey&quot;, 0.1212121212121212),
- (&#39;psychology-accuracy_and_precision&#39;, 0.1190233977619532),
- (&#39;sociology-social_risk_positions&#39;, 0.1176470588235294),
- (&#39;psychology-list_of_psychological_research_methods&#39;, 0.1176470588235294),
- (&#39;political_science-poll_average&#39;, 0.1149425287356321),
- (&#39;economics-average_variable_cost&#39;, 0.1094890510948905),
- (&#39;economics-portfolio_analysis&#39;, 0.1092436974789916),
- (&#39;economics-risk_premium&#39;, 0.106694560669456),
- (&#39;economics-economic_data&#39;, 0.1064891846921797),
- (&#39;anthropology-linguistic_linked_open_data&#39;, 0.1054263565891472)]
-</pre></div>
-</div>
-</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>topic: statistical methods</th>
+      <th>probability</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>political_science-total_survey_error</td>
+      <td>0.278846</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>political_science-non-sampling_error</td>
+      <td>0.271186</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>economics-kitchen_sink_regression</td>
+      <td>0.218750</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>psychology-list_of_backmasked_messages</td>
+      <td>0.200000</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>economics-analysis_of_rhythmic_variance</td>
+      <td>0.170213</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>psychology-psychological_statistics</td>
+      <td>0.166909</td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>economics-cash_flow_hedge</td>
+      <td>0.166667</td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>political_science-administrative_error</td>
+      <td>0.166667</td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>economics-variance_risk_premium</td>
+      <td>0.161290</td>
+    </tr>
+    <tr>
+      <th>9</th>
+      <td>economics-correlation_trading</td>
+      <td>0.148936</td>
+    </tr>
+    <tr>
+      <th>10</th>
+      <td>economics-truncated_regression_model</td>
+      <td>0.144068</td>
+    </tr>
+    <tr>
+      <th>11</th>
+      <td>psychology-repeatability</td>
+      <td>0.141593</td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>economics-average_fixed_cost</td>
+      <td>0.140845</td>
+    </tr>
+    <tr>
+      <th>13</th>
+      <td>economics-economic_puzzle</td>
+      <td>0.139535</td>
+    </tr>
+    <tr>
+      <th>14</th>
+      <td>psychology-reliability_(statistics)</td>
+      <td>0.137624</td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>sociology-list_of_countries_by_share_of_income...</td>
+      <td>0.136364</td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>political_science-data_editing</td>
+      <td>0.135802</td>
+    </tr>
+    <tr>
+      <th>17</th>
+      <td>economics-cost_accrual_ratio</td>
+      <td>0.135135</td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>political_science-tim_holt_(statistician)</td>
+      <td>0.123711</td>
+    </tr>
+    <tr>
+      <th>19</th>
+      <td>political_science-scale_analysis_(statistics)</td>
+      <td>0.123711</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
 </div>
 <p>Statistical methods is one of our most interdisciplinary topics as it is present in articles from all disciplines. We find in particular that articles from psychology, political science and economics are related to the topic suggesting that statistical methods is a topic of interdisciplinary character. Intuitively, this aligns with our understanding of the different disciplines as statistical inference and causality traditionally both are strived for in academic work from these fields and thus involve well-known methods related to this topic which would be written about on Wikipedia.
 Since the distribution of wikipedia articles between disciplines is skewed towards political science, we find many political science-related topics in general as well as articles in each topic.</p>
@@ -782,6 +805,25 @@ Since the distribution of wikipedia articles between disciplines is skewed towar
 <span class="n">B</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="n">bipart_nx</span><span class="p">[</span><span class="s1">&#39;source&#39;</span><span class="p">],</span> <span class="n">bipartite</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="n">B</span><span class="o">.</span><span class="n">add_nodes_from</span><span class="p">(</span><span class="n">bipart_nx</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">],</span> <span class="n">bipartite</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 <span class="n">B</span><span class="o">.</span><span class="n">add_weighted_edges_from</span><span class="p">(</span><span class="n">w</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">edge_list</span> <span class="o">=</span> <span class="p">[(</span><span class="n">edge</span><span class="o">.</span><span class="n">source</span><span class="p">,</span> <span class="n">edge</span><span class="o">.</span><span class="n">target</span><span class="p">,</span> <span class="n">edge</span><span class="o">.</span><span class="n">weight</span><span class="p">)</span> <span class="k">for</span> <span class="n">edge</span> <span class="ow">in</span> <span class="n">bipart_nx</span><span class="o">.</span><span class="n">itertuples</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)]</span>
+<span class="n">node_atributes</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">bipart_nx</span><span class="p">[</span><span class="s1">&#39;source&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span> <span class="o">+</span> <span class="n">bipart_nx</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;node&#39;</span><span class="p">])</span>
+<span class="n">node_atributes</span><span class="p">[</span><span class="s1">&#39;category&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">node_atributes</span><span class="p">[</span><span class="s1">&#39;node&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">&#39;target&#39;</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">bipart_nx</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span> <span class="k">else</span> <span class="s1">&#39;source&#39;</span><span class="p">)</span>
+<span class="n">node_atributes</span><span class="p">[</span><span class="s1">&#39;node_attr&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">node_atributes</span><span class="o">.</span><span class="n">node</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]))</span>
+<span class="n">node_atributes</span><span class="p">[</span><span class="s1">&#39;node_attr&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">node_atributes</span><span class="p">[</span><span class="s1">&#39;node_attr&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">&#39;topic&#39;</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">node_atributes</span><span class="p">[</span><span class="s1">&#39;node&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span> <span class="k">else</span> <span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">node_atributes</span><span class="o">.</span><span class="n">to_pickle</span><span class="p">(</span><span class="s1">&#39;node_attributes.pxl&#39;</span><span class="p">)</span>
+<span class="n">node_atributes</span><span class="o">.</span><span class="n">to_pickle</span><span class="p">(</span><span class="s1">&#39;weighted_edge_list.pxl&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
