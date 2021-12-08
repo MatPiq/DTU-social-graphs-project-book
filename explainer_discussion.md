@@ -1,23 +1,21 @@
-<!-- #region -->
 Discussion
 ==========
 
-In this section we will briefly touch upon the most pressing issues of our project. We split the discussion into X parts relating to:
+Our results reveal several interesting aspects of how the disciplines relate to each other. First of all, the initial networks showed that while they are all to some extent connected to each other - there is a large degree of within discipline clustering. These results are quite robust also when doing community detection with the Louvain algorithm and node2vec. While we were able to find more communities than the amount of disciplines it seems that these communities mostly represent some sub-theme or topic within a discipline. Interestingly, the node2vec projection showed that the relative distance between disciplines varies with Economics and Anthropology being furthest apart, while Political Science and Sociology are more central. This suggests that their distribution of connections to other fields is more even. 
 
-(1) The quality of our data
-(2) Others?
+Our hSBM topic model results 
 
-## 
+## Limitations and Future work
 
-Our results reveal several interesting aspects of how the disciplines relate to each other. First of all, the initial networks showed that while they are all to some extent connected to each other - there is a large degree of within discipline clustering. These results are quite robust also when doing community detection with the Louvain algorithm and node2vec. While we were able to find more communities than the amount of disciplines it seems that these communities mostly represent some sub-theme within a discipline. Interestingly, the node2vec projection showed that the relative distance between disciplines is varies with Economics and Anthropology being furthest apart, while Political Science and Sociology are more central. This suggesting that their distribution of connections to other fields is more even. Moreover, some 
+As Wikipedia - too some extent - is free to edit it becomes unclear what different editors might to believe falls under [Wikipedia's definition of the social scienes categories](https://en.wikipedia.org/wiki/Wikipedia:Contents/Society_and_social_sciences). If these differences between editors are truely random they might even out in the long run, but if there are systematically differences between the people editing the pages for the disciplines our comparisons of the disciplines will induce bias into our analysis. The fact that the amount of Wikipedia pages we found for each discipline differed so greatly might be indicatory of this. For example, when including depths 0,1 and 2 the amount of Anthropology pages was 17,621 while the second largests was Psychology with 5895, however, Anthropology is a relatively small field of study. 
+ 
+Future studies should focus even more on sampling than we did to ensure that the results are at least representative for Wikipedia. For the purpose of visualizing the network and because of computational constraints we chose to work with a smaller sub-sample of the data. While we think sub-sampling based on community structure rather than, say, random draws edge list was a good strategy for the purpose of our study, we recognize that this might have obscured both interesting and relevant aspects of the network. We think it would be interesting to further look at the larger social science network but also including more disciplines. As an example, one could look at how [Network Science](https://en.wikipedia.org/wiki/Network_science) relates to the social sciences. 
 
-Our 
+We also want to draw some attention to the way we drew edges between Wiki pages. A connection between nodes A and B in our Network is created based on direct references to each other. However, this is by no means the only way one can model the relationship between nodes. An alternative approach that we considered was a model where edges constitute a common reference (hyperlink) between two nodes, e.g. if both page A and B link to C then A and B are connected. In this case the common reference does not necessarily have to be in our initial node list we think that this could have revealed some other patterns.
+
+Lastly, more effort could be given to investigate the relative positions of the disciplines in the network and to what extent the relationships are reciprocal for example by more closely looking at the in- and outdegree's from the point of view of one discipline relative to all the other. In this context, it would also make sense to look at the average path length.
 
 
-## The data
-
-As Wikipedia - too some extent - is free to edit it becomes unclear what different editors might to believe falls under [Wikipedia's definition of the social scienes categories](https://en.wikipedia.org/wiki/Wikipedia:Contents/Society_and_social_sciences). If these differences between editors are truely random they might even out in the long run, but if there are systematically differences between the people editing the pages for the disciplines our comparisons of the disciplines will induce bias into our analysis.
-<!-- #endregion -->
 
 ```python
 
