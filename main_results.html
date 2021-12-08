@@ -296,6 +296,11 @@
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#okay-so-the-discipline-are-different-but-the-most-be-some-similiarites-right">
+   Okay.. So the discipline are different, but the most be some similiarites, right?
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#understanding-communities-and-what-they-talk-about">
    2. Understanding Communities and what they talk about
   </a>
@@ -323,24 +328,11 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="main-results">
 <h1>Main Results<a class="headerlink" href="#main-results" title="Permalink to this headline">¶</a></h1>
-<div class="cell docutils container">
+<p>Wit the data at hand and all of the preprocessing put behind we now put together our great Wikipedia network that describes how the pages references to other pages at the site.</p>
+<div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">IPython.core.display</span> <span class="kn">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span>
-</pre></div>
-</div>
-</div>
-</div>
-<p>Here we present the most interesting findings from our project. For a more detailed coverage please visit the explainer notebook.</p>
-<ul class="simple">
-<li><p><a class="reference external" href="#part1"><code class="docutils literal notranslate"><span class="pre">1.</span> <span class="pre">Network</span> <span class="pre">Visualization</span></code></a></p></li>
-<li><p><a class="reference external" href="#part2"><code class="docutils literal notranslate"><span class="pre">2.</span> <span class="pre">Understanding</span> <span class="pre">Communities</span> <span class="pre">and</span> <span class="pre">what</span> <span class="pre">they</span> <span class="pre">talk</span> <span class="pre">about</span></code></a></p></li>
-<li><p><a class="reference external" href="#part3"><code class="docutils literal notranslate"><span class="pre">3.</span> <span class="pre">Content</span> <span class="pre">analysis:</span> <span class="pre">Discovering</span> <span class="pre">salient</span> <span class="pre">topics.</span></code></a></p></li>
-<li><p><a class="reference external" href="#part4"><code class="docutils literal notranslate"><span class="pre">4.</span> <span class="pre">socialscience2vec:</span> <span class="pre">Node</span> <span class="pre">and</span> <span class="pre">Document</span> <span class="pre">Embeddings</span></code></a></p></li>
-</ul>
-<p>Wit the data at hand and all of the preprocessing put behind we now put together our great Wikipedia network that describes how the pages references to other pages at the site.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="s1">&#39;full_network.html&#39;</span><span class="p">))</span>
+<span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="s1">&#39;full_network.html&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -818,7 +810,21 @@
 })(window);</script></div>
 </div>
 <p>Generally speaking the pattern from our previous network is confirmed: The editors of disciplines’ pages on Wikipedia do really not like to link to pages from other disciplines! But it also reveals that the disciplines pages might not be as uniform as first anticipated. Community 1, 10 and 15 are rather unambigous communities of the political science category but they serve as a great example of the disciplines heterogenity. On the one hand Community 15 illustrates the modern study of politics at the universities using scientific methods, whereas community 1 and 10 are two pages of a another subcategory we could label “ideology”. And even though they both revolve around political ideologies, they are widely different as one describes far-left/socialist tendencies whereas the other deals with far-right/libertarian pages. Our detection of communites therefore adds nuances to the painting of the social science landscape: Yes, they do not like to interact, but even within their own disciplinary most like to stay together in their small community of like-minded pages.</p>
+<div class="section" id="okay-so-the-discipline-are-different-but-the-most-be-some-similiarites-right">
+<h2>Okay.. So the discipline are different, but the most be some similiarites, right?<a class="headerlink" href="#okay-so-the-discipline-are-different-but-the-most-be-some-similiarites-right" title="Permalink to this headline">¶</a></h2>
+<p>Paradoxially, a rather famous and widely applied theory in social science <a class="reference external" href="https://en.wikipedia.org/wiki/Social_identity_theory"><em>Social identity theory</em></a> can help us understand why all of the disciplines seem to think within the box. Originally put forward by <a class="reference external" href="https://en.wikipedia.org/wiki/Henri_Tajfel">Henri Tajfel</a> and his apprentice <a class="reference external" href="https://en.wikipedia.org/wiki/John_Turner_(psychologist)">John Turner</a> the theory explains how members of a group favoritse persons similar to themselves, say sociologists, at the expense of the out-group members, say economists. Interestingly, the theory propose that one way to build bridge between people of different groups is by exposure to one another to discover their many simialarites. A lesson we believe the editors of Wikipedia could learn a bit from.</p>
+<p>Instead of only looking at how the Wikipeda pages were connected we decided to also look at their actual content. For this we ran a <em>topic-model</em>, a model similar to our community detection, but instead of relying on the networks structure it tries to partition the pages into different topics based on the pages’ <em>text</em>.</p>
+<p><img alt="" src="_images/topic_models.svg" /></p>
+<p>The funny thing about these topics are, that all though some clearly relates to only one disciplines, most of them are constituted by words of pages from more than one discipline. The most clear example of this is the topic we have decided to label <em>statistical methods</em>. When we qualitatively asses the pages of this topic we find a remarkbly diversity in the discipline represented (REF HSBM NOTEBOOK). As this topic relates to the (statistical) methods used to genereate new knowledge it might suggest, that all though the theory of the discplines might vary a bit, the ways they explore the world are fairly similar. What we are trying to say with this is that despite the disciplines cluster together on Wikipedia and stick to intra-disciplinary referencing, they are actually not that different from eatch other. Maybe we could all learn from Tajfel and Turn and enrichen our perspectives by seeing things from other angels</p>
+<p>Here we present the most interesting findings from our project. For a more detailed coverage please visit the explainer notebook.</p>
+<ul class="simple">
+<li><p><a class="reference external" href="#part1"><code class="docutils literal notranslate"><span class="pre">1.</span> <span class="pre">Network</span> <span class="pre">Visualization</span></code></a></p></li>
+<li><p><a class="reference external" href="#part2"><code class="docutils literal notranslate"><span class="pre">2.</span> <span class="pre">Understanding</span> <span class="pre">Communities</span> <span class="pre">and</span> <span class="pre">what</span> <span class="pre">they</span> <span class="pre">talk</span> <span class="pre">about</span></code></a></p></li>
+<li><p><a class="reference external" href="#part3"><code class="docutils literal notranslate"><span class="pre">3.</span> <span class="pre">Content</span> <span class="pre">analysis:</span> <span class="pre">Discovering</span> <span class="pre">salient</span> <span class="pre">topics.</span></code></a></p></li>
+<li><p><a class="reference external" href="#part4"><code class="docutils literal notranslate"><span class="pre">4.</span> <span class="pre">socialscience2vec:</span> <span class="pre">Node</span> <span class="pre">and</span> <span class="pre">Document</span> <span class="pre">Embeddings</span></code></a></p></li>
+</ul>
 <p><a id='part2'></a></p>
+</div>
 <div class="section" id="understanding-communities-and-what-they-talk-about">
 <h2>2. Understanding Communities and what they talk about<a class="headerlink" href="#understanding-communities-and-what-they-talk-about" title="Permalink to this headline">¶</a></h2>
 <p>For each Wiki page, we also collected the body of text. In order to better understand what the communities represent, we used a multionomial logistic model to predict the community using the text as input features. By looking at the words with the highest partial effects on the prediction of some community we can get an idea of what separates them.</p>
