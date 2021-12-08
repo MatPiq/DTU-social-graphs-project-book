@@ -11,9 +11,9 @@ As Wikipedia - too some extent - is free to edit it becomes unclear what differe
  
 Future studies should focus even more on sampling than we did to ensure that the results are at least representative for Wikipedia. For the purpose of visualizing the network and because of computational constraints we chose to work with a smaller sub-sample of the data. While we think sub-sampling based on community structure rather than, say, random draws edge list was a good strategy for the purpose of our study, we recognize that this might have obscured both interesting and relevant aspects of the network. We think it would be interesting to further look at the larger social science network but also including more disciplines. As an example, one could look at how [Network Science](https://en.wikipedia.org/wiki/Network_science) relates to the social sciences. 
 
-We also want to draw some attention to the way we drew edges between Wiki pages. A connection between nodes A and B in our Network is created based on direct references to each other. However, this is by no means the only way one can model the relationship between nodes. An alternative approach that we considered was a model where edges constitute a common reference (hyperlink) between two nodes, e.g. if both the page for 
+We also want to draw some attention to the way we drew edges between Wiki pages. A connection between nodes A and B in our Network is created based on direct references to each other. However, this is by no means the only way one can model the relationship between nodes. An alternative approach that we considered was a model where edges constitute a common reference (hyperlink) between two nodes, e.g. if both page A and B link to C then A and B are connected. In this case the common reference does not necessarily have to be in our initial node list we think that this could have revealed some other patterns.
 
-Lastly, in terms of methods we think that the network could be more
+Lastly, more effort could be given to investigate the relative positions of the disciplines in the network and to what extent the relationships are reciprocal for example by more closely looking at the in- and outdegree's from the point of view of one discipline relative to all the other. In this context, it would also make sense to look at the average path length.
 
 
 
