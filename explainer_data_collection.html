@@ -365,7 +365,7 @@
 </div>
 <div class="section" id="finding-relevant-articles">
 <h2>Finding Relevant Articles<a class="headerlink" href="#finding-relevant-articles" title="Permalink to this headline">¶</a></h2>
-<p>To collect the relevant Wikipedia pages for our project, we specify the dataclass <code class="docutils literal notranslate"><span class="pre">WikiPage</span></code>. This is based on the use of the open-source software <a class="reference external" href="https://petscan.wmflabs.org/">PetScan</a> that based on a list of Wikipedia-categories yields the corresponding page-names. We furthermore specify the depth of our PetScan-query, which is a measure of how deeply nested we want our categories to be. As the list of pages grows exponentially we limit the levels of depth we set the parameter to 0, 1 and 2. The reason for not choosing one specific depth is that the group and sub-group structure of the disciplines differs which means that we get a widely different amount of pages.</p>
+<p>To collect the relevant Wikipedia pages for our project, we specify the dataclass <code class="docutils literal notranslate"><span class="pre">WikiPage</span></code>. This is based on the use of the open-source software <a class="reference external" href="https://petscan.wmflabs.org/">PetScan</a> that based on a list of Wikipedia-categories yields the corresponding page-names. We furthermore specify the depth of our PetScan-query, which is a measure of how deeply nested we want our categories to be. As the list of pages grows exponentially we limit the levels of depth we set the parameter to 0, 1 and 2. The reason for not choosing one specific depth is that the group and subgroup structure of the disciplines differs which means that we get a widely different amount of pages.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nd">@dataclass</span><span class="p">(</span><span class="n">frozen</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
@@ -422,7 +422,7 @@
 </div>
 </div>
 </div>
-<p>Below we call the function <code class="docutils literal notranslate"><span class="pre">collect_pages</span></code>, create a page list for depth 0, 1 and 2 and display the resulting counts. As can be seen Anthropology is a clear outlier because of a different group structure on Wikipedia.</p>
+<p>Below we call the function <code class="docutils literal notranslate"><span class="pre">collect_pages()</span></code>, create a page list for depth 0, 1 and 2 and display the resulting counts. As can be seen Anthropology is a clear outlier because of a different group structure on Wikipedia.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Define initial query groups</span>
@@ -460,7 +460,7 @@ Name: title, dtype: int64
 </div>
 <div class="section" id="collect-page-text-and-edges">
 <h2>Collect Page Text and Edges<a class="headerlink" href="#collect-page-text-and-edges" title="Permalink to this headline">¶</a></h2>
-<p>In the function <code class="docutils literal notranslate"><span class="pre">collect_attributes</span></code> we use <code class="docutils literal notranslate"><span class="pre">BeautifulSoup</span></code> to scrape the html content from the wikipedia pages we’ve found. The key html node is the <code class="docutils literal notranslate"><span class="pre">div</span></code> with attributes <code class="docutils literal notranslate"><span class="pre">{'id':'mw-content-text'}</span></code> from which we can parse out all paragraphs and hyperlinks, disregarding section headings, tables and other irrelevant content and page attributes.</p>
+<p>In the function <code class="docutils literal notranslate"><span class="pre">collect_attributes()</span></code> we use <code class="docutils literal notranslate"><span class="pre">BeautifulSoup</span></code> to scrape the html content from the wikipedia pages we’ve found. The key html node is the <code class="docutils literal notranslate"><span class="pre">div</span></code> with attributes <code class="docutils literal notranslate"><span class="pre">{'id':'mw-content-text'}</span></code> from which we can parse out all paragraphs and hyperlinks, disregarding section headings, tables and other irrelevant content and page attributes.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">collect_attributes</span><span class="p">(</span><span class="n">articles</span><span class="p">:</span><span class="nb">list</span><span class="p">[</span><span class="n">WikiPage</span><span class="p">])</span><span class="o">-&gt;</span><span class="nb">list</span><span class="p">[</span><span class="n">WikiPage</span><span class="p">]:</span>
@@ -501,18 +501,7 @@ Name: title, dtype: int64
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pages_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">pages</span><span class="p">)</span>
-<span class="n">pages_df</span><span class="o">.</span><span class="n">to_pickle</span><span class="p">(</span><span class="s2">&quot;full_data_pickle&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mi">81</span><span class="o">/</span><span class="n">hmpn7q9j37l5nqxjsd88rbf00000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_6176</span><span class="o">/</span><span class="mf">1607620959.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">pages_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">pages</span><span class="p">)</span>
-
-<span class="ne">NameError</span>: name &#39;pages&#39; is not defined
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pages_df</span><span class="o">.</span><span class="n">to_pickle</span><span class="p">(</span><span class="s2">&quot;full_data_pickle&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -533,13 +522,13 @@ Name: title, dtype: int64
 </div>
 <div class="section" id="subsetting-a-smaller-network">
 <h2>Subsetting a Smaller Network<a class="headerlink" href="#subsetting-a-smaller-network" title="Permalink to this headline">¶</a></h2>
-<p>Because of the large size of the network, we deem it necessary to create a smaller subgraph that is more manageble. To do this we initially perform three operations:</p>
+<p>Because of the large size of the network, we deem it necessary to create a smaller subgraph that is more manageable. To do this we initially perform three operations:</p>
 <ul class="simple">
 <li><p>(1) <strong>Restrict anthropology pages to depth = 1</strong>:
-Due to the inherent strcuture of Wikipedia we cannot expect all of the categories to have an equal amount of pages.
-Some categories might be defined more loosely and therefore span broader, whereas other categories might be larger as more people participates in activities related to the given discpline and therefore more prone to contribute to the related Wikipedia pages. No matter the reason, anthropology pages are widely overrepresentative in our dataset, why we decide to restrict the anthropology pages to <code class="docutils literal notranslate"><span class="pre">depth</span> <span class="pre">=</span> <span class="pre">1</span></code>.</p></li>
+Due to the inherent structure of Wikipedia we cannot expect all of the categories to have an equal amount of pages.
+Some categories might be defined more loosely and therefore span broader, whereas other categories might be larger as more people participate in activities related to the given discipline and therefore more prone to contribute to the related Wikipedia pages. No matter the reason, anthropology pages are widely overrepresented in our dataset, which is why we decide to restrict the anthropology pages to <code class="docutils literal notranslate"><span class="pre">depth</span> <span class="pre">=</span> <span class="pre">2</span></code>.</p></li>
 <li><p>(2) <strong>Remove Duplicates</strong>:
-Some pages occur in two categories e.g. the page <em>elitism</em> occurs both in the political science and the anthropology category. As it becomes ambigious to which discipline the page belongs, we decide to remove them. In cases where some pages occurs several times within the same category (as they are collected at different depths) we collapse them to one observation.</p></li>
+Some pages occur in two categories e.g. the page <em>elitism</em> occurs both in the political science and the anthropology category. As it becomes ambiguous to which discipline the page belongs, we decide to remove them. In cases where some pages occur several times within the same category (as they are collected at different depths) we collapse them to one observation.</p></li>
 <li><p>(3) <strong>Remove edges to pages that did not collect</strong>:
 Lastly we remove all edges from the pages we have collected to pages not in our sample.</p></li>
 </ul>
@@ -604,7 +593,7 @@ Lastly we remove all edges from the pages we have collected to pages not in our 
 {"model_id": "ce45f4b494d549068d18c3f44bbea7b0", "version_major": 2, "version_minor": 0}
 </script></div>
 </div>
-<p>To further subset our data, we remove self-loops and model an undirected network from which we extract the giant connected component. We then try to sample a representative subgraph containing <span class="math notranslate nohighlight">\(\frac{1}{4}\)</span> of the giant connected component’s nodes using a Metropolis algoritm as stated in <span id="id1">[<a class="reference internal" href="references.html#id12">Hübler <em>et al.</em>, 2008</a>]</span> and implemented in the function <code class="docutils literal notranslate"><span class="pre">.MetropolisHastingsRandomWalkSampler()</span></code> from the module <code class="docutils literal notranslate"><span class="pre">littleballoffur</span></code>. The intuition behind the method is to initialise a random subgraph <span class="math notranslate nohighlight">\(S\)</span> of our full network <span class="math notranslate nohighlight">\(G\)</span> from which we iteratively remove and add nodes in order to mimic some topological properties of <span class="math notranslate nohighlight">\(G\)</span>, in this case the degree-distriubtion. This is of course not without consequences as we partly remove the complexity in our network and thereby lose information, however we deem this necesarry to reduce our network to a more manageable size.</p>
+<p>To further subset our data, we remove self-loops and model an undirected network from which we extract the giant connected component. We then try to sample a representative subgraph containing <span class="math notranslate nohighlight">\(\frac{1}{4}\)</span> of the giant connected component’s nodes using a Metropolis algorithm as stated in <span id="id1">[<a class="reference internal" href="references.html#id12">Hübler <em>et al.</em>, 2008</a>]</span> and implemented in the function <code class="docutils literal notranslate"><span class="pre">.MetropolisHastingsRandomWalkSampler()</span></code> from the module <code class="docutils literal notranslate"><span class="pre">littleballoffur</span></code>. The intuition behind the method is to initialise a random subgraph <span class="math notranslate nohighlight">\(S\)</span> of our full network <span class="math notranslate nohighlight">\(G\)</span> from which we iteratively remove and add nodes in order to mimic some topological properties of <span class="math notranslate nohighlight">\(G\)</span>, in this case the degree-distribution. This is of course not without consequences as we partly remove the complexity in our network and thereby lose information, however we deem this necessary to reduce our network to a more manageable size.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We create a dictionary with the index each pagename</span>
@@ -634,7 +623,7 @@ Lastly we remove all edges from the pages we have collected to pages not in our 
 </div>
 </div>
 </div>
-<p>To asses the bias induced by our sampling, we compare the networks in terms of their degree exponent and transitivity. This way we can make sure that the networks degree distribution and level of clusterness is somewhat comparable.</p>
+<p>To assess the bias induced by our sampling, we compare the networks in terms of their degree exponent and transitivity. This way we can make sure that the network’s degree distribution and level of clusterness is somewhat comparable.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span>
@@ -671,7 +660,7 @@ Transitivity supgraph S: 0.2822
 </div>
 </div>
 </div>
-<p>Reassuringly, the exponent of the two networks are fairly similiar suggesting that the degree distributions somewhat follows the same structure. A bit more worrying is the difference in transitivity that shows that we have oversestimated the transitivity in our supgraph. This results in our network being more dense with higher number of “triads”, than what really is the case. Nontheless we choose to use the subgraph for our further analysis. We can now model our final network and corresponding DataFrame which we will use for our analysis based on the nodes from the subgraph. Finally we restrict this network to the weakly connected component as we create a <em>directed</em> network.</p>
+<p>Reassuringly, the exponent of the two networks are fairly similar suggesting that the degree distributions somewhat follow the same structure. A bit more worrying is the difference in transitivity that shows that we have overestimated the transitivity in our supgraph. This results in our network being more dense with a higher number of “triads”, than what really is the case. Nonetheless we choose to use the subgraph for our further analysis. We can now model our final network and corresponding DataFrame which we will use for our analysis based on the nodes from the subgraph. Finally we restrict this network to the weakly connected component as we create a <em>directed</em> network.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># We define a list of nodes to keep and remove edges that refers to nodes that we have removed</span>
@@ -727,13 +716,13 @@ Transitivity supgraph S: 0.2822
 <p>In this section we conduct light preprocessing since the Wikipedia documents are fairly clean. We do the following preprocessing steps:</p>
 <ul class="simple">
 <li><p><strong>1 Getting the clean text from the Wikipedia pages:</strong>
-The Wikipedia pages are structued in a page-specific text section and a section with links called “See Also”. We are only intereseted in the first part. We clean the text further by removing all non-alphanumerical characters.</p></li>
+The Wikipedia pages are structured in a page-specific text section and a section with links called “See Also”. We are only interested in the first part. We clean the text further by removing all non-alphanumeric characters.</p></li>
 <li><p><strong>2 Remove stopwords:</strong>
 To reduce the size of the vocabulary we remove all stopwords as they do not carry a lot of information relative to their size.</p></li>
 <li><p><strong>3 Lemmatization of words:</strong>
 Lemmatization refers to the reduction of words to its syntactical root to align words despite grammatical modifications which is useful for our analysis of text. We therefore add a column to our final DataFrame with lemmatized words.</p></li>
 <li><p><strong>4 Tokenisation of words:</strong>
-We split up all the lemmatized pages into list of words (or tokens) and add them to a new column in our final DataFrame.</p></li>
+We split up all the lemmatized pages into a list of words (or tokens) and add them to a new column in our final DataFrame.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
