@@ -309,7 +309,7 @@
 <p>In this section we introduce part of our text analysis, namely the part which pertains to our topic modelling approach. Topic models are mainly used to cluster a collection of documents into different so-called ‘topics’. In our analysis, we choose relevant topics, extract their topic distributions and visualize the results in different manners to demonstrate how and in which areas the different disciplines tend to interact on Wikipedia.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import relevant modules</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Imports</span>
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">joblib</span>
 <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
@@ -642,14 +642,8 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># load data</span>
-<span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/Users/emiliemunchgregersen/Downloads&#39;</span>
-<span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
-
-<span class="c1"># wikipedia data</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;wiki_df_new.csv.gz&#39;</span><span class="p">,</span> <span class="n">compression</span> <span class="o">=</span> <span class="s1">&#39;gzip&#39;</span><span class="p">)</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Unnamed: 0&#39;</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">df</span><span class="o">.</span><span class="n">tokens</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">tokens</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="nb">eval</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load data</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span><span class="p">(</span><span class="s1">&#39;Final_df.pickle&#39;</span><span class="p">)</span>
 <span class="n">new_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">parent</span><span class="o">+</span> <span class="s1">&#39;-&#39;</span> <span class="o">+</span> <span class="n">df</span><span class="o">.</span><span class="n">title</span><span class="p">))</span>
 <span class="n">new_names</span> <span class="o">=</span> <span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="nb">tuple</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">new_names</span><span class="p">)]</span>
 
@@ -672,35 +666,35 @@
 <div class="section" id="hierarchical-stochastic-block-model-hsbm-topic-modelling">
 <h2>hierarchical Stochastic Block Model (hSBM) Topic Modelling<a class="headerlink" href="#hierarchical-stochastic-block-model-hsbm-topic-modelling" title="Permalink to this headline">¶</a></h2>
 <p>Inspired by the approach set forth by <span id="id1">[<a class="reference internal" href="references.html#id19">Gerlach <em>et al.</em>, 2018</a>]</span>, we show the hierarchical clustering of documents and words from our Wikipedia dataset for all five scientific disciplines using a <strong>hierarchical Stochastic Block Model</strong> (hSBM). We only consider words that appear more than ten times in the text corpus and end up with 4302 articles or in our case, nodes. As opposed to other popular topic models such as LDA, we do not need to specify number of groups, levels or topics beforehand, since hSBM automatically detects these parameters. The model is inspired by community detection in networks and creates a bipartite-like network of words and documents. It splits the network into groups on different hierarchical levels organized as a tree. On each level, the hSBM clusters the documents and words in varying group sizes.</p>
-<p>We have fed the model with data consisting of preprocessed tokens from each Wikipedia article where we remove infrequent tokens with a threshold at minimum 10 occurences per token. We are able to extract the documents from the model using the document number which corresponds to the index from our dataframe. We have merged the title of each article with the discipline from which it originates i.e. ‘Voter Turnout’ becomes ‘political_science-voter_turnout, which we need for the forthcoming analysis. The model has been trained in Google Colab due to ressource limitations using the following code:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># our text data
-docs = df[&#39;tokens&#39;]
+<p>We have fed the model with data consisting of preprocessed tokens from each Wikipedia article where we remove infrequent tokens with a threshold at minimum 10 occurrences per token. We are able to extract the documents from the model using the document number which corresponds to the index from our dataframe. We have merged the title of each article with the discipline from which it originates i.e. ‘Voter Turnout’ becomes ‘political_science-voter_turnout, which we need for the forthcoming analysis. The model has been trained in Google Colab due to resource limitations using the following code:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># our text data</span>
+<span class="n">docs</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;tokens&#39;</span><span class="p">]</span>
 
-# remove infrequent words.
-cutoff = 5
-c = Counter()
-for doc in docs:
-    c.update(Counter(doc))
-vocab = c.most_common(25000)
-vocab = set([w for w,count in vocab if count&gt;10])
-# remove words 
-docs = [[w for w in doc if w in vocab] for doc in docs]
+<span class="c1"># remove infrequent words.</span>
+<span class="n">cutoff</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">docs</span><span class="p">:</span>
+    <span class="n">c</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">Counter</span><span class="p">(</span><span class="n">doc</span><span class="p">))</span>
+<span class="n">vocab</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">most_common</span><span class="p">(</span><span class="mi">25000</span><span class="p">)</span>
+<span class="n">vocab</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="n">w</span> <span class="k">for</span> <span class="n">w</span><span class="p">,</span><span class="n">count</span> <span class="ow">in</span> <span class="n">vocab</span> <span class="k">if</span> <span class="n">count</span><span class="o">&gt;</span><span class="mi">10</span><span class="p">])</span>
+<span class="c1"># remove words </span>
+<span class="n">docs</span> <span class="o">=</span> <span class="p">[[</span><span class="n">w</span> <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">doc</span> <span class="k">if</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">vocab</span><span class="p">]</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">docs</span><span class="p">]</span>
 
-# we create an instance of the sbmtm-class
-model = sbmtm()
+<span class="c1"># we create an instance of the sbmtm-class</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">sbmtm</span><span class="p">()</span>
 
-# we have to create the word-document network from the corpus
-model.make_graph(docs,documents=[&#39;%d&#39;%i for i in range(len(docs))])
+<span class="c1"># we have to create the word-document network from the corpus</span>
+<span class="n">model</span><span class="o">.</span><span class="n">make_graph</span><span class="p">(</span><span class="n">docs</span><span class="p">,</span><span class="n">documents</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;</span><span class="si">%d</span><span class="s1">&#39;</span><span class="o">%</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">docs</span><span class="p">))])</span>
 
-# fit the model
-gt.seed_rng(32) ## seed for graph-tool&#39;s random number generator --&gt; same results
-model.fit()
+<span class="c1"># fit the model</span>
+<span class="n">gt</span><span class="o">.</span><span class="n">seed_rng</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="c1">## seed for graph-tool&#39;s random number generator --&gt; same results</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 
-# generate topics at level 1
-topics_l1 = loaded_model.topics(l=1,n=20) ```
+<span class="c1"># generate topics at level 1</span>
+<span class="n">topics_l1</span> <span class="o">=</span> <span class="n">loaded_model</span><span class="o">.</span><span class="n">topics</span><span class="p">(</span><span class="n">l</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span> 
 </pre></div>
 </div>
-<p>We have experimented with extracting topics at different levels of the model (our model has 7 levels). Generally, we find that the topics at level 1 are the most cohesive and specific which is useful for our analysis. We specify that the model should return the 20 most probable words per topic (remember the model itself chooses number of topics). The model generates 76 topics on level 1 which span from very method-related to more theme or topic-specific such as ‘socialism’ or ‘US politics’. On level 2, we find 15 topics which are more discipline-related and broader. The lower the level, the less semantically cohesive the topics. We have exported the level 1 topics generated by the model from the colab notebook alongside the forthcoming visualizaion and model parameters.</p>
+<p>We have experimented with extracting topics at different levels of the model (our model has 7 levels). Generally, we find that the topics at level 1 are the most cohesive and specific which is useful for our analysis. We specify that the model should return the 20 most probable words per topic (remember the model itself chooses a number of topics). The model generates 76 topics on level 1 which span from very method-related to more theme or topic-specific such as ‘socialism’ or ‘US politics’. On level 2, we find 15 topics which are more discipline-related and broader. The lower the level, the less semantically cohesive the topics. We have exported the level 1 topics generated by the model from the colab notebook alongside the forthcoming visualisation and model parameters.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot of the model&#39;s hierarchical layers </span>
@@ -712,7 +706,7 @@ topics_l1 = loaded_model.topics(l=1,n=20) ```
 <img alt="_images/explainer_topic_model_6_0.png" src="_images/explainer_topic_model_6_0.png" />
 </div>
 </div>
-<p>The above image shows the structure of the model. On the left side, we have the documents and on the right side, we see the words. Compared to Gerlach et al.’s visualization (see link), we are not able to detect the different disciplines from this image, however we do find the division on the document-ax interesting as it seems to divide the documents into two overall sections. However we need a different approach to utilize this sort of model output, so instead we choose and name 10 topics from the level 1 topics for a deeper content analysis:</p>
+<p>The above image shows the structure of the model. On the left side, we have the documents and on the right side, we see the words. Compared to Gerlach et al. ‘s visualisation (see link), we are not able to detect the different disciplines from this image, however we do find the division on the document-ax interesting as it seems to divide the documents into two overall sections. However we need a different approach to utilize this sort of model output, so instead we choose and name 10 topics from the level 1 topics for a deeper content analysis:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># the 10 topics from level 1 of our model</span>
@@ -729,7 +723,7 @@ topics_l1 = loaded_model.topics(l=1,n=20) ```
 </div>
 </div>
 </div>
-<p>The topics are chosen based on word clusters we find semantically meaningful and interesting for our query at hand - we choose some we believe to be purely discipline-specific and some which we believe to capture some overlap between disciplines. Our analysis will therefore touch upon patterns and tendencies rather than generalize across our entire dataset. We choose to visualize the word-topics with bar plots of the word prabability distribution in each topic:</p>
+<p>The topics are chosen based on word clusters we find semantically meaningful and interesting for our query at hand - we choose some we believe to be purely discipline-specific and some which we believe to capture some overlap between disciplines. Our analysis will therefore touch upon patterns and tendencies rather than generalize across our entire dataset. We choose to visualize the word-topics with bar plots of the word probability distribution in each topic:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot word probability distribution</span>
