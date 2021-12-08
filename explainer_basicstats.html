@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Descriptive statistics &#8212; The Social Science Network</title>
+    <title>Descriptive Statistics &#8212; The Social Science Network</title>
     
   <link href="_static/css/theme.css" rel="stylesheet">
   <link href="_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -154,7 +154,7 @@
    </li>
    <li class="toctree-l2 current active">
     <a class="current reference internal" href="#">
-     Descriptive statistics
+     Descriptive Statistics
     </a>
    </li>
    <li class="toctree-l2 has-children">
@@ -301,8 +301,8 @@
               <div>
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="descriptive-statistics">
-<span id="explainer-basicstats"></span><h1>Descriptive statistics<a class="headerlink" href="#descriptive-statistics" title="Permalink to this headline">¶</a></h1>
-<p>In this section we look further into some basic properties of our network. We will use the node attributes and edgelist from our <a class="reference internal" href="explainer_data_collection.html#explainer-data-collection"><span class="std std-ref">Data collection</span></a> notebook. Initially we will model a directed network where each node constitutes a Wikipedia page and each edge constitutes a hyperlink from one page to another. We furthermore subset our network to only include the weakly connected component.</p>
+<span id="explainer-basicstats"></span><h1>Descriptive Statistics<a class="headerlink" href="#descriptive-statistics" title="Permalink to this headline">¶</a></h1>
+<p>In this section we look further into some basic properties of our network. We will use the node attributes and edgelist from our <a class="reference internal" href="explainer_data_collection.html#explainer-data-collection"><span class="std std-ref">Data Collection</span></a> notebook. Initially we will model a directed network where each node constitutes a Wikipedia page and each edge constitutes a hyperlink from one page to another. We furthermore subset our network to only include the weakly connected component.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># imports</span>
@@ -662,7 +662,7 @@
 </div>
 </div>
 </div>
-<p>To put out network under further scrutiny it is relevant to compute the in- and out-degree distributions.</p>
+<p>To put our network under further scrutiny it is relevant to compute the in- and out-degree distributions.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">get_degree_distributions</span><span class="p">(</span><span class="n">G</span><span class="p">:</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">,</span> <span class="n">degree</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s2">&quot;In&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
@@ -713,13 +713,13 @@
 <div class="cell_output docutils container">
 <img alt="_images/explainer_basicstats_5_0.svg" src="_images/explainer_basicstats_5_0.svg" /></div>
 </div>
-<p>When comparing both of the linear plots with the log-log plots, it is clear that our directed network have scale-free properties. The reason for this is that the in-degree and out-degree distriubtions are well approximated by a linear model on a log-log scale suggesting that they follow a power-law distribution <span id="id1">[<a class="reference internal" href="references.html#id9">Barabási, 2016</a>]</span>. Formally the pow-law distribution can be expressed as:</p>
+<p>When comparing both of the linear plots with the log-log plots, it is clear that our directed network have scale-free properties. The reason for this is that the in-degree and out-degree distriubtions are well approximated by a linear model on a log-log scale suggesting that they follow a power-law distribution <span id="id1">[<a class="reference internal" href="references.html#id9">Barabási, 2016</a>]</span>. Formally the power-law distribution can be expressed as:</p>
 <p><span class="math notranslate nohighlight">\(Pk \sim\)</span> <span class="math notranslate nohighlight">\(k^{-\gamma}\)</span></p>
 <p>where <span class="math notranslate nohighlight">\(P_k\)</span> is the probability that a random node links to another node, and <span class="math notranslate nohighlight">\(k\)</span> constitutes the degree exponent <span id="id2">[<a class="reference internal" href="references.html#id9">Barabási, 2016</a>]</span> If we rewrite the expression to <span class="math notranslate nohighlight">\(Pk_{out} \sim\)</span> <span class="math notranslate nohighlight">\(k^{-\gamma_{out}}\)</span> and <span class="math notranslate nohighlight">\(Pk_{in} \sim\)</span> <span class="math notranslate nohighlight">\(k^{-\gamma_{in}}\)</span> we can calculate the exponent for both of the distributions.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span>
-<span class="c1"># We extract the the exponent</span>
+<span class="c1"># We extract the exponent</span>
 <span class="n">in_degree_dist</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">in_degree</span><span class="p">()]</span>
 <span class="n">out_degree_dist</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">G</span><span class="o">.</span><span class="n">out_degree</span><span class="p">()]</span>
 <span class="n">in_degree_exp</span> <span class="o">=</span> <span class="n">powerlaw</span><span class="o">.</span><span class="n">Fit</span><span class="p">(</span><span class="n">in_degree_dist</span><span class="p">)</span>
@@ -744,7 +744,7 @@ The exponent of the Out-degree distribution is: 4.909211267133928
 </div>
 </div>
 </div>
-<p>As the exponent corresponds to the slope of the straight line in a log-log plot, this means that the out-degree distrubution to a larger degree than the in-degree distrubitions is scale-free. In pratice this entails that a few pages with a lot of links to other pages are dominating the out-degree distribution. All though a smaller exponent, we still see that this is also the case for the in-degree distribution, where some pages have a lot more pages linking to it than the rest. In the following we try to inspect some of these nodes by plotting the ones with the highest in- or out-degree.</p>
+<p>As the exponent corresponds to the slope of the straight line in a log-log plot, this means that the out-degree distrubution to a larger degree than the in-degree distrubitions is scale-free. In pratice this entails that a few pages with a lot of links to other pages are dominating the out-degree distribution. Although a smaller exponent, we still see that this is also the case for the in-degree distribution, where some pages have a lot more pages linking to it than the rest. In the following we try to inspect some of these nodes by plotting the ones with the highest in- or out-degree.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span> <span class="k">def</span> <span class="nf">get_high_k_nodes</span><span class="p">(</span><span class="n">G</span><span class="p">:</span> <span class="n">nx</span><span class="o">.</span><span class="n">DiGraph</span><span class="p">,</span> <span class="n">degree</span><span class="p">:</span> <span class="nb">str</span><span class="o">=</span><span class="s2">&quot;In&quot;</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
@@ -782,8 +782,8 @@ The exponent of the Out-degree distribution is: 4.909211267133928
 <div class="cell_output docutils container">
 <img alt="_images/explainer_basicstats_10_0.svg" src="_images/explainer_basicstats_10_0.svg" /></div>
 </div>
-<p>The inspection of the pages with high degrees reveals the most central pages are what can be labelled as “metapages”, that is describing social science disciplines or broad societal phenomenas such as religion or language. Naturally, a large share of the other pages refers to these, why three out of five discipline’s wikipedia page are among the pages with a highest in-degree. Interestingly, some of the most prominent forfathers of economics <a class="reference external" href="https://en.wikipedia.org/wiki/Friedrich_Hayek">Friedrich Hayek</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/Adam_Smith">Adam Smith</a> seem to be some of the most central persons to the social sciences.</p>
-<p>Next we visual inspect our network by drawing it. In order to enhance readability of our plot we turn the directed network into an undirected network and specify Force Atlas 2 as our layout algorithm. Furthermore we specify node sizes according to degree and colour according to discipline.</p>
+<p>The inspection of the pages with high degrees reveals the most central pages are what can be labelled as “metapages”, that is describing social science disciplines or broad societal phenomenas such as religion or language. Naturally, a large share of the other pages refer to these, why three out of five disciplines’ Wikipedia pages are among the pages with the highest in-degree. Interestingly, some of the most prominent founding fathers of economics <a class="reference external" href="https://en.wikipedia.org/wiki/Friedrich_Hayek">Friedrich Hayek</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/Adam_Smith">Adam Smith</a> seem to be some of the most central persons to the social sciences.</p>
+<p>Next we visually inspect our network by drawing it. In order to enhance readability of our plot we turn the directed network into an undirected network and specify Force Atlas 2 as our layout algorithm. Furthermore we specify node sizes according to degree and colour according to discipline.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span>
@@ -895,7 +895,7 @@ The exponent of the Out-degree distribution is: 4.909211267133928
   }
 })(window);</script></div>
 </div>
-<p>All though a bit messy the visual inspection still reveals some properties of our network. As we already knew from the analysis of the degree distributions metapages like political science and anthropology are central in our network. The new information we get from this network is how clearly the different disciplines pages tend to bundle together. But there still seem to be some inter-disciplinary variance. To gain more knowledge about our network we plot five subgraphs - one for each discipline.</p>
+<p>Although a bit messy, the visual inspection still reveals some properties of our network. As we already knew from the analysis of the degree distributions, metapages such as political science or anthropology are central in our network. The new information we get from this network is how clearly the different disciplines pages tend to bundle together. It seems, however, to be some inter-disciplinary variance. To gain more knowledge about our network we plot five subgraphs - one for each discipline.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%capture</span>
@@ -1058,7 +1058,7 @@ The exponent of the Out-degree distribution is: 4.909211267133928
   }
 })(window);</script></div>
 </div>
-<p>Once again we see that the metapages are biggest for all of the disciplines. Some of the new information that these plots provide us with is the level of intra-disciplinary clustering. Whereas sociology and anthropology, probably due to their size and our <a class="reference internal" href="explainer_data_collection.html#explainer-data-collection"><span class="std std-ref">sampling strategy</span></a>, seems to relatively clustered, the disciplines political science, economics and psycology seem to a higher degree to be split up into minor clusters. To estimate this in a more formal and systematic way we conduct <a class="reference internal" href="explainer_community_detection.html#explainer-community-detection"><span class="std std-ref">community detection</span></a> and <a class="reference internal" href="explainer_topic_model.html#explainer-topic-model"><span class="std std-ref">topic-modelling</span></a> in the forthcomming analysis.</p>
+<p>Once again we see that the metapages are biggest for all of the disciplines. Some of the new information that these plots provide us with is the level of intra-disciplinary clustering. Whereas sociology and anthropology, probably due to their size and our <a class="reference internal" href="explainer_data_collection.html#explainer-data-collection"><span class="std std-ref">sampling strategy</span></a>, seem to relatively be clustered, political science, economics and psycology seem to a higher degree to be split up into minor clusters. To estimate this in a more formal and systematic way we conduct <a class="reference internal" href="explainer_community_detection.html#explainer-community-detection"><span class="std std-ref">community detection</span></a> and <a class="reference internal" href="explainer_topic_model.html#explainer-topic-model"><span class="std std-ref">topic-modelling</span></a> in the forthcomming analysis.</p>
 </div>
 
     <script type="text/x-thebe-config">
