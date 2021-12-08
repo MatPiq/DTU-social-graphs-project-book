@@ -312,7 +312,7 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="data-description">
 <h1>Data Description<a class="headerlink" href="#data-description" title="Permalink to this headline">¶</a></h1>
-<p>For our project, we collected wikipedia articles corresponding to five major social science diciplines: Economics, Political Science, Anthropology, Sociology and Psychology. To understand how we did this one need to know the structure of how information is stored into <a class="reference external" href="https://en.wikipedia.org/wiki/Wikipedia:Contents/Categories">categories</a> on Wikipedia. Each category blablabla…</p>
+<p>For our project, we collected wikipedia articles corresponding to five major social science diciplines: Economics, Political Science, Anthropology, Sociology and Psychology. To understand how we did this one need to know the structure of how information is stored into <a class="reference external" href="https://en.wikipedia.org/wiki/Wikipedia:Contents/Categories">categories</a> on Wikipedia. Each category consists of serveral subcategories with even more sub-subcategories and so on. However, besides the subcategories each level of the depthness also contain the corresponding pages belonging to that level’s subcategories. This is visiualised in the image below.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create illustration of wikipedia structure</span>
@@ -352,9 +352,8 @@
 </div>
 </div>
 <p><img alt="" src="_images/wikipedia_struture.png" /></p>
-<p>To do this we used the tool <a class="reference external" href="https://petscan.wmflabs.org/">PetScan</a> which enabled us to find all the sub-categories or pages for each discipline depending on the depth of query. Petscan can then be accessed programmatically through Python and provide us with a relevant list of pages to get.</p>
-<p><img alt="" src="_images/petscan.gif" /></p>
-<p>The table bellow shows the five first observations of our data-set, which includes the following variables:</p>
+<p>To acess the papges at a given level of depth we used the tool <a class="reference external" href="https://petscan.wmflabs.org/">PetScan</a>. This enabled us to find all the pages for each discipline depending on the depth of query which in our case were set to 2. Petscan can then be accessed programmatically through Python and provide us with a relevant list of pages to get.</p>
+<center><img src='petscan.gif'></center><p>The table bellow shows the five first observations of our data-set, which includes the following variables:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">name</span></code>: The name of the Wikipedia article.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">parent</span></code>: The discipline to which the article belongs.</p></li>
