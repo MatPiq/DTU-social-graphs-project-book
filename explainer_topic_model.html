@@ -698,7 +698,7 @@
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot of the model&#39;s hierarchical layers </span>
-<span class="n">Image</span><span class="p">(</span><span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;/Users/emiliemunchgregersen/Downloads/hSBM.png&#39;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">Image</span><span class="p">(</span><span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;hSBM.png&#39;</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="mi">50</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -744,7 +744,7 @@
 <div class="cell_output docutils container">
 <img alt="_images/explainer_topic_model_10_0.svg" src="_images/explainer_topic_model_10_0.svg" /></div>
 </div>
-<p>From the words, we are already able to get a general idea of what kind of topic to infer. We see that especially the first 3 words of each topic tend to be very contributing. Based on our knowledge of the different disciplines, we are able to get an overall sense of whether we are dealing with an interdisciplinary topic such as ‘statistical methods’ or a disciplinary topic such as cognitive psychology. We do however want to be certain in our assesment and since words tend to be ambiguous, we extract the topic distribution for each chosen topic and their relation to articles in our corpus to better understand the context of the different words. The titles above each plot have been chosen based on both the word clusters as well as the articles related to each topic.</p>
+<p>From the words, we are already able to get a general idea of what kind of topic to infer. We see that especially the first 3 words of each topic tend to be very contributing. Based on our knowledge of the different disciplines, we are able to get an overall sense of whether we are dealing with an interdisciplinary topic such as ‘statistical methods’ or a disciplinary topic such as cognitive psychology. We do however want to be certain in our assessment and since words tend to be ambiguous, we extract the topic distribution for each chosen topic and their relation to articles in our corpus to better understand the context of the different words. The titles above each plot have been chosen based on both the word clusters as well as the articles related to each topic.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># function to extract the relevant data from our topic distributions</span>
@@ -794,7 +794,7 @@
 </div>
 </div>
 </div>
-<p>Before diving further into our analysis, let’s take a closer look at a few of the topics:</p>
+<p>Before diving further into our analysis, let us take a closer look at a few of the topics:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># the 20 most probable articles and words for this topic</span>
@@ -932,7 +932,7 @@
 </table>
 </div></div></div>
 </div>
-<p>For topic 7, we infer it to regard administrative science. While the most probable words are ‘law’, ‘power’, and ‘institution’, we also see how the topic is the majority contributor in an overweight of political science documents which suggest the topic to be mainly political science-related. This topic is one of our more or less ‘pure’ discipline topics. Let’s take a look at one of our more interdiciplinary topics:</p>
+<p>For topic 7, we infer it to regard administrative science. While the most probable words are ‘law’, ‘power’, and ‘institution’, we also see how the topic is the majority contributor in an overweight of political science documents which suggest the topic to be mainly political science-related. This topic is one of our more or less ‘pure’ discipline topics. Let’s take a look at one of our more interdisciplinary topics:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">topic5</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">article_names</span><span class="p">[</span><span class="mi">5</span><span class="p">],</span> <span class="n">probabilities</span><span class="p">[</span><span class="mi">5</span><span class="p">])),</span> 
@@ -1074,7 +1074,7 @@ Since the distribution of Wikipedia articles between disciplines is skewed towar
 </div>
 <div class="section" id="bipartite-network-of-10-topic-and-related-articles">
 <h2>Bipartite Network of 10 Topic and Related Articles<a class="headerlink" href="#bipartite-network-of-10-topic-and-related-articles" title="Permalink to this headline">¶</a></h2>
-<p>We wish to visualize the topics and their related articles in a bipartite networks. The topics will be one type of nodes and the articles another type. Links represents articles connected to the given topic. The links are further weigthed by the probabilities for an article to be contributing/explanatory of the topic.</p>
+<p>We wish to visualize the topics and their related articles in a bipartite network. The topics will be one type of nodes and the articles another type. Links represent articles connected to the given topic. The links are further weighted by the probabilities for an article to be contributing/explanatory of the topic.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># list to hold the weights of the edges </span>
@@ -1214,11 +1214,10 @@ Since the distribution of Wikipedia articles between disciplines is skewed towar
   }
 })(window);</script></div>
 </div>
-<p>Remember that each small node represents an article and each large node represents a topic. The links are created if they have been determined by the hSBM model to be related to the given topic. Each discipline has been given a distinct color and the edged have been weighted with the probabilities of the topic being contributing to the given article.</p>
-<p><strong>Inspection of the plot</strong>
-The plot testifies to the dominance of politcal science in our dataset however, we also see pure psychological and anthropological topics. The anthropological topic is interesting since it doesn’t capture stereotypical topics within anthropology but rather captures the archaeological and historical part of the discipline.</p>
-<p>While we had expected to see more overlaps between articles across topics, this is merely a small subsample of the 76 topics which the model generated from the corpus. We do however see links between topics which are dominated by economics articles. The intersecting nodes are different lists of scholars or topics except one which pertains to economic power. We do not find this shared links to capture meaningful intersections between the chosen topics. It would have been interesting to look at all semantically cohesive topics from the model and see if more overlaps would be present. However, as the following section of our analysis will touch upon, the authors of the different Wikipedia articles do not seem to relate articles to other disciplines intentionally.</p>
-<p>In summary: Overall such an analysis can provide us with an understanding of language similarities across documents. It provides us with an overview of the distribution of disciplines within topics and thus and opportunity to look at possible intersections such as the statistical methods-topic.</p>
+<p>Remember that each small node represents an article and each large node represents a topic. The links are created if they have been determined by the hSBM model to be related to the given topic. Each discipline has been given a distinct color and the edges have been weighted with the probabilities of the topic contributing to the given article.</p>
+<p>The plot testifies to the dominance of political science in our dataset however, we also see pure psychological and anthropological topics. The anthropological topic is interesting since it doesn’t capture stereotypical topics within anthropology but rather captures the archaeological and historical part of the discipline.</p>
+<p>While we had expected to see more overlaps between articles across topics, this is merely a small subsample of the 76 topics which the model generated from the corpus. We do however see links between topics which are dominated by economics articles. The intersecting nodes are different lists of scholars or topics except one which pertains to economic power. We do not find these shared links to capture meaningful intersections between the chosen topics. It would have been interesting to look at all semantically cohesive topics from the model and see if more overlaps would be present. However, as the following section of our analysis will touch upon, the authors of the different Wikipedia articles do not seem to relate articles to other disciplines intentionally.</p>
+<p><strong>In summary:</strong> Overall such an analysis can provide us with an understanding of language similarities across documents. It provides us with an overview of the distribution of disciplines within topics and thus an opportunity to look at possible intersections such as the statistical methods-topic.</p>
 </div>
 </div>
 
