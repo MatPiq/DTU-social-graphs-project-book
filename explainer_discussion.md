@@ -3,7 +3,7 @@ Discussion
 
 Our results reveal several interesting aspects of how the disciplines relate to each other. First of all, the initial networks showed that while they are all to some extent connected to each other - there is a large degree of within discipline clustering. These results are quite robust also when doing community detection with the Louvain algorithm and node2vec. While we were able to find more communities than the amount of disciplines it seems that these communities mostly represent some sub-theme or topic within a discipline. Interestingly, the node2vec projection showed that the relative distance between disciplines varies with Economics and Anthropology being furthest apart, while Political Science and Sociology are more central. This suggests that their distribution of connections to other fields is more even. 
 
-Our hSBM topic model results 
+From the text analsysis using topic modelling and doc2vec we found that the disciplines, content wise, are more similar than one might initially conclude soley based on the network analysis. While some topics predicted by hSBM are clearly related to one discipline, others are shared between disciplines. In the same way, the variation in the latent space estimated by the doc2vec model seems to be mostly explained by content than what discipline the Wiki page belongs to. This is of course to be expected as they all the disciplines in our study are social sciences and commonly concerned with understanding human behavior and societies. However, we think that 
 
 ## Limitations and Future work
 
@@ -16,7 +16,3 @@ We also want to draw some attention to the way we drew edges between Wiki pages.
 Lastly, more effort could be given to investigate the relative positions of the disciplines in the network and to what extent the relationships are reciprocal for example by more closely looking at the in- and outdegree's from the point of view of one discipline relative to all the other. In this context, it would also make sense to look at the average path length.
 
 
-
-```python
-
-```
