@@ -345,8 +345,7 @@
 <p><a id='part1'></a></p>
 <div class="section" id="network-visualization">
 <h2>1. Network Visualization<a class="headerlink" href="#network-visualization" title="Permalink to this headline">¶</a></h2>
-<p>In the plot bellow we visualize the network. Nodes represent the Wikipedia pages and are colored by the discipline from which they originated. An edge between two nodes is drawn if a page has a hyperlink to another page.</p>
-<p>To further understand the Network structure we also plot the most central pages both in the Network as a whole but also within disciplines.</p>
+<p>Wit the data at hand and all of the preprocessing put behind we now put together our great Wikipedia network that describes how the pages references to other pages at the site.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="s1">&#39;full_network.html&#39;</span><span class="p">))</span>
@@ -440,6 +439,7 @@
 
 </html></div></div>
 </div>
+<p>The network seemingly confirms one of many academic-stereotypes: Researches rarely care about anything outside their own field. The outlier here seems to be sociology that makes a sympathic and honorable attemp at working as a middle-man gathering insights from psycology, anthropology and political science. But even for sociologists the field of economics are rather distinct except for the case of notable scholars as <a class="reference external" href="https://en.wikipedia.org/wiki/Bertrand_Russell">Bertrand Russel</a>, <a class="reference external" href="https://en.wikipedia.org/wiki/John_Rawls">John Rawls</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/Daniel_Kahneman">Daniel Kahneman</a> whose categorisation as economists are rather dubios to say the least. So what else can this network tell us about the disciplines? Well it seems that religion is not only the <a class="reference external" href="https://en.wikipedia.org/wiki/Opium_of_the_people">opium of the of the people</a> but also for the social sciences as this it the most linked page across all disciplines.</p>
 <p><a id='part2'></a></p>
 </div>
 <div class="section" id="understanding-communities-and-what-they-talk-about">
