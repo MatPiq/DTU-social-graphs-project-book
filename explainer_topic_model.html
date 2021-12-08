@@ -296,8 +296,8 @@
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id1">
-   hSBM Topic Modelling
+  <a class="reference internal nav-link" href="#hierarchical-stochastic-block-model-hsbm-topic-modelling">
+   hierarchical Stochastic Block Model (hSBM) Topic Modelling
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -354,7 +354,7 @@
 <div class="output text_html">
 <div class="bk-root">
     <a href="https://bokeh.org" target="_blank" class="bk-logo bk-logo-small bk-logo-notebook"></a>
-    <span id="1001">Loading BokehJS ...</span>
+    <span id="1219">Loading BokehJS ...</span>
 </div></div><script type="application/javascript">
 (function(root) {
   function now() {
@@ -515,7 +515,7 @@
      "</div>"}};
 
   function display_loaded() {
-    var el = document.getElementById("1001");
+    var el = document.getElementById("1219");
     if (el != null) {
       el.textContent = "BokehJS is loading...";
     }
@@ -635,7 +635,7 @@
       console.log("Bokeh: BokehJS failed to load within specified timeout.");
       root._bokeh_failed_load = true;
     } else if (force !== true) {
-      var cell = $(document.getElementById("1001")).parents('.cell').data().cell;
+      var cell = $(document.getElementById("1219")).parents('.cell').data().cell;
       cell.output_area.append_execute_result(NB_LOAD_WARNING)
     }
 
@@ -681,9 +681,9 @@
 </div>
 </div>
 </div>
-<div class="section" id="id1">
-<h2>hSBM Topic Modelling<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<p>Inspired by the approach set forth by <a class="reference external" href="https://www.science.org/doi/10.1126/sciadv.aaq1360">Gerlach et al. 2018</a>, we show the hierarchical clustering of documents and words from our Wikipedia dataset for all six scientific disciplines using a <strong>hierarchical Stochastic Block Model</strong> (hSBM). We only consider words that appear more than ten times in the text corpus and end up with 4810 articles or in our case, nodes. As opposed to other popular topic models such as LDA, we do not need to specify number of groups, levels or topics beforehand, since hSBM automatically detects these parameters. The model is inspired by community detection in networks and creates a bipartite-like network of words and documents. It splits the network into groups on different hierarchical levels organized as a tree. On each level, the hSBM clusters the documents and words in varying group sizes.</p>
+<div class="section" id="hierarchical-stochastic-block-model-hsbm-topic-modelling">
+<h2>hierarchical Stochastic Block Model (hSBM) Topic Modelling<a class="headerlink" href="#hierarchical-stochastic-block-model-hsbm-topic-modelling" title="Permalink to this headline">¶</a></h2>
+<p>Inspired by the approach set forth by <a class="reference external" href="https://www.science.org/doi/10.1126/sciadv.aaq1360">Gerlach et al. 2018</a>, we show the hierarchical clustering of documents and words from our Wikipedia dataset for all five scientific disciplines using a <strong>hierarchical Stochastic Block Model</strong> (hSBM). We only consider words that appear more than ten times in the text corpus and end up with 4302 articles or in our case, nodes. As opposed to other popular topic models such as LDA, we do not need to specify number of groups, levels or topics beforehand, since hSBM automatically detects these parameters. The model is inspired by community detection in networks and creates a bipartite-like network of words and documents. It splits the network into groups on different hierarchical levels organized as a tree. On each level, the hSBM clusters the documents and words in varying group sizes.</p>
 <p>We have fed the model with data consisting of preprocessed tokens from each Wikipedia article where we remove infrequent tokens with a threshold at minimum 10 occurences per token. We are able to extract the documents from the model using the document number which corresponds to the index from our dataframe. We have merged the title of each article with the discipline from which it originates i.e. ‘Voter Turnout’ becomes ‘political_science-voter_turnout, which we need for the forthcoming analysis. The model has been trained in Google Colab due to ressource limitations using the following code:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span># our text data
 docs = df[&#39;tokens&#39;]
@@ -724,7 +724,7 @@ topics_l1 = loaded_model.topics(l=1,n=20) ```
 <img alt="_images/explainer_topic_model_6_0.png" src="_images/explainer_topic_model_6_0.png" />
 </div>
 </div>
-<p>The above image shows the structure of the model. On the left side, we have the documents and on the right side, we see the words. Compared to Gerlach et al.’s visualization (see link), we are not able to detect the different disciplines from this image, however we do find the division on the document-ax interesting as it seems to divide the divide the documents into two overall sections. However we need a different approach to utilize this model, so instead we choose and name 10 topics from the level 1 topics for a deeper content analysis:</p>
+<p>The above image shows the structure of the model. On the left side, we have the documents and on the right side, we see the words. Compared to Gerlach et al.’s visualization (see link), we are not able to detect the different disciplines from this image, however we do find the division on the document-ax interesting as it seems to divide the documents into two overall sections. However we need a different approach to utilize this sort of model output, so instead we choose and name 10 topics from the level 1 topics for a deeper content analysis:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># the 10 topics from level 1 of our model</span>
@@ -735,7 +735,6 @@ topics_l1 = loaded_model.topics(l=1,n=20) ```
 
 <span class="c1"># we create a pandas dataframe for our topics and topic words</span>
 <span class="n">topic_names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">chosen_topics</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
-
 <span class="n">topic_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span> <span class="o">=</span> <span class="n">topic_names</span><span class="p">)</span>
 <span class="n">topic_df</span><span class="p">[</span><span class="s1">&#39;topics&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">chosen_topics</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
 </pre></div>
@@ -813,7 +812,7 @@ topics_l1 = loaded_model.topics(l=1,n=20) ```
 </div>
 </div>
 </div>
-<p>Before diving further into our analysis, let’s take a look at a few of the topics:</p>
+<p>Before diving further into our analysis, let’s take a closer look at a few of the topics:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># the 20 most probable articles and words for this topic</span>
@@ -1089,11 +1088,11 @@ topics_l1 = loaded_model.topics(l=1,n=20) ```
 </div></div></div>
 </div>
 <p>Statistical methods is one of our most interdisciplinary topics as it is present in articles from multiple disciplines. We find in particular that articles from psychology, political science and economics are related to the topic suggesting that statistical methods is a topic of interdisciplinary character. Intuitively, this aligns with our understanding of the different disciplines as statistical inference and causality traditionally both are strived for in academic work from these fields and thus involve well-known methods related to this topic.
-Since the distribution of Wikipedia articles between disciplines is skewed towards political science, we find many political science-related topics in general as well as articles in each topic. This will also be eveident in the following section.</p>
+Since the distribution of Wikipedia articles between disciplines is skewed towards political science, we find many political science-related topics in general as well as articles in each topic. This will also be evident in the following section.</p>
 </div>
 <div class="section" id="bipartite-network-of-10-topic-and-related-articles">
 <h2>Bipartite Network of 10 Topic and Related Articles<a class="headerlink" href="#bipartite-network-of-10-topic-and-related-articles" title="Permalink to this headline">¶</a></h2>
-<p>We wish to visualize the topics and their related articles in abipartite networks. The topics will be one type of nodes and the articles another type. Links represents articles connected to the given topic. The links are further weigthed by the probabilities for an article to be contributing/explanatory of the topic.</p>
+<p>We wish to visualize the topics and their related articles in a bipartite networks. The topics will be one type of nodes and the articles another type. Links represents articles connected to the given topic. The links are further weigthed by the probabilities for an article to be contributing/explanatory of the topic.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># list to hold the weights of the edges </span>
@@ -1236,8 +1235,8 @@ Since the distribution of Wikipedia articles between disciplines is skewed towar
 <p>Remember that each small node represents an article and each large node represents a topic. The links are created if they have been determined by the hSBM model to be related to the given topic. Each discipline has been given a distinct color and the edged have been weighted with the probabilities of the topic being contributing to the given article.</p>
 <p><strong>Inspection of the plot</strong>
 The plot testifies to the dominance of politcal science in our dataset however, we also see pure psychological and anthropological topics. The anthropological topic is interesting since it doesn’t capture stereotypical topics within anthropology but rather captures the archaeological and historical part of the discipline.</p>
-<p>While we had expected to see more overlaps between articles across topics, this is merely a small subsample of the 76 topics which the model generated from the corpus. We do however see between topics which are dominated by economics articles. The intersecting nodes are different lists of scholars or topics except one which pertains to economic power.</p>
-<p>Overall such an analysis can provide us with an overview of the distribution of disciplines between topics as well as potential overlaps. *</p>
+<p>While we had expected to see more overlaps between articles across topics, this is merely a small subsample of the 76 topics which the model generated from the corpus. We do however see links between topics which are dominated by economics articles. The intersecting nodes are different lists of scholars or topics except one which pertains to economic power. We do not find this shared links to capture meaningful intersections between the chosen topics. It would have been interesting to look at all semantically cohesive topics from the model and see if more overlaps would be present. However, as the following section of our analysis will touch upon, the authors of the different Wikipedia articles do not seem to relate articles to other disciplines intentionally.</p>
+<p>In summary: Overall such an analysis can provide us with an understanding of language similarities across documents. It provides us with an overview of the distribution of disciplines within topics and thus and opportunity to look at possible intersections such as the statistical methods-topic.</p>
 </div>
 </div>
 
