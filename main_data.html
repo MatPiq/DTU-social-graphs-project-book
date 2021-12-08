@@ -300,7 +300,7 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="data-description">
 <h1>Data Description<a class="headerlink" href="#data-description" title="Permalink to this headline">¶</a></h1>
-<p>For our project, we collected wikipedia articles corresponding to five major social science diciplines: Economics, Political Science, Anthropology, Sociology and Psychology. To understand how we did this one need to know the structure of how information is stored into <a class="reference external" href="https://en.wikipedia.org/wiki/Wikipedia:Contents/Categories">categories</a> on Wikipedia. Each category consists of serveral subcategories with even more sub-subcategories and so on. However, besides the subcategories each level of the depthness also contains the corresponding pages belonging to that level’s subcategories. This is visiualised in the image below.</p>
+<p>As mentioned, we collected Wikipedia articles corresponding to the five major social science diciplines: Economics, Political Science, Anthropology, Sociology and Psychology. To understand how we did this one need to know the structure of how information is stored into <a class="reference external" href="https://en.wikipedia.org/wiki/Wikipedia:Contents/Categories">categories</a> on Wikipedia (very exciting!). Each category consists of serveral subcategories with even more sub-subcategories and on to infinity. Besides the subcategories each level of the depthness also contains the corresponding pages belonging to that level’s subcategories. This is visiualised in the image below.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create illustration of wikipedia structure</span>
@@ -340,7 +340,7 @@
 </div>
 </div>
 <p><img alt="" src="_images/wikipedia_struture.png" /></p>
-<p>To access the pages at a given level of depth we used the tool <a class="reference external" href="https://petscan.wmflabs.org/">PetScan</a>. This enabled us to find all the pages for each discipline depending on the depth of query which in our case were set to 2. Petscan can then be accessed programmatically through Python and provide us with a relevant list of pages to get.</p>
+<p>Perhaps a specific depth level could be the key to an representative sampling strategy, we thought and so we used the tool <a class="reference external" href="https://petscan.wmflabs.org/">PetScan</a> to access the articles at a predefined depth. This enabled us to find all the pages for each discipline depending on the depth of query which in our case were set to 2. A nice bonus to this approach is that Petscan can be accessed programmatically through Python and thus provide us with a relevant list of pages to collect from Wikipedia. A sort of structured way to sample from an otherwise chaotic encyclopedia. But now that we have the data, let’s get serious.</p>
 <p><img alt="" src="_images/petscan.gif" /></p>
 <p>The table below shows the five first observations of our data-set, which includes the following variables:</p>
 <ul class="simple">
@@ -353,7 +353,7 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">tokens</span></code>: The lemmatized tokenized into list of words.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">gcc</span></code>: Dummy for if the article is part of the giant component in the network.</p></li>
 </ul>
-<p>The data can be downloaded from the following <a class="reference external" href="https://drive.google.com/file/d/1U0Q8eMvp50crf383ykE1anB5J4oq_mrc/view?usp=sharing">link</a>.</p>
+<p>The data can be downloaded from the following (if you really want to see for yourself) <a class="reference external" href="https://drive.google.com/file/d/1U0Q8eMvp50crf383ykE1anB5J4oq_mrc/view?usp=sharing">link</a>.</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -525,7 +525,7 @@
 <p>4302 rows × 8 columns</p>
 </div></div></div>
 </div>
-<p>In the table below we display summary statistics including the average number of articles for each discipline, number of edges and word count. As can be seen, the distribution is rather skewed with Political Science for example having more than double the amount of articles compared to sociology for instance.</p>
+<p>In the table below we display summary statistics including the average number of articles for each discipline, number of edges and word count. As expected, the distribution is rather skewed with Political Science for example having more than double the amount of articles compared to sociology for instance. Remember this detail - Political Science is dominating our dataset and therefore most likely our analysis…</p>
 <div class="cell tag_hide-input docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Create descriptives table</span>
