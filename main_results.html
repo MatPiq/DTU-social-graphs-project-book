@@ -291,11 +291,6 @@
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#network-visualization">
-   1. Network Visualization
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#understanding-communities-and-what-they-talk-about">
    2. Understanding Communities and what they talk about
   </a>
@@ -337,9 +332,6 @@
 <li><p><a class="reference external" href="#part3"><code class="docutils literal notranslate"><span class="pre">3.</span> <span class="pre">Content</span> <span class="pre">analysis:</span> <span class="pre">Discovering</span> <span class="pre">salient</span> <span class="pre">topics.</span></code></a></p></li>
 <li><p><a class="reference external" href="#part4"><code class="docutils literal notranslate"><span class="pre">4.</span> <span class="pre">socialscience2vec:</span> <span class="pre">Node</span> <span class="pre">and</span> <span class="pre">Document</span> <span class="pre">Embeddings</span></code></a></p></li>
 </ul>
-<p><a id='part1'></a></p>
-<div class="section" id="network-visualization">
-<h2>1. Network Visualization<a class="headerlink" href="#network-visualization" title="Permalink to this headline">¶</a></h2>
 <p>Wit the data at hand and all of the preprocessing put behind we now put together our great Wikipedia network that describes how the pages references to other pages at the site.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -434,9 +426,8 @@
 
 </html></div></div>
 </div>
-<p>The network seemingly confirms one of many academic-stereotypes: Researches rarely care about anything outside their own field. The outlier here seems to be sociology that makes a sympathic and honorable attemp at working as a middle-man gathering insights from psycology, anthropology and political science. But even for sociologists the field of economics are rather distinct except for the case of notable scholars as <a class="reference external" href="https://en.wikipedia.org/wiki/Bertrand_Russell">Bertrand Russel</a>, <a class="reference external" href="https://en.wikipedia.org/wiki/John_Rawls">John Rawls</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/Daniel_Kahneman">Daniel Kahneman</a> whose categorisation as economists are rather dubios to say the least. So what else can this network tell us about the disciplines? Well it seems that religion is not only the <a class="reference external" href="https://en.wikipedia.org/wiki/Opium_of_the_people">opium of the of the people</a> but also for the social sciences as this it the most linked page across all disciplines.</p>
+<p>The network seemingly confirms one of many academic-stereotypes: Researches rarely care about anything outside their own field. The outlier here seems to be sociology that makes a sympathic and honorable attemp at working as a middle-man linking knowledge from psycology, anthropology and political science. But even for sociologists the field of economics are rather distinct except for the case of notable scholars as <a class="reference external" href="https://en.wikipedia.org/wiki/Bertrand_Russell">Bertrand Russel</a>, <a class="reference external" href="https://en.wikipedia.org/wiki/John_Rawls">John Rawls</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/Daniel_Kahneman">Daniel Kahneman</a> whose categorisation as economists are rather dubios to say the least. So what else can this network tell us about the disciplines? Well it seems that religion is not only the <a class="reference external" href="https://en.wikipedia.org/wiki/Opium_of_the_people">opium of the of the people</a> but also for the social sciences as this it the most linked page across all disciplines. However, except for this important insight, the sheer size of the network makes it diffucult to extract further information, why we want to break it further down</p>
 <p><a id='part2'></a></p>
-</div>
 <div class="section" id="understanding-communities-and-what-they-talk-about">
 <h2>2. Understanding Communities and what they talk about<a class="headerlink" href="#understanding-communities-and-what-they-talk-about" title="Permalink to this headline">¶</a></h2>
 <p>For each Wiki page, we also collected the body of text. In order to better understand what the communities represent, we used a multionomial logistic model to predict the community using the text as input features. By looking at the words with the highest partial effects on the prediction of some community we can get an idea of what separates them.</p>
