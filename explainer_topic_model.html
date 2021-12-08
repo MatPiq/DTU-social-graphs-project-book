@@ -822,8 +822,12 @@ Since the distribution of wikipedia articles between disciplines is skewed towar
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">node_atributes</span><span class="o">.</span><span class="n">to_pickle</span><span class="p">(</span><span class="s1">&#39;node_attributes.pxl&#39;</span><span class="p">)</span>
-<span class="n">node_atributes</span><span class="o">.</span><span class="n">to_pickle</span><span class="p">(</span><span class="s1">&#39;weighted_edge_list.pxl&#39;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pickle</span> 
+<span class="n">node_atributes</span><span class="o">.</span><span class="n">to_pickle</span><span class="p">(</span><span class="s1">&#39;node_attributes.pkl&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;weighted_edge_list.pkl&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">edge_list</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+    
+<span class="c1">#edge_list.to_pickle(&#39;weighted_edge_list.pkl&#39;)</span>
 </pre></div>
 </div>
 </div>
