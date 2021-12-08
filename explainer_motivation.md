@@ -6,7 +6,6 @@ In this project, we analyse five of the major social science diciplines and how 
 * *How and to what are the social science disciplines connected in terms of referencing each other?*
 * *Are relationships reciprocal or are some fields more central and influential than others?*
 * *How does the content differ between diciplines? Are some more similar than others?*
-* *Is it possible to create an interpretable two dimensional latent representation of the diciplines using their nodes and textual features?*
 
 **The Dataset**
 
