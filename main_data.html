@@ -361,6 +361,7 @@
 <li><p><code class="docutils literal notranslate"><span class="pre">text</span></code>: The raw text of the article.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">cleaned_text</span></code>: Punctuation removed, lower-cased.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">lemmatized</span></code>: The cleaned text in lemmatized form, stop words removed.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tokens</span></code>: The lemmatized tokenized into list of words.</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">gcc</span></code>: Dummy for if the article is part of the giant component in the network.</p></li>
 </ul>
 <p>The data can be downloaded from the following <a class="reference external" href="https://drive.google.com/file/d/1U0Q8eMvp50crf383ykE1anB5J4oq_mrc/view?usp=sharing">link</a>.</p>
@@ -371,11 +372,11 @@
 <span class="kn">from</span> <span class="nn">ast</span> <span class="kn">import</span> <span class="n">literal_eval</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
 
-
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span><span class="p">(</span><span class="s1">&#39;/home/matiasp/University/m2/socialgraphs2021-Matias/project/df_preprocessed.obj&#39;</span><span class="p">)</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;categories&#39;</span><span class="p">,</span> <span class="s1">&#39;depth&#39;</span><span class="p">,</span> <span class="s1">&#39;tokens&#39;</span><span class="p">,</span> <span class="s1">&#39;Unnamed: 0&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
-<span class="n">df</span><span class="p">[</span><span class="s1">&#39;edges&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;edges&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">literal_eval</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
-<span class="n">df</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_pickle</span><span class="p">(</span><span class="s1">&#39;Final_df.pickle&#39;</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;parent&#39;</span><span class="p">,</span> <span class="s1">&#39;edges&#39;</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">,</span> <span class="s1">&#39;cleaned_text&#39;</span><span class="p">,</span> <span class="s2">&quot;lemmatized&quot;</span><span class="p">,</span> <span class="s2">&quot;tokens&quot;</span><span class="p">,</span> <span class="s2">&quot;gcc&quot;</span><span class="p">]]</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;title&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)))</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">&quot;parent&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;parent&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)))</span>
+<span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -398,71 +399,141 @@
   <thead>
     <tr style="text-align: right;">
       <th></th>
+      <th>title</th>
       <th>parent</th>
       <th>edges</th>
       <th>text</th>
       <th>cleaned_text</th>
       <th>lemmatized</th>
+      <th>tokens</th>
       <th>gcc</th>
-    </tr>
-    <tr>
-      <th>name</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>Anarchism</th>
-      <td>political_science</td>
-      <td>[-ism, 1872 Hague Congress, 1919 United States...</td>
-      <td>Anarchism is a political philosophy and moveme...</td>
-      <td>anarchism is a political philosophy and moveme...</td>
-      <td>anarchism political philosophy movement scepti...</td>
+      <th>0</th>
+      <td>political science</td>
+      <td>political science</td>
+      <td>[comparative_politics, public_administration, ...</td>
+      <td>\n Political science is the scientific study ...</td>
+      <td>political science is the scientific study of ...</td>
+      <td>political science scientific study politics so...</td>
+      <td>[political, science, scientific, study, politi...</td>
       <td>1</td>
     </tr>
     <tr>
-      <th>Census</th>
-      <td>political_science</td>
-      <td>[2011 Canadian census, Ab urbe condita (book),...</td>
-      <td>A census is the procedure of systematically ca...</td>
-      <td>a census is the procedure of systematically ca...</td>
-      <td>a census procedure systematically calculating ...</td>
+      <th>1</th>
+      <td>world values survey</td>
+      <td>political science</td>
+      <td>[religion, left-wing_politics, joseph_schumpet...</td>
+      <td>The World Values Survey (WVS) is a global res...</td>
+      <td>the world values survey wvs is a global resea...</td>
+      <td>world value survey wv global research project ...</td>
+      <td>[world, value, survey, wv, global, research, p...</td>
       <td>1</td>
     </tr>
     <tr>
-      <th>Comparative_law</th>
-      <td>political_science</td>
-      <td>[Act of Congress, Act of Parliament, Adjudicat...</td>
-      <td>Comparative law is the study of differences an...</td>
-      <td>comparative law is the study of differences an...</td>
-      <td>comparative law study difference similarity la...</td>
+      <th>2</th>
+      <td>voter turnout</td>
+      <td>political science</td>
+      <td>[tactical_voting, political_science, political...</td>
+      <td>In political science, voter turnout is the pe...</td>
+      <td>in political science voter turnout is the per...</td>
+      <td>political science voter turnout percentage eli...</td>
+      <td>[political, science, voter, turnout, percentag...</td>
       <td>1</td>
     </tr>
     <tr>
-      <th>Code_of_Hammurabi</th>
-      <td>political_science</td>
-      <td>['Ain Ghazal Statues, A. Leo Oppenheim, A Medi...</td>
-      <td>The Code of Hammurabi is a Babylonian legal te...</td>
-      <td>the code of hammurabi is a babylonian legal te...</td>
-      <td>the code hammurabi babylonian legal text compo...</td>
+      <th>3</th>
+      <td>mierscheid law</td>
+      <td>political science</td>
+      <td>[]</td>
+      <td>The Mierscheid law is a satirical forecast[ci...</td>
+      <td>the mierscheid law is a satirical forecast ci...</td>
+      <td>mierscheid law satirical forecast citation nee...</td>
+      <td>[mierscheid, law, satirical, forecast, citatio...</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>political groups of the european parliament</td>
+      <td>political science</td>
+      <td>[civil_service, foreign_policy, london_school_...</td>
+      <td>\n \n \n \n The political groups of the Europ...</td>
+      <td>the political groups of the european parliame...</td>
+      <td>political group european parliament parliament...</td>
+      <td>[political, group, european, parliament, parli...</td>
       <td>1</td>
     </tr>
     <tr>
-      <th>Egalitarianism</th>
-      <td>political_science</td>
-      <td>[Abdullah Öcalan, Abraham Lincoln, Adam Smith,...</td>
-      <td>Egalitarianism (from French  égal 'equal'), or...</td>
-      <td>egalitarianism from french  égal equal or equa...</td>
-      <td>egalitarianism french égal equal equalitariani...</td>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>4297</th>
+      <td>sascha altman dubrul</td>
+      <td>psychology</td>
+      <td>[anti-psychiatry, medicalization, psychoanalyt...</td>
+      <td>Sascha Altman DuBrul, a.k.a. Sascha DuBrul or...</td>
+      <td>sascha altman dubrul a k a sascha dubrul or s...</td>
+      <td>sascha altman dubrul k sascha dubrul sascha sc...</td>
+      <td>[sascha, altman, dubrul, k, sascha, dubrul, sa...</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4298</th>
+      <td>grotesque body</td>
+      <td>psychology</td>
+      <td>[social_system, burlesque]</td>
+      <td>The grotesque body is a concept, or literary ...</td>
+      <td>the grotesque body is a concept or literary t...</td>
+      <td>grotesque body concept literary trope put forw...</td>
+      <td>[grotesque, body, concept, literary, trope, pu...</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4299</th>
+      <td>imaginary audience</td>
+      <td>psychology</td>
+      <td>[]</td>
+      <td>The imaginary audience refers to a psychologi...</td>
+      <td>the imaginary audience refers to a psychologi...</td>
+      <td>imaginary audience refers psychological state ...</td>
+      <td>[imaginary, audience, refers, psychological, s...</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4300</th>
+      <td>lady wonder</td>
+      <td>psychology</td>
+      <td>[astrology, mediumship, communal_reinforcement...</td>
+      <td>Reportedly haunted locations:\n Lady Wonder (...</td>
+      <td>reportedly haunted locations lady wonder born...</td>
+      <td>reportedly haunted location lady wonder born l...</td>
+      <td>[reportedly, haunted, location, lady, wonder, ...</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>4301</th>
+      <td>ego integrity</td>
+      <td>psychology</td>
+      <td>[psychometrics, religion, object_relations_the...</td>
+      <td>Ego integrity was the term given by Erik Erik...</td>
+      <td>ego integrity was the term given by erik erik...</td>
+      <td>ego integrity term given erik erikson last eig...</td>
+      <td>[ego, integrity, term, given, erik, erikson, l...</td>
       <td>1</td>
     </tr>
   </tbody>
 </table>
+<p>4302 rows × 8 columns</p>
 </div></div></div>
 </div>
 <p>In the table bellow we display summary statistics including the average number of articles for each discipline, number of edges and word count. As can be seen the distribution is rather skewed, with Antropology for example having more than double the amount of articles compared to Political Science.</p>
@@ -476,7 +547,6 @@
     <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;parent&#39;</span><span class="p">]</span><span class="o">==</span><span class="n">discipline</span><span class="p">]</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
         <span class="n">avg_edges</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;edges&#39;</span><span class="p">]))</span>
         <span class="n">avg_pagelen</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;tokens&#39;</span><span class="p">]))</span>
-    
     <span class="n">tab</span><span class="p">[</span><span class="s1">&#39;Discipline&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">discipline</span><span class="p">)</span>
     <span class="n">tab</span><span class="p">[</span><span class="s1">&#39;Number of articles&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;parent&#39;</span><span class="p">]</span><span class="o">==</span><span class="n">discipline</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="n">tab</span><span class="p">[</span><span class="s1">&#39;Avg. edges&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">avg_edges</span><span class="p">))</span>
@@ -518,34 +588,34 @@
   </thead>
   <tbody>
     <tr>
-      <th>political_science</th>
-      <td>418</td>
-      <td>218.65</td>
-      <td>12748.76</td>
+      <th>political science</th>
+      <td>1614</td>
+      <td>3.97</td>
+      <td>714.27</td>
     </tr>
     <tr>
       <th>economics</th>
-      <td>675</td>
-      <td>82.67</td>
-      <td>4399.29</td>
-    </tr>
-    <tr>
-      <th>sociology</th>
-      <td>684</td>
-      <td>137.08</td>
-      <td>9135.81</td>
+      <td>1020</td>
+      <td>3.30</td>
+      <td>433.05</td>
     </tr>
     <tr>
       <th>anthropology</th>
-      <td>1198</td>
-      <td>193.84</td>
-      <td>10567.26</td>
+      <td>510</td>
+      <td>4.86</td>
+      <td>815.08</td>
     </tr>
     <tr>
       <th>psychology</th>
-      <td>955</td>
-      <td>127.90</td>
-      <td>10447.76</td>
+      <td>543</td>
+      <td>4.68</td>
+      <td>857.45</td>
+    </tr>
+    <tr>
+      <th>sociology</th>
+      <td>615</td>
+      <td>3.28</td>
+      <td>575.52</td>
     </tr>
   </tbody>
 </table>

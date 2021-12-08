@@ -369,7 +369,7 @@
 <span class="kn">import</span> <span class="nn">powerlaw</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">from</span> <span class="nn">tqdm</span> <span class="kn">import</span> <span class="n">tqdm</span>
+<span class="kn">from</span> <span class="nn">tqdm.notebook</span> <span class="kn">import</span> <span class="n">tqdm</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span>
 <span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">chain</span>
 <span class="kn">from</span> <span class="nn">bs4</span> <span class="kn">import</span> <span class="n">BeautifulSoup</span>
@@ -526,6 +526,17 @@ Name: title, dtype: int64
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pages_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">pages</span><span class="p">)</span>
+<span class="n">pages_df</span><span class="o">.</span><span class="n">to_pickle</span><span class="p">(</span><span class="s2">&quot;full_data_pickle&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">folders</span><span class="o">/</span><span class="mi">81</span><span class="o">/</span><span class="n">hmpn7q9j37l5nqxjsd88rbf00000gn</span><span class="o">/</span><span class="n">T</span><span class="o">/</span><span class="n">ipykernel_6176</span><span class="o">/</span><span class="mf">1607620959.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">pages_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">pages</span><span class="p">)</span>
+
+<span class="ne">NameError</span>: name &#39;pages&#39; is not defined
 </pre></div>
 </div>
 </div>
@@ -612,9 +623,9 @@ Lastly we remove all edges from the pages we have collected to pages not in our 
 </div>
 <div class="cell_output docutils container">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "eb827056769a4e83bb885986a414ef44", "version_major": 2, "version_minor": 0}
+{"model_id": "08cf700339d44c81aef96e08d9c1159a", "version_major": 2, "version_minor": 0}
 </script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "5f2b1be6ad7649abbd8f03e04bf81b27", "version_major": 2, "version_minor": 0}
+{"model_id": "ce45f4b494d549068d18c3f44bbea7b0", "version_major": 2, "version_minor": 0}
 </script></div>
 </div>
 <p>To further subset our data we remove self-loops and model a undirected network from which we extract the giant connected component. We then try to sample a respresntative supgraph containing <span class="math notranslate nohighlight">\(\frac{1}{4}\)</span> of the giant connected component’s nodes using a Metropolis algoritm as stated in <span id="id1">[<a class="reference internal" href="references.html#id12">Hübler <em>et al.</em>, 2008</a>]</span> and implemented in the function <code class="docutils literal notranslate"><span class="pre">.MetropolisHastingsRandomWalkSampler()</span></code> from the module <code class="docutils literal notranslate"><span class="pre">littleballoffur</span></code>. The intuition behind the method is to initialise a random subgraph <span class="math notranslate nohighlight">\(S\)</span> of our full network <span class="math notranslate nohighlight">\(G\)</span> from which we iteratively remove and add nodes in order to mimic some topological properties of <span class="math notranslate nohighlight">\(G\)</span>, in this case the degree-distriubtion. This is of course not without consequences as we remove of the complexity in our network and thereby lose information, however we deem this nesecarry to reduce our network to a more manageble size.</p>
@@ -669,8 +680,8 @@ Lastly we remove all edges from the pages we have collected to pages not in our 
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Degree distribution exponent full network G: </span><span class="si">{</span><span class="n">G_exponent</span><span class="o">.</span><span class="n">power_law</span><span class="o">.</span><span class="n">alpha</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Degree distribution exponent supgraph S: </span><span class="si">{</span><span class="n">sampled_supgraph_exponent</span><span class="o">.</span><span class="n">power_law</span><span class="o">.</span><span class="n">alpha</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="o">*</span><span class="mi">70</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Transitivity full network G: </span><span class="si">{:.4f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">transitivity</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Transitivity supgraph S: </span><span class="si">{:.4f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">transitivity_sampled</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Transitivity full network G: </span><span class="si">{:.4f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">G_transitivity</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Transitivity supgraph S: </span><span class="si">{:.4f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sampled_supgraph_transitivity</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -678,8 +689,8 @@ Lastly we remove all edges from the pages we have collected to pages not in our 
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Degree distribution exponent full network G: 3.2974527129230946
 Degree distribution exponent supgraph S: 3.8342121796821265
 ----------------------------------------------------------------------
-Transitivity full network G: 0.1929
-Transitivity supgraph S: 0.2991
+Transitivity full network G: 0.1796
+Transitivity supgraph S: 0.2822
 </pre></div>
 </div>
 </div>
@@ -717,7 +728,7 @@ Transitivity supgraph S: 0.2991
 </div>
 <div class="cell_output docutils container">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "5b226fb4ef1744fc9c07fb3752af44cb", "version_major": 2, "version_minor": 0}
+{"model_id": "e4f160ec51504f4a80c061af2b5d6508", "version_major": 2, "version_minor": 0}
 </script></div>
 </div>
 <div class="cell docutils container">
@@ -798,13 +809,13 @@ We split up all the lemmatized pages into list of words (or tokens) and add them
 </div>
 <div class="cell_output docutils container">
 <script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "3d049402f0c64e3cabe5cbc7ad4a239e", "version_major": 2, "version_minor": 0}
+{"model_id": "54e2d52548514cffb285c5baae0b37c0", "version_major": 2, "version_minor": 0}
 </script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "9f003087d33a4fc794ef030a91b2879a", "version_major": 2, "version_minor": 0}
+{"model_id": "6698010fd3f94f3391759f653cb566e9", "version_major": 2, "version_minor": 0}
 </script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "04e50e22b5434f38b8c4c819f77437ba", "version_major": 2, "version_minor": 0}
+{"model_id": "6ba99dfd468f40f89dd781ff74be321e", "version_major": 2, "version_minor": 0}
 </script><script type="application/vnd.jupyter.widget-view+json">
-{"model_id": "a74d52b4a12a4b55881a3fb8e7dab949", "version_major": 2, "version_minor": 0}
+{"model_id": "a331f4ef075b47e9be9fc8e516191103", "version_major": 2, "version_minor": 0}
 </script></div>
 </div>
 <div class="cell docutils container">
@@ -817,11 +828,11 @@ We split up all the lemmatized pages into list of words (or tokens) and add them
 </div>
 <div class="cell_output docutils container">
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>parent
-anthropology         1401
-economics            4636
-political_science    5217
-psychology           6715
-sociology            3518
+anthropology          510
+economics            1020
+political_science    1614
+psychology            543
+sociology             615
 Name: title, dtype: int64
 </pre></div>
 </div>
