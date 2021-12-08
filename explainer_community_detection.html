@@ -54,7 +54,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="hSBM topic modelling" href="explainer_topic_model.html" />
+    <link rel="next" title="hSBM Topic Modelling" href="explainer_topic_model.html" />
     <link rel="prev" title="Theory, Methods and Analysis" href="explainer_analysis.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -149,7 +149,7 @@
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="explainer_data_collection.html">
-     Data collection
+     Data Collection
     </a>
    </li>
    <li class="toctree-l2">
@@ -174,7 +174,7 @@
      </li>
      <li class="toctree-l3">
       <a class="reference internal" href="explainer_topic_model.html">
-       hSBM topic modelling
+       hSBM Topic Modelling
       </a>
      </li>
      <li class="toctree-l3">
@@ -297,27 +297,15 @@
             </div>
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#">
-   Community detection
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#tf-idf">
+   TF-IDF
   </a>
  </li>
- <li class="toc-h1 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id1">
-   Community detection
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#multinomial-logistic-regression">
+   Multinomial Logistic regression
   </a>
-  <ul class="visible nav section-nav flex-column">
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#tf-idf">
-     TF-IDF
-    </a>
-   </li>
-   <li class="toc-h2 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#multinomial-logistic-regression">
-     Multinomial Logistic regression
-    </a>
-   </li>
-  </ul>
  </li>
 </ul>
 
@@ -332,9 +320,6 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="community-detection">
 <span id="explainer-community-detection"></span><h1>Community detection<a class="headerlink" href="#community-detection" title="Permalink to this headline">¶</a></h1>
-</div>
-<div class="tex2jax_ignore mathjax_ignore section" id="id1">
-<h1>Community detection<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
@@ -672,17 +657,17 @@
   }
 }(window));</script></div>
 </div>
-<p>In the <a class="reference internal" href="explainer_basicstats.html#explainer-basicstats"><span class="std std-ref">walk-through of our network’s basic properties</span></a> we see that nodes tend to bundle together in different groups. To identify some of these groups in a systematic way <em>community detection</em> serves as a useful tool. For this we use the <em>Louvain algorithm</em>. The Louvain algorithm relies on the network’s <em>modularity</em> which is best described as a measure of how well a partitioned in the network can be split into supgraphs (communities). A higher modularity therefore corresponds to a better community structure. Formally the modularity can be expressed as <span id="id2">[<a class="reference internal" href="references.html#id9">Barabási, 2016</a>]</span>:</p>
+<p>In the <a class="reference internal" href="explainer_basicstats.html#explainer-basicstats"><span class="std std-ref">walk-through of our network’s basic properties</span></a> we see that nodes tend to bundle together in different groups. To identify some of these groups in a systematic way <em>community detection</em> serves as a useful tool. For this we use the <em>Louvain algorithm</em>. The Louvain algorithm relies on the network’s <em>modularity</em> which is best described as a measure of how well a partitioned in the network can be split into supgraphs (communities). A higher modularity therefore corresponds to a better community structure. Formally the modularity can be expressed as <span id="id1">[<a class="reference internal" href="references.html#id9">Barabási, 2016</a>]</span>:</p>
 <div class="math notranslate nohighlight">
 \[
 M = \sum^{n_c}_{c=1}\left[\frac{L_c}{L}-\left(\frac{k_c}{2L}\right)^{2}\right]
 \]</div>
-<p>where <span class="math notranslate nohighlight">\(n_c\)</span> are the communities, <span class="math notranslate nohighlight">\(L_c\)</span> are the number of links and  <span class="math notranslate nohighlight">\(k_c\)</span> the total degree of nodes in the community <span class="math notranslate nohighlight">\(c\)</span>. The Louvain algorithm tries to find the communities that maximize <span class="math notranslate nohighlight">\(M\)</span> by the following two steps <span id="id3">[<a class="reference internal" href="references.html#id9">Barabási, 2016</a>]</span>:</p>
+<p>where <span class="math notranslate nohighlight">\(n_c\)</span> are the communities, <span class="math notranslate nohighlight">\(L_c\)</span> are the number of links and  <span class="math notranslate nohighlight">\(k_c\)</span> the total degree of nodes in the community <span class="math notranslate nohighlight">\(c\)</span>. The Louvain algorithm tries to find the communities that maximize <span class="math notranslate nohighlight">\(M\)</span> by the following two steps <span id="id2">[<a class="reference internal" href="references.html#id9">Barabási, 2016</a>]</span>:</p>
 <ol class="simple">
 <li><p>First it assigns each node to its own communities, i.e. there are as many communities as nodes. Next, for each node <span class="math notranslate nohighlight">\(i\)</span> we evaluate if by assigning it to one of its neighbours <span class="math notranslate nohighlight">\(j\)</span> communities the change in modularity  <span class="math notranslate nohighlight">\(\Delta M\)</span> is positive. Node <span class="math notranslate nohighlight">\(i\)</span> then moves to the community of the neighbor that yields the highest positive change in <span class="math notranslate nohighlight">\(\Delta M\)</span>. This is repeated for all nodes until no further increase can be made.</p></li>
 <li><p>In the second step, the algorithm creates a “super graph”, that is each community is condensed into one node where the edges are now weighted by the total number of links going from one community to the other in the original network. Having done this, we rerun the first step on the “super graph”.</p></li>
 </ol>
-<p>The steps are done iteratively until the maximum <span class="math notranslate nohighlight">\(M\)</span> has been reached. As this is an approximate method it is not ensured that the algorithm will always find the global maximum <span class="math notranslate nohighlight">\(M\)</span>, all though that tests shows, that the algorithm usually is fairly accurate <span id="id4">[<a class="reference internal" href="references.html#id10">Blondel <em>et al.</em>, 2021</a>]</span>.</p>
+<p>The steps are done iteratively until the maximum <span class="math notranslate nohighlight">\(M\)</span> has been reached. As this is an approximate method it is not ensured that the algorithm will always find the global maximum <span class="math notranslate nohighlight">\(M\)</span>, all though that tests shows, that the algorithm usually is fairly accurate <span id="id3">[<a class="reference internal" href="references.html#id10">Blondel <em>et al.</em>, 2021</a>]</span>.</p>
 <p>To implement the Louvain algorithm and find the optimal communities for our network we simply rely on the function <code class="docutils literal notranslate"><span class="pre">.best_partition()</span></code> from the module <code class="docutils literal notranslate"><span class="pre">community</span></code>. As the Louvain algorithm only works for undirected networkx we model our network accordingly for the community detection. Furthermore we restrict our network to the giant connected component, as the Lovain algorithm else finds several communites consisting of 1 node.</p>
 <p>Once again we use the data from our <a class="reference internal" href="explainer_data_collection.html#explainer-data-collection"><span class="std std-ref">Data collection notebook</span></a>.</p>
 <div class="cell docutils container">
@@ -745,9 +730,9 @@ Mean community size 110.375 nodes
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/explainer_community_detection_5_0.svg" src="_images/explainer_community_detection_5_0.svg" /></div>
+<img alt="_images/explainer_community_detection_4_0.svg" src="_images/explainer_community_detection_4_0.svg" /></div>
 </div>
-<p>Our Louvain-algorithm finds 24 communities. All though the overall modularity on <em>average</em> is fairly accurate <span id="id5">[<a class="reference internal" href="references.html#id10">Blondel <em>et al.</em>, 2021</a>]</span> we must still be careful when interpreting the communites, as some of them are very small and might be prone to errors. For an example is the smallest community deteceted composed of only 4 nodes. We therefore decide to limit our further insecption of the communities to the 9 most frequent (9 instead of 10 for practical reasons when we want to vizualise the communites).</p>
+<p>Our Louvain-algorithm finds 24 communities. All though the overall modularity on <em>average</em> is fairly accurate <span id="id4">[<a class="reference internal" href="references.html#id10">Blondel <em>et al.</em>, 2021</a>]</span> we must still be careful when interpreting the communites, as some of them are very small and might be prone to errors. For an example is the smallest community deteceted composed of only 4 nodes. We therefore decide to limit our further insecption of the communities to the 9 most frequent (9 instead of 10 for practical reasons when we want to vizualise the communites).</p>
 <div class="section" id="tf-idf">
 <h2>TF-IDF<a class="headerlink" href="#tf-idf" title="Permalink to this headline">¶</a></h2>
 <p>To decide what the resulting communities reflect we can list the most frequent words. However using the simple counts of each word would not reflect the differences between the communities, as this would yield a list of rather generic terms always occuring. Instead we want to see how import the words in one community are <em>relative</em> (or, simply TF-IDF) to other communities. For this end the <em>term frequency–inverse document frequency</em> is a relevant measure. Following the <a class="reference external" href="https://en.wikipedia.org/wiki/Tf%E2%80%93idf">Wikipedia</a> documentation the TF-IDF can be defined as:</p>
@@ -884,13 +869,13 @@ Mean community size 110.375 nodes
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/explainer_community_detection_12_0.svg" src="_images/explainer_community_detection_12_0.svg" /></div>
+<img alt="_images/explainer_community_detection_11_0.svg" src="_images/explainer_community_detection_11_0.svg" /></div>
 </div>
 <p>The TF-IDF values reveals some quite interesting attributes of the communities. As one would expect, there is some communities as 15, 3, 6 and 9 that clear relates to the disciplines political science, economics, anthropology and psycology. Non-surpringsly this suggets, that pages from the same Wikipedia category tend to cluster together. But on the other hand we also find communities like 1 and 10 that clearly describes pages refering to far-right/populistic and far-left/socialist pages, where the so-called <a class="reference external" href="https://en.wikipedia.org/wiki/Joh_Bjelke-Petersen">“<em>Hillbilly Dictator</em>” Joh Bjelke-Petersen</a> is amongst the pages with a higest TF-IDF scores. Lastly community 14 is fairly interesting as it suggets that pseudoscientific pages such as <a class="reference external" href="https://en.wikipedia.org/wiki/Mediumship">medium</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/Astrology?wprov=srpw1_0">atstrology</a> are placed in the neighbourhood of political repressive phenomas as state <a class="reference external" href="https://en.wikipedia.org/wiki/Propaganda">propaganda</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/Slavery">slavery</a></p>
 </div>
 <div class="section" id="multinomial-logistic-regression">
 <h2>Multinomial Logistic regression<a class="headerlink" href="#multinomial-logistic-regression" title="Permalink to this headline">¶</a></h2>
-<p>Lastly, to get other nuances of these communities we implement a multinomial lasso-logistic regression with <code class="docutils literal notranslate"><span class="pre">sklearn</span></code>. The multinomial model closely resembles a regular logistic regression but is extended from binary classification to multi-class classification. We then extract each feature’s <em>average marginal effects</em> (AME) to inspect how predictive they are of each community. Following <span id="id6">[<a class="reference internal" href="references.html#id11">Cameron, 2005</a>]</span> this can be expressed as:</p>
+<p>Lastly, to get other nuances of these communities we implement a multinomial lasso-logistic regression with <code class="docutils literal notranslate"><span class="pre">sklearn</span></code>. The multinomial model closely resembles a regular logistic regression but is extended from binary classification to multi-class classification. We then extract each feature’s <em>average marginal effects</em> (AME) to inspect how predictive they are of each community. Following <span id="id5">[<a class="reference internal" href="references.html#id11">Cameron, 2005</a>]</span> this can be expressed as:</p>
 <div class="math notranslate nohighlight">
 \[
 AME_{jk} = \frac{\partial Pr[y_i = j|\mathbf{w}_{i}]}{\partial w_{jk}} = N^{-1} \sum_{i = 1}^N p_{ij}\left(\theta_{jk} - \sum^J_{m = 1} p_{im} \theta_{mk}\right)
@@ -964,7 +949,7 @@ AME_{jk} = \frac{\partial Pr[y_i = j|\mathbf{w}_{i}]}{\partial w_{jk}} = N^{-1} 
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="_images/explainer_community_detection_17_0.svg" src="_images/explainer_community_detection_17_0.svg" /></div>
+<img alt="_images/explainer_community_detection_16_0.svg" src="_images/explainer_community_detection_16_0.svg" /></div>
 </div>
 <p>Before we comment features’ meaning it is important to notice that the y-scale uses scientific notation and thus reflect quite small effect sizes. All though the difference are minor, we believe that the most predictive features from the multinomial logistic regression makes the communities are bit easier to interpret. It now becomes clearer that community 5 is related to sociology and community 4 have something to do with middle-eastern immigration. To see how each of these topic are strucuted and related to the different disciplines we draw each of them as networks which nodes colourd according to their discipline.</p>
 <div class="cell docutils container">
@@ -1243,7 +1228,7 @@ AME_{jk} = \frac{\partial Pr[y_i = j|\mathbf{w}_{i}]}{\partial w_{jk}} = N^{-1} 
     <a class='right-next' id="next-link" href="explainer_topic_model.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">hSBM topic modelling</p>
+        <p class="prev-next-title">hSBM Topic Modelling</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
